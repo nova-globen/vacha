@@ -1,0 +1,14 @@
+[package]
+name = "tond-core"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+publish = false
+description = "Disk-backed piece-table text engine: open and edit 50 GB+ files without loading them."
+
+# Only these two, on purpose (see docs/plans/06-tond/RESEARCH_huge-file-editors.md §3):
+# memmap2 for the read-only original mapping, memchr for newline scans and
+# streamed literal search. Everything else is std.
+[dependencies]
+memmap2 = "0.9"
+memchr = "2"

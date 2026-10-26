@@ -1,0 +1,23 @@
+[package]
+name = "tond-open"
+version = "1.1.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+publish = false
+description = "Forwards file arguments to a running Vacha over its main named pipe."
+build = "build.rs"
+
+# No dependencies on purpose: the shim is on the notepad-feel critical path and
+# must build offline. Everything it needs (SHA-256, the VS Code IPC framing, the
+# two Win32 calls) is implemented in src/.
+
+[[bin]]
+name = "vacha_open"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

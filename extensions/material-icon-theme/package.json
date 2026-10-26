@@ -1,0 +1,66 @@
+{
+  "name": "material-icon-theme",
+  "displayName": "Material Icon Theme",
+  "description": "Material Design Icons for Visual Studio Code",
+  "version": "5.36.1",
+  "license": "MIT",
+  "publisher": "PKief",
+  "author": {
+    "name": "Material Extensions",
+    "email": "material-icons-extensions@googlegroups.com",
+    "url": "https://github.com/material-extensions"
+  },
+  "funding": "https://github.com/sponsors/material-extensions",
+  "sponsor": {
+    "url": "https://github.com/sponsors/material-extensions"
+  },
+  "engines": {
+    "vscode": "^1.55.0"
+  },
+  "homepage": "https://github.com/material-extensions/vscode-material-icon-theme/blob/main/README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/material-extensions/vscode-material-icon-theme.git"
+  },
+  "bugs": {
+    "url": "https://github.com/material-extensions/vscode-material-icon-theme/issues"
+  },
+  "icon": "logo.png",
+  "galleryBanner": {
+    "color": "#282c34",
+    "theme": "dark"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "icons",
+    "theme",
+    "material",
+    "icon-theme",
+    "customization"
+  ],
+  "extensionKind": [
+    "ui",
+    "workspace"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "iconThemes": [
+      {
+        "id": "material-icon-theme",
+        "label": "Material Icon Theme",
+        "path": "./dist/material-icons.json",
+        "_watch": true
+      }
+    ]
+  },
+  "patchedDependencies": {
+    "changelogen@0.6.2": "patches/changelogen@0.6.2.patch"
+  }
+}
