@@ -115,6 +115,18 @@ export interface IProductConfiguration {
 	readonly updateUrl?: string;
 	/** Tond: manifest with the latest release, checked periodically to offer manual updates */
 	readonly tondUpdateManifestUrl?: string;
+	/**
+	 * Vacha: set in the Microsoft Store (MSIX) build. The Store delivers
+	 * updates and the package manifest registers file types and the startup
+	 * task, so the app writes nothing to the registry itself.
+	 */
+	readonly win32StorePackage?: boolean;
+	/**
+	 * Vacha: the user data folder name under %APPDATA% when it differs from
+	 * `nameShort`. The Store build sets its own so it never shares settings or
+	 * the single-instance pipe with the site installer's copy.
+	 */
+	readonly userDataFolderName?: string;
 	readonly webUrl?: string;
 	readonly webEndpointUrlTemplate?: string;
 	readonly webviewContentExternalBaseUrlTemplate?: string;

@@ -9,7 +9,7 @@ A fast, editor-only text and code editor for Windows, built by
 Vacha opens a file the way Notepad does and edits it the way a code editor
 does. Measured on a desktop PC (Ryzen 9 9950X3D, Windows 11 x64), it starts
 in about 0.7 s, and once Vacha is running a file opens in about 0.14 s
-(medians; method and raw runs under [Measuring startup](#measuring-startup)).
+(medians of 5 runs on 2026-10-23; method under [Measuring startup](#measuring-startup)).
 
 Version 1.1.0 · Windows arm64 and x64 · called Tond up to 1.0.0
 
@@ -142,9 +142,10 @@ components that no longer ship.
 ## Measuring startup
 
 Speed figures for Vacha come from `scripts\measure-startup.ps1`, run against a
-packaged build. Latest results are in
-[docs/perf/startup-summary.md](docs/perf/startup-summary.md), and every run
-is in [docs/perf/startup.jsonl](docs/perf/startup.jsonl).
+packaged build. The script writes a summary and every run to `docs\perf\`.
+Latest results (medians of 5 runs, AMD Ryzen 9 9950X3D, Windows 11 x64, warm
+file cache): cold start to an editable file 0.70 s (0.67-0.84 s); opening a
+file while Vacha is running 0.14 s (0.12-0.16 s).
 
 ```powershell
 .\scripts\release.ps1 -Arch x64 -NoZip     # or: npm run gulp -- vscode-win32-x64-min, plus the shim

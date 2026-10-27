@@ -70,7 +70,9 @@ class TondUpdateService extends Disposable implements ITondUpdateService {
 		const manifestUrl = this.productService.tondUpdateManifestUrl;
 		if (!manifestUrl) {
 			if (interactive) {
-				this.notificationService.info(localize('updateNotConfigured', "Update checks are not available in this build."));
+				this.notificationService.info(this.productService.win32StorePackage
+					? localize('updateThroughStore', "{0} updates through the Microsoft Store.", this.productService.nameShort)
+					: localize('updateNotConfigured', "Update checks are not available in this build."));
 			}
 			return;
 		}

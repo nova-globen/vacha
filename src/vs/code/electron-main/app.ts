@@ -1215,17 +1215,21 @@ export class CodeApplication extends Disposable {
 			initWindowsVersionInfo();
 		}
 
-		// Tond: icons for file types the user sent to Tond with "Choose another app"
-		repairFileTypeIcons(this.logService);
-
-		// Tond: tray icon (the only full exit) + start-at-login registration
+		// Tond: tray icon (the only full exit)
 		this.installTray();
-		this.updateStartAtLogin();
-		this._register(this.configurationService.onDidChangeConfiguration(e => {
-			if (e.affectsConfiguration('window.startAtLogin')) {
-				this.updateStartAtLogin();
-			}
-		}));
+
+		// Tond: icons for file types the user sent to Tond with "Choose another app",
+		// and the start-at-login registration. Vacha's Store package declares its
+		// file types and startup task in its manifest instead.
+		if (!this.productService.win32StorePackage) {
+			repairFileTypeIcons(this.logService);
+			this.updateStartAtLogin();
+			this._register(this.configurationService.onDidChangeConfiguration(e => {
+				if (e.affectsConfiguration('window.startAtLogin')) {
+					this.updateStartAtLogin();
+				}
+			}));
+		}
 
 		// Start to fetch shell environment (if needed) after window has opened
 		// Since this operation can take a long time, we want to warm it up while

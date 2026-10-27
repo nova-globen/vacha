@@ -14,6 +14,7 @@ import { isLaunchedFromCli } from '../../environment/node/argvHelper.js';
 import { createDecorator } from '../../instantiation/common/instantiation.js';
 import { ILifecycleMainService } from '../../lifecycle/electron-main/lifecycleMainService.js';
 import { ILogService } from '../../log/common/log.js';
+import { IProductService } from '../../product/common/productService.js';
 import { repairFileTypeIcons } from '../../native/electron-main/fileTypeIcons.js';
 import { IURLService } from '../../url/common/url.js';
 import { ICodeWindow } from '../../window/electron-main/window.js';
@@ -47,6 +48,7 @@ export class LaunchMainService implements ILaunchMainService {
 		@IWindowsMainService private readonly windowsMainService: IWindowsMainService,
 		@IURLService private readonly urlService: IURLService,
 		@IConfigurationService configurationService: IConfigurationService,
+		@IProductService private readonly productService: IProductService,
 	) { }
 
 	async start(args: NativeParsedArgs, userEnv: IProcessEnvironment): Promise<void> {
@@ -62,7 +64,7 @@ export class LaunchMainService implements ILaunchMainService {
 		}
 
 		// Tond: a type the user just sent here with "Choose another app" gets its icon
-		if (args._.length > 0) {
+		if (args._.length > 0 && !this.productService.win32StorePackage) {
 			repairFileTypeIcons(this.logService, args._);
 		}
 

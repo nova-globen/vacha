@@ -24,7 +24,9 @@ param(
 	[switch]$NoMinify,
 	# Compile the Inno Setup user installer (requires ISCC.exe on PATH or in %LOCALAPPDATA%\Programs\Inno Setup 6).
 	# Inno's licence allows commercial use with no fee; the vendor requests a paid licence (jrsoftware.org/isorder.php).
-	[switch]$Installer
+	[switch]$Installer,
+	# Also package the Microsoft Store MSIX (scripts\package-msix.ps1, placeholder identity)
+	[switch]$Msix
 )
 
 $ErrorActionPreference = 'Stop'
@@ -144,6 +146,10 @@ if ($Installer) {
 	Write-Host '-- compiling installer' -ForegroundColor Cyan
 	& $iscc "/DArch=$Arch" "/DAppVersion=$version" "/DSourceDir=$destination" "/O$(Join-Path $repoRoot 'dist')" (Join-Path $repoRoot 'build\win32\vacha-setup.iss')
 	if ($LASTEXITCODE -ne 0) { throw 'installer compilation failed' }
+}
+
+if ($Msix) {
+	& (Join-Path $PSScriptRoot 'package-msix.ps1') -Arch $Arch
 }
 
 Write-Host "== Done: $destination ==" -ForegroundColor Green

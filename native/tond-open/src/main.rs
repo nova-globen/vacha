@@ -78,6 +78,25 @@ fn main() -> ExitCode {
 		_ => {}
 	}
 
+	// The Store package's startup task cannot pass arguments, so it starts a
+	// copy of this exe named vacha_resident.exe: under that name the shim
+	// starts Vacha hidden (resident mode), or does nothing if it is running.
+	if is_resident_launch() {
+		let handle = ipc_handle(&None);
+		if connect(&handle).is_ok() {
+			log("resident launch: already running");
+			return ExitCode::SUCCESS;
+		}
+		log("resident launch: starting hidden");
+		return match launch(&[OsString::from("--start-hidden")]) {
+			Ok(()) => ExitCode::SUCCESS,
+			Err(error) => {
+				log(&format!("launch failed ({error})"));
+				ExitCode::FAILURE
+			}
+		};
+	}
+
 	let cli = Cli::parse(env::args_os().skip(1));
 
 	// A hung instance must not strand the process holding the user's double
@@ -107,6 +126,14 @@ fn main() -> ExitCode {
 			}
 		}
 	}
+}
+
+/// Whether this exe runs as `vacha_resident.exe` (see main).
+fn is_resident_launch() -> bool {
+	env::current_exe()
+		.ok()
+		.and_then(|exe| exe.file_stem().map(|stem| stem.to_string_lossy().to_ascii_lowercase()))
+		.is_some_and(|stem| stem.ends_with("_resident"))
 }
 
 // -- command line ------------------------------------------------------------
@@ -167,8 +194,9 @@ fn user_data_path(user_data_dir: &Option<String>) -> String {
 	if let Ok(portable) = env::var("VSCODE_PORTABLE") {
 		return normalize(&format!("{portable}\\user-data"));
 	}
+	let folder = user_data_folder_name();
 	if let Ok(app_data) = env::var("VSCODE_APPDATA") {
-		return normalize(&format!("{app_data}\\{NAME_SHORT}"));
+		return normalize(&format!("{app_data}\\{folder}"));
 	}
 	if let Some(dir) = user_data_dir {
 		return normalize(dir);
@@ -178,7 +206,28 @@ fn user_data_path(user_data_dir: &Option<String>) -> String {
 		let profile = env::var("USERPROFILE").unwrap_or_default();
 		format!("{profile}\\AppData\\Roaming")
 	});
-	normalize(&format!("{roaming}\\{NAME_SHORT}"))
+	normalize(&format!("{roaming}\\{folder}"))
+}
+
+/// `product.userDataFolderName ?? product.nameShort`. The Store build sets its
+/// own folder name in the product.json beside this exe, so it is read at run
+/// time; the baked-in name covers the site build and a missing file.
+fn user_data_folder_name() -> String {
+	env::current_exe()
+		.ok()
+		.and_then(|exe| std::fs::read_to_string(exe.parent()?.join("resources").join("app").join("product.json")).ok())
+		.and_then(|product| string_field(&product, "userDataFolderName"))
+		.unwrap_or_else(|| NAME_SHORT.to_string())
+}
+
+/// Minimal `"key": "value"` lookup, as in build.rs; product.json keeps the
+/// field at the top level and the value has no escapes.
+fn string_field(json: &str, key: &str) -> Option<String> {
+	let needle = format!("\"{key}\"");
+	let rest = &json[json.find(&needle)? + needle.len()..];
+	let rest = rest[rest.find(':')? + 1..].trim_start();
+	let rest = rest.strip_prefix('"')?;
+	Some(rest[..rest.find('"')?].to_string())
 }
 
 /// `path.resolve` equivalent: back-slashes, no `.`/`..` segments, no trailing

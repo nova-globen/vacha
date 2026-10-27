@@ -56,7 +56,7 @@ if (args['sandbox'] &&
 }
 
 // Set userData path before app 'ready' event
-const userDataPath = getUserDataPath(args, product.nameShort ?? 'code-oss-dev');
+const userDataPath = getUserDataPath(args, product.userDataFolderName ?? product.nameShort ?? 'code-oss-dev');
 if (process.platform === 'win32') {
 	const userDataUNCHost = getUNCHost(userDataPath);
 	if (userDataUNCHost) {
@@ -442,7 +442,8 @@ function createDefaultArgvConfigSync(argvConfigPath: string): void {
  * instead and left in place. Custom data locations are never touched.
  */
 function migrateFromTond(cliArgs: NativeParsedArgs): void {
-	if (process.platform !== 'win32' || portable.isPortable || cliArgs['user-data-dir'] || process.env['VSCODE_APPDATA'] || process.env['VSCODE_DEV']) {
+	// The Store package keeps its settings apart from the site installer's
+	if (process.platform !== 'win32' || portable.isPortable || product.win32StorePackage || cliArgs['user-data-dir'] || process.env['VSCODE_APPDATA'] || process.env['VSCODE_DEV']) {
 		return;
 	}
 
