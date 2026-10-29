@@ -105,20 +105,40 @@ jobs:
           $helpers = Join-Path $env:RUNNER_TEMP 'store-state.ps1'
           Set-Content -Path $helpers -Encoding utf8 -Value @'
           $script:api = "https://manage.devcenter.microsoft.com/v1.0/my/applications/$env:STORE_PRODUCT_ID"
+          # One API call, tried up to 3 times 20 s apart while the answer is transient (5xx, 408, 429, no answer, or
+          # not JSON, such as an HTML error page). Errors are reported in one line with the status code; a response
+          # body is never printed. A transient failure throws a TimeoutException, which Wait-StoreIdle rides out.
+          function Invoke-Store([string]$What, [hashtable]$Request) {
+            for ($try = 1; ; $try++) {
+              $reason = $null
+              try {
+                $r = Invoke-RestMethod @Request -ErrorAction Stop
+                if ($r -is [pscustomobject]) { return $r }
+                $reason = 'an answer that is not JSON'
+              } catch {
+                $code = [int]$_.Exception.Response.StatusCode
+                if ($code -and $code -lt 500 -and $code -notin 408, 429) { throw "Partner Center refused $What (HTTP $code)" }
+                $reason = if ($code) { "HTTP $code" } else { 'no answer' }
+              }
+              if ($try -ge 3) { throw [TimeoutException]::new("Partner Center gave $reason for $What, 3 times") }
+              Write-Host "Partner Center gave $reason for $What; trying again in 20 s"
+              Start-Sleep -Seconds 20
+            }
+          }
           function Get-StoreHeaders {
             $body = @{ grant_type = 'client_credentials'; client_id = $env:CLIENT; client_secret = $env:SECRET; resource = 'https://manage.devcenter.microsoft.com' }
-            $token = (Invoke-RestMethod -Method Post -Uri "https://login.microsoftonline.com/$env:TENANT/oauth2/token" -Body $body).access_token
+            $token = (Invoke-Store 'the sign-in' @{ Method = 'Post'; Uri = "https://login.microsoftonline.com/$env:TENANT/oauth2/token"; Body = $body }).access_token
             @{ Authorization = "Bearer $token" }
           }
           # Prints the last published and the pending submission (status, package versions); returns the pending one.
           function Get-StorePending {
             $h = Get-StoreHeaders
-            $app = Invoke-RestMethod -Uri $script:api -Headers $h
+            $app = Invoke-Store 'the product' @{ Uri = $script:api; Headers = $h }
             $pending = $null
             foreach ($kind in 'lastPublishedApplicationSubmission', 'pendingApplicationSubmission') {
               $id = $app.$kind.id
               if (-not $id) { Write-Host "${kind}: none"; continue }
-              $s = Invoke-RestMethod -Uri "$script:api/submissions/$id" -Headers $h
+              $s = Invoke-Store "submission $id" @{ Uri = "$script:api/submissions/$id"; Headers = $h }
               $versions = ($s.applicationPackages | Where-Object fileStatus -ne 'PendingDelete' | ForEach-Object { "$($_.version) ($($_.fileName))" }) -join ', '
               Write-Host "${kind}: $id, status $($s.status), packages: $versions"
               foreach ($e in @($s.statusDetails.errors)) { if ($e) { Write-Host "  error $($e.code): $($e.details)" } }
@@ -130,13 +150,17 @@ jobs:
           $script:replaceable = 'PendingCommit', 'CommitFailed', 'PreProcessingFailed', 'CertificationFailed', 'ReleaseFailed', 'PublishFailed', 'Canceled'
           function Wait-StoreIdle([int]$Minutes) {
             $until = (Get-Date).AddMinutes($Minutes)
+            $p = $null
             while ($true) {
-              $p = Get-StorePending
-              if (-not $p -or $p.status -in $script:replaceable) { return }
+              $seen = $null
+              try { $p = Get-StorePending; $seen = $true }
+              catch [TimeoutException] { Write-Host $_.Exception.Message }
+              if ($seen -and (-not $p -or $p.status -in $script:replaceable)) { return }
+              $state = if ($p) { "the in-flight submission $($p.id) (status $($p.status))" } else { 'the submission state' }
               if ((Get-Date) -ge $until) {
-                throw "waiting for the in-flight submission $($p.id) (status $($p.status)): it was still in flight after $Minutes minutes. Nothing was submitted; dispatch release.yml with tag $env:TAG again once Partner Center shows it finished."
+                throw "waiting for ${state}: no go after $Minutes minutes. Nothing was submitted; dispatch release.yml with tag $env:TAG again once Partner Center shows the submission finished."
               }
-              Write-Host "waiting for the in-flight submission $($p.id) (status $($p.status)); next look in 60 s"
+              Write-Host "waiting for $state; next look in 60 s"
               Start-Sleep -Seconds 60
             }
           }
