@@ -467,6 +467,15 @@ export class LifecycleMainService extends Disposable implements ILifecycleMainSe
 				window.close();
 			});
 		}));
+		// Vacha: Windows asks a running app to close for an app update (Restart
+		// Manager's "close-app", as the Microsoft Store does), a shutdown or a
+		// log-off. Hiding to the tray would refuse that and fail the update, so
+		// the resident app quits instead, through the normal quit path.
+		windowListeners.add(Event.fromNodeEventEmitter<electron.WindowSessionEndEvent>(win, 'session-end')(e => {
+			this.trace(`Lifecycle#window.on('session-end') - reasons: ${e.reasons.join(', ')}`);
+			this.quit();
+		}));
+
 		windowListeners.add(Event.fromNodeEventEmitter<electron.Event>(win, 'closed')(() => {
 			this.trace(`Lifecycle#window.on('closed') - window ID ${window.id}`);
 

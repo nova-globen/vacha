@@ -11,7 +11,7 @@ does. Measured on a desktop PC (Ryzen 9 9950X3D, Windows 11 x64), it starts
 in about 0.7 s, and once Vacha is running a file opens in about 0.14 s
 (medians of 5 runs on 2026-10-23; method under [Measuring startup](#measuring-startup)).
 
-Version 1.1.2 · Windows x64 · called Tond up to 1.0.0
+Version 1.1.3 · Windows x64 · called Tond up to 1.0.0
 
 **Website:** <https://nova-globen.se/products/vacha> · **Issues:**
 <https://nova-globen.se/products/vacha/issues>
