@@ -10,12 +10,12 @@ import { dirname, extname, join } from '../../../base/common/path.js';
 import { ILogService } from '../../log/common/log.js';
 
 /**
- * Tond: when the user picks Tond for a file type with "Choose another app",
+ * Vacha: when the user picks Vacha for a file type with "Choose another app",
  * Windows records an `<ext>_auto_file` ProgId without an icon, so those files
  * show a blank page in Explorer. The forwarder shim repairs that: each such
- * type gets the icon Windows registers for it, or Tond's icon when there is
+ * type gets the icon Windows registers for it, or Vacha's icon when there is
  * none. Without arguments every auto ProgId is checked (startup); with paths,
- * only those files' types (a file just opened through Tond).
+ * only those files' types (a file just opened through Vacha).
  */
 export function repairFileTypeIcons(logService: ILogService, paths: string[] = []): void {
 	if (!isWindows) {

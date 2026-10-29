@@ -410,8 +410,8 @@ export class RenameAction extends EditorAction {
 }
 
 registerEditorContribution(RenameController.ID, RenameController, EditorContributionInstantiation.Lazy);
-// Tond: RenameAction not registered - no rename provider exists (frees F2).
-// Tond: the rename-input commands (acceptRenameInput, acceptRenameInputWithPreview,
+// Vacha: RenameAction not registered - no rename provider exists (frees F2).
+// Vacha: the rename-input commands (acceptRenameInput, acceptRenameInputWithPreview,
 // cancelRenameInput, focusNext/PreviousRenameSuggestion) are not registered either —
 // renameInputVisible can never become true without RenameAction.
 
@@ -435,4 +435,4 @@ registerModelAndPositionCommand('_executePrepareRename', async function (accesso
 });
 
 
-// Tond: editor.rename.enablePreview removed - no rename provider exists.
+// Vacha: editor.rename.enablePreview removed - no rename provider exists.

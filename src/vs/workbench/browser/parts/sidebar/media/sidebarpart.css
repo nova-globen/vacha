@@ -8,7 +8,7 @@
 	visibility: hidden !important;
 }
 
-/* Tond: the sidebar has no title area (sidebarPart.ts `hasTitle: false`), so */
+/* Vacha: the sidebar has no title area (sidebarPart.ts `hasTitle: false`), so */
 /* the progress bar sits at the very top of the content instead of below a */
 /* 35px header. */
 .monaco-workbench .part.sidebar > .content > .monaco-progress-container {

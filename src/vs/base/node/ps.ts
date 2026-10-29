@@ -111,7 +111,7 @@ export function listProcesses(rootPid: number): Promise<ProcessItem> {
 				}
 			};
 
-			// Tond: read the process table through CIM instead of the native
+			// Vacha: read the process table through CIM instead of the native
 			// windows-process-tree module (no CPU load figures; memory is the working set)
 			const script = 'Get-CimInstance Win32_Process | Select-Object ProcessId,ParentProcessId,CommandLine,WorkingSetSize | ConvertTo-Json -Compress';
 			exec(`powershell.exe -NoProfile -NonInteractive -Command "${script}"`, { maxBuffer: 64 * 1024 * 1024, windowsHide: true }, (err, stdout) => {

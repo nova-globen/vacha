@@ -19,7 +19,7 @@ export class SharedProcessService extends Disposable implements ISharedProcessSe
 
 	declare readonly _serviceBrand: undefined;
 
-	// Tond: connecting is what SPAWNS the shared process. Nothing on a normal
+	// Vacha: connecting is what SPAWNS the shared process. Nothing on a normal
 	// boot needs it, so the connection is established on the first channel CALL
 	// or raw connection instead of eagerly from the constructor. Event listens
 	// and channel registrations queue up and attach if a call ever brings the
@@ -76,7 +76,7 @@ export class SharedProcessService extends Disposable implements ISharedProcessSe
 	getChannel(channelName: string): IChannel {
 		const that = this;
 
-		// Tond: deliberately not `getDelayedChannel(...)` because that would
+		// Vacha: deliberately not `getDelayedChannel(...)` because that would
 		// require the connection promise up front. Only an actual call/listen
 		// brings the shared process up.
 		return {

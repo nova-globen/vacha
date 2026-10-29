@@ -126,7 +126,7 @@ export class RequestService extends AbstractRequestService implements IRequestSe
 		return undefined; // currently not implemented in node
 	}
 
-	// Tond: no Kerberos proxy auth and no system-certificate loading; both
+	// Vacha: no Kerberos proxy auth and no system-certificate loading; both
 	// served the extension host (the kerberos and @vscode/proxy-agent
 	// modules are gone). Chromium-network requests use the OS store anyway.
 	async lookupKerberosAuthorization(urlStr: string): Promise<string | undefined> {

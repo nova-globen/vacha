@@ -15,7 +15,7 @@
 	flex: 1;
 }
 
-/* Tond: `flex: 1` implies `flex-shrink: 1`; in fit mode the label has to */
+/* Vacha: `flex: 1` implies `flex-shrink: 1`; in fit mode the label has to */
 /* hold its full width so the strip scrolls rather than the title ellipsizing. */
 .monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab.sizing-fit .tab-label {
 	flex: 0 0 auto;

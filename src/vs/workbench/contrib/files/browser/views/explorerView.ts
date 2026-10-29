@@ -458,7 +458,7 @@ export class ExplorerView extends ViewPane implements IExplorerView {
 			return configValue;
 		};
 
-		// Tond: explorer.fileNesting.* is unregistered, so `fileNesting` is absent from the explorer config.
+		// Vacha: explorer.fileNesting.* is unregistered, so `fileNesting` is absent from the explorer config.
 		const getFileNestingSettings = (item?: ExplorerItem) => this.configurationService.getValue<IFilesConfiguration>({ resource: item?.root.resource }).explorer?.fileNesting;
 
 		this.tree = this.instantiationService.createInstance(WorkbenchCompressibleAsyncDataTree<ExplorerItem | ExplorerItem[], ExplorerItem, FuzzyScore>, 'FileExplorer', container, new ExplorerDelegate(), new ExplorerCompressionDelegate(), [this.renderer],

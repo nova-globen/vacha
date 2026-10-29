@@ -161,7 +161,7 @@ abstract class BaseOpenRecentAction extends Action2 {
 
 		let keyMods: IKeyMods | undefined;
 
-		// Tond: files only — recent folders/workspaces are not offered.
+		// Vacha: files only — recent folders/workspaces are not offered.
 		const fileSeparator: IQuickPickSeparator = { type: 'separator', label: localize('files', "files") };
 		const picks = [fileSeparator, ...filePicks];
 
@@ -455,7 +455,7 @@ KeybindingsRegistry.registerCommandAndKeybindingRule({
 	mac: { primary: KeyMod.WinCtrl | KeyMod.Shift | KeyCode.KeyR }
 });
 
-// Tond: workbench.action.toggleConfirmBeforeClose removed with the window.confirmBeforeClose setting.
+// Vacha: workbench.action.toggleConfirmBeforeClose removed with the window.confirmBeforeClose setting.
 
 // --- Menu Registration
 

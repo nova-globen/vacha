@@ -60,7 +60,7 @@ async function npmInstallAsync(dir: string, opts?: child_process.SpawnOptions): 
 		shell: true,
 	};
 
-	// Tond: npm 11 passes a user-level `allow-scripts` on to child installs
+	// Vacha: npm 11 passes a user-level `allow-scripts` on to child installs
 	// as npm_config_allow_scripts, then rejects it there (EALLOWSCRIPTS)
 	delete finalOpts.env?.['npm_config_allow_scripts'];
 
@@ -197,7 +197,7 @@ function ensureAgentHarnessLink(sourceRelativePath: string, linkPath: string): '
 
 	const sourcePath = path.resolve(path.dirname(linkPath), sourceRelativePath);
 	if (!fs.existsSync(sourcePath)) {
-		// agent harness files are maintainer-local and absent in clones/CI
+		// the link's target is not part of the repository (absent in clones and CI)
 		return 'missing';
 	}
 	const isDirectory = fs.statSync(sourcePath).isDirectory();

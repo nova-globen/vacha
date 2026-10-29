@@ -20,7 +20,7 @@ export interface IJsonStorageDatabaseLoggingOptions {
 }
 
 /**
- * Tond: the storage database is a JSON file holding one object of string
+ * Vacha: the storage database is a JSON file holding one object of string
  * keys and values, replacing the native @vscode/sqlite3 database.
  *
  * - The whole table is held in memory; every update rewrites the file

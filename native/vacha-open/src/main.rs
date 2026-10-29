@@ -28,8 +28,8 @@ use wire::{
 	RESPONSE_INITIALIZE, RESPONSE_PROMISE_SUCCESS,
 };
 
-const VERSION: &str = env!("TOND_VERSION");
-const NAME_SHORT: &str = env!("TOND_NAME_SHORT");
+const VERSION: &str = env!("VACHA_VERSION");
+const NAME_SHORT: &str = env!("VACHA_NAME_SHORT");
 
 /// If the running instance has not answered by now something is wrong with it;
 /// give up rather than leave the user staring at nothing.
@@ -377,10 +377,10 @@ fn launch(args: &[OsString]) -> io::Result<()> {
 
 // -- diagnostics -------------------------------------------------------------
 
-/// Off unless TOND_OPEN_LOG names a file; the shim is a windowed binary with
+/// Off unless VACHA_OPEN_LOG names a file; the shim is a windowed binary with
 /// nowhere to print, and this is how the open latency gets measured.
 fn log(message: &str) {
-	let Ok(path) = env::var("TOND_OPEN_LOG") else {
+	let Ok(path) = env::var("VACHA_OPEN_LOG") else {
 		return;
 	};
 	if let Ok(mut file) = OpenOptions::new()

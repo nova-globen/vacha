@@ -187,7 +187,7 @@ const tasks = compilations.map(function (tsconfigFile) {
 	return { transpileTask, compileTask, watchTask };
 });
 
-// Tond: with no compiled extensions left, gulp.parallel() of an empty list
+// Vacha: with no compiled extensions left, gulp.parallel() of an empty list
 // is invalid — substitute a no-op.
 const noopTask = async () => { };
 

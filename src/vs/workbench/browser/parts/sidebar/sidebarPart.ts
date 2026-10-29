@@ -86,7 +86,7 @@ export class SidebarPart extends AbstractPaneCompositePart {
 	) {
 		super(
 			Parts.SIDEBAR_PART,
-			// Tond: no container title. There is one view container ("Explorer")
+			// Vacha: no container title. There is one view container ("Explorer")
 			// holding Open Editors + Search, so its header only ever repeated a
 			// word and cost 35px; the pane headers carry the labels. `hasTitle:
 			// false` makes PartLayout hand the height to the content, which a CSS

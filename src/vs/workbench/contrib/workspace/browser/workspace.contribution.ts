@@ -737,8 +737,8 @@ Registry.as<IEditorPaneRegistry>(EditorExtensions.EditorPane).registerEditorPane
  * Actions
  */
 
-// Tond: security.workspace.trust.* settings removed - workspace trust is permanently off (no extensions, no tasks, no debug); the trust services stay and short-circuit to trusted.
-// Tond: workbench.trust.configure / workbench.trust.manage not registered — their
+// Vacha: security.workspace.trust.* settings removed - workspace trust is permanently off (no extensions, no tasks, no debug); the trust services stay and short-circuit to trusted.
+// Vacha: workbench.trust.configure / workbench.trust.manage not registered — their
 // preconditions gate on the unregistered trust settings and can never be true.
 
 class WorkspaceTrustTelemetryContribution extends Disposable implements IWorkbenchContribution {

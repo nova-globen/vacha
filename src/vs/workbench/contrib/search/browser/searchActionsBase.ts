@@ -66,7 +66,7 @@ function hasDownstreamMatch(elements: RenderableMatch[], focusElement: Renderabl
 
 }
 
-// Tond: the include/exclude arguments are gone with the query-details UI —
+// Vacha: the include/exclude arguments are gone with the query-details UI —
 // search is always scoped to the active file.
 export interface IFindInFilesArgs {
 	query?: string;
@@ -106,7 +106,7 @@ export async function findInFilesCommand(accessor: ServicesAccessor, _args: IFin
 		}
 	}
 
-	// Tond: always the Search view — there is no Search Editor in this build.
+	// Vacha: always the Search view — there is no Search Editor in this build.
 	openSearchView(viewsService, false).then(openedView => {
 		if (openedView) {
 			const searchAndReplaceWidget = openedView.searchAndReplaceWidget;

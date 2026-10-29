@@ -25,7 +25,7 @@ export const PICK_WORKSPACE_FOLDER_COMMAND_ID = '_workbench.pickWorkspaceFolder'
 
 // Command registration
 
-// Tond: the folder/new-window pickers (openFileFolderInNewWindow, openFolderInNewWindow,
+// Vacha: the folder/new-window pickers (openFileFolderInNewWindow, openFolderInNewWindow,
 // openFileInNewWindow, openWorkspaceInNewWindow) and the root-folder editors
 // (addRootFolder, setRootFolder) are not registered — no folders, no workspaces,
 // single window.

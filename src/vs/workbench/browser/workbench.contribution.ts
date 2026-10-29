@@ -430,7 +430,7 @@ const registry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Con
 				'default': false,
 				'description': localize('perEditorGroup', "Controls if the limit of maximum opened editors should apply per editor group or across all editor groups.")
 			},
-			// Tond: workbench.localHistory.* removed and the working-copy history tracker is no longer
+			// Vacha: workbench.localHistory.* removed and the working-copy history tracker is no longer
 			// registered - there is no Timeline view or local-history command to view or restore entries.
 			'workbench.commandPalette.history': {
 				'type': 'number',
@@ -443,7 +443,7 @@ const registry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Con
 				'description': localize('preserveInput', "Controls whether the last typed input to the command palette should be restored when opening it the next time."),
 				'default': false
 			},
-			// Tond: command palette chat / natural-language settings removed (no chat, no NL search provider).
+			// Vacha: command palette chat / natural-language settings removed (no chat, no NL search provider).
 			'workbench.quickOpen.closeOnFocusLost': {
 				'type': 'boolean',
 				'description': localize('closeOnFocusLost', "Controls whether Quick Open should close automatically once it loses focus."),
@@ -510,7 +510,7 @@ const registry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Con
 			[LayoutSettings.ACTIVITY_BAR_LOCATION]: {
 				'type': 'string',
 				'enum': ['default', 'top', 'bottom', 'hidden'],
-				// Tond: the sidebar is a single Explorer pane, so there is only
+				// Vacha: the sidebar is a single Explorer pane, so there is only
 				// one container to switch to — hide the activity bar entirely
 				// and reclaim the space.
 				'default': 'hidden',
@@ -523,13 +523,13 @@ const registry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Con
 				],
 				agentsWindow: { default: 'default', readOnly: true },
 			},
-			// Tond: activity bar autoHide/compact/iconClickBehavior, panel and secondary side bar settings removed - those parts can never hold content (activityBar.location is kept).
+			// Vacha: activity bar autoHide/compact/iconClickBehavior, panel and secondary side bar settings removed - those parts can never hold content (activityBar.location is kept).
 			'workbench.view.alwaysShowHeaderActions': {
 				'type': 'boolean',
 				'default': false,
 				'description': localize('viewVisibility', "Controls the visibility of view header actions. View header actions may either be always visible, or only visible when that view is focused or hovered over.")
 			},
-			// Tond: workbench.view.showQuietly removed (no extensions, no Output view).
+			// Vacha: workbench.view.showQuietly removed (no extensions, no Output view).
 			'workbench.fontAliasing': {
 				'type': 'string',
 				'enum': ['default', 'antialiased', 'none', 'auto'],
@@ -555,7 +555,7 @@ const registry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Con
 				'default': 'ui',
 				'scope': ConfigurationScope.WINDOW
 			},
-			// Tond: workbench.settings.showAISearchToggle removed (no AI search backend).
+			// Vacha: workbench.settings.showAISearchToggle removed (no AI search backend).
 			'workbench.hover.delay': {
 				'type': 'number',
 				'description': localize('workbench.hover.delay', "Controls the delay in milliseconds after which the hover is shown for workbench items (ex. some extension provided tree view items). Already visible items may require a refresh before reflecting this setting change."),
@@ -604,7 +604,7 @@ const registry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Con
 			},
 			[LayoutSettings.LAYOUT_ACTIONS]: {
 				'type': 'boolean',
-				// Tond: the title-bar layout buttons are off — the layout is fixed.
+				// Vacha: the title-bar layout buttons are off — the layout is fixed.
 				'default': false,
 				'markdownDescription': isWeb ?
 					localize('layoutControlEnabledWeb', "Controls whether the layout control in the title bar is shown.") :
@@ -686,7 +686,7 @@ const registry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Con
 			},
 			[LayoutSettings.COMMAND_CENTER]: {
 				type: 'boolean',
-				default: false, // Tond: plain window title by default
+				default: false, // Vacha: plain window title by default
 				markdownDescription: isWeb ?
 					localize('window.commandCenterWeb', "Show command launcher together with the window title.") :
 					localize({ key: 'window.commandCenter', comment: ['{0}, {1} is a placeholder for a setting identifier.'] }, "Show command launcher together with the window title. This setting only has an effect when {0} is not set to {1}.", '`#window.customTitleBarVisibility#`', '`never`'),
@@ -734,7 +734,7 @@ const registry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Con
 	// Dynamic Window Configuration
 	registerWorkbenchContribution2(DynamicWindowConfiguration.ID, DynamicWindowConfiguration, WorkbenchPhase.Eventually);
 
-	// Tond: problems.visibility removed - no markers UI and no diagnostics providers.
+	// Vacha: problems.visibility removed - no markers UI and no diagnostics providers.
 
 })();
 

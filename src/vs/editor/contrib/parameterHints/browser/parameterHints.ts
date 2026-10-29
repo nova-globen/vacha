@@ -94,7 +94,7 @@ export class TriggerParameterHintsAction extends EditorAction {
 }
 
 registerEditorContribution(ParameterHintsController.ID, ParameterHintsController, EditorContributionInstantiation.BeforeFirstInteraction);
-// Tond: TriggerParameterHintsAction not registered - no signature help provider exists (frees Ctrl+Shift+Space).
+// Vacha: TriggerParameterHintsAction not registered - no signature help provider exists (frees Ctrl+Shift+Space).
 
-// Tond: closeParameterHints / showPrev/NextParameterHint not registered — the
+// Vacha: closeParameterHints / showPrev/NextParameterHint not registered — the
 // parameterHintsVisible context can never become true (no signature providers).

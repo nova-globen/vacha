@@ -173,10 +173,10 @@ export class SearchService extends Disposable implements ISearchService {
 	private doSearch(query: ISearchQuery, token?: CancellationToken, onProgress?: (item: ISearchProgressItem) => void): Promise<ISearchComplete> {
 		this.logService.trace('SearchService#search', JSON.stringify(query));
 
-		// Tond: text search only ever targets the active file, which is open,
+		// Vacha: text search only ever targets the active file, which is open,
 		// so getOpenEditorResults() has already searched its model; a disk
 		// search would re-read the same file (and needs the ripgrep binary,
-		// which Tond does not ship)
+		// which Vacha does not ship)
 		if (query.type === QueryType.Text) {
 			return Promise.resolve({ limitHit: false, results: [], messages: [] });
 		}

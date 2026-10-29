@@ -25,4 +25,4 @@ registerAction2(ToggleAlwaysShowInlineSuggestionToolbar);
 registerEditorAction(DevExtractReproSample);
 
 HoverParticipantRegistry.register(InlineCompletionsHoverParticipant);
-// Tond: InlineCompletionsAccessibleView not registered - no inline-completion provider can exist.
+// Vacha: InlineCompletionsAccessibleView not registered - no inline-completion provider can exist.

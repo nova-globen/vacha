@@ -8,5 +8,5 @@ import { LoggerGroup } from '../../../../platform/log/common/log.js';
 
 export const windowLogId = 'rendererLog';
 export const windowLogGroup: LoggerGroup = { id: windowLogId, name: localize('window', "Window") };
-// Tond: `showWindowLogActionId` removed — contrib/logs (which registered the
+// Vacha: `showWindowLogActionId` removed — contrib/logs (which registered the
 // command) is not part of this build.

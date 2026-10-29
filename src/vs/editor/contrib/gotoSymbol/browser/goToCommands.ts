@@ -38,7 +38,7 @@ import { IWordAtPosition } from '../../../common/core/wordHelper.js';
 import { ILanguageFeaturesService } from '../../../common/services/languageFeatures.js';
 import { Iterable } from '../../../../base/common/iterator.js';
 
-// Tond: the editor-context "Peek" submenu is not registered - every item that fed it is gone.
+// Vacha: the editor-context "Peek" submenu is not registered - every item that fed it is gone.
 
 export interface SymbolNavigationActionConfig {
 	openToSide: boolean;
@@ -263,7 +263,7 @@ export class DefinitionAction extends SymbolNavigationAction {
 	}
 }
 
-// Tond: the Go To / Peek symbol actions (revealDefinition F12, revealDefinitionAside Ctrl+K F12,
+// Vacha: the Go To / Peek symbol actions (revealDefinition F12, revealDefinitionAside Ctrl+K F12,
 // peekDefinition Alt+F12, goToReferences Shift+F12, goToImplementation Ctrl+F12, peekImplementation,
 // and the declaration / type-definition siblings) are not registered - none of those providers exist,
 // so those chords are free. The base classes stay: DefinitionAction is used by goToDefinitionAtPosition

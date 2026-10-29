@@ -13,7 +13,7 @@ export class ReportExtensionIssueAction extends Action {
 	private static readonly _label = nls.localize('reportExtensionIssue', "Report Issue");
 
 	constructor(
-		extension: IExtensionDescription, // Tond: issue reporter removed; action stays constructible but disabled
+		extension: IExtensionDescription, // Vacha: issue reporter removed; action stays constructible but disabled
 	) {
 		super(ReportExtensionIssueAction._id, ReportExtensionIssueAction._label, 'extension-action report-issue');
 
@@ -21,6 +21,6 @@ export class ReportExtensionIssueAction extends Action {
 	}
 
 	override async run(): Promise<void> {
-		// Tond: issue reporter removed
+		// Vacha: issue reporter removed
 	}
 }

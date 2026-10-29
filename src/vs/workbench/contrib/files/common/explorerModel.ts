@@ -310,7 +310,7 @@ export class ExplorerItem {
 	}
 
 	fetchChildren(sortOrder: SortOrder): ExplorerItem[] | Promise<ExplorerItem[]> {
-		// Tond: explorer.fileNesting.* is unregistered, so `fileNesting` is absent from the explorer config.
+		// Vacha: explorer.fileNesting.* is unregistered, so `fileNesting` is absent from the explorer config.
 		const nestingConfig = this.configService.getValue<IFilesConfiguration>({ resource: this.root.resource }).explorer?.fileNesting;
 
 		// fast path when the children can be resolved sync

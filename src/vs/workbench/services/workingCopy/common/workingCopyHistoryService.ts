@@ -899,5 +899,5 @@ export class NativeWorkingCopyHistoryService extends WorkingCopyHistoryService {
 	}
 }
 
-// Tond: the WorkingCopyHistoryTracker is NOT registered - there is no Timeline view and no
+// Vacha: the WorkingCopyHistoryTracker is NOT registered - there is no Timeline view and no
 // local-history commands, so writing a shadow copy of every file on every save is pure IO cost.

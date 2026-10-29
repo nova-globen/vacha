@@ -69,7 +69,7 @@ Remove-Item (Join-Path $staging 'Vacha.VisualElementsManifest.xml') -Force -Erro
 Write-Host '-- Store variant (product.json)' -ForegroundColor Cyan
 $productPath = Join-Path $staging 'resources\app\product.json'
 $product = Get-Content $productPath -Raw | ConvertFrom-Json
-$product.PSObject.Properties.Remove('tondUpdateManifestUrl')
+$product.PSObject.Properties.Remove('updateManifestUrl')
 $product | Add-Member -Force -NotePropertyName win32StorePackage -NotePropertyValue $true
 # Its own settings folders, single-instance pipe and mutex: a site install
 # beside it must not receive its files or share its profile

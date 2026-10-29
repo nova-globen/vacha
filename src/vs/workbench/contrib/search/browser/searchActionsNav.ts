@@ -21,7 +21,7 @@ import { category, getSearchView, openSearchView } from './searchActionsBase.js'
 import { CONTEXT_ACCESSIBILITY_MODE_ENABLED } from '../../../../platform/accessibility/common/accessibility.js';
 import { FileMatchOrMatch, RenderableMatch, ISearchResult, isSearchTreeFolderMatch } from './searchTreeModel/searchTreeCommon.js';
 
-// Tond: ToggleQueryDetailsAction (Ctrl+Shift+J) is gone — the include/exclude
+// Vacha: ToggleQueryDetailsAction (Ctrl+Shift+J) is gone — the include/exclude
 // 'query details' UI does not exist in the active-file-scoped search pane.
 
 registerAction2(class CloseReplaceAction extends Action2 {

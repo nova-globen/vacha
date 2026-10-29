@@ -38,7 +38,7 @@ export const OpenEditorsReadonlyEditorContext = new RawContextKey<boolean>('read
 export const OpenEditorsSelectedFileOrUntitledContext = new RawContextKey<boolean>('openEditorsSelectedFileOrUntitled', true);
 export const ResourceSelectedForCompareContext = new RawContextKey<boolean>('resourceSelectedForCompare', false);
 
-// Tond: removeRootFolder and the compressed-folder command ids removed with their commands.
+// Vacha: removeRootFolder and the compressed-folder command ids removed with their commands.
 
 export const NEW_UNTITLED_FILE_COMMAND_ID = 'workbench.action.files.newUntitledFile';
 export const NEW_UNTITLED_FILE_LABEL = nls.localize2('newUntitledFile', "New Untitled Text File");

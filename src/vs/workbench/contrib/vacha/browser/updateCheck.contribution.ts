@@ -18,7 +18,7 @@ import { asJson, IRequestService } from '../../../../platform/request/common/req
 import { IStorageService, StorageScope, StorageTarget } from '../../../../platform/storage/common/storage.js';
 import { IWorkbenchContribution, WorkbenchPhase, registerWorkbenchContribution2 } from '../../../common/contributions.js';
 
-interface ITondRelease {
+interface IVachaRelease {
 	readonly version?: string;
 	readonly url?: string;
 	readonly notes?: string;
@@ -36,9 +36,9 @@ interface ICheckOptions {
 	readonly interactive?: boolean;
 }
 
-const ITondUpdateService = createDecorator<ITondUpdateService>('tondUpdateService');
+const IVachaUpdateService = createDecorator<IVachaUpdateService>('vachaUpdateService');
 
-interface ITondUpdateService {
+interface IVachaUpdateService {
 	readonly _serviceBrand: undefined;
 	checkForUpdates(options?: ICheckOptions): Promise<void>;
 }
@@ -50,7 +50,7 @@ interface ITondUpdateService {
  * runs at most once a day; the Help > Check for Updates command forces it and
  * reports the result either way.
  */
-class TondUpdateService extends Disposable implements ITondUpdateService {
+class VachaUpdateService extends Disposable implements IVachaUpdateService {
 
 	declare readonly _serviceBrand: undefined;
 
@@ -67,7 +67,7 @@ class TondUpdateService extends Disposable implements ITondUpdateService {
 	async checkForUpdates(options: ICheckOptions = {}): Promise<void> {
 		const { force, interactive } = options;
 
-		const manifestUrl = this.productService.tondUpdateManifestUrl;
+		const manifestUrl = this.productService.updateManifestUrl;
 		if (!manifestUrl) {
 			if (interactive) {
 				this.notificationService.info(this.productService.win32StorePackage
@@ -84,10 +84,10 @@ class TondUpdateService extends Disposable implements ITondUpdateService {
 			}
 		}
 
-		let release: ITondRelease | null;
+		let release: IVachaRelease | null;
 		try {
-			const context = await this.requestService.request({ type: 'GET', url: manifestUrl, callSite: 'tondUpdateCheck' }, CancellationToken.None);
-			const json = await asJson<ITondRelease | ITondRelease[]>(context);
+			const context = await this.requestService.request({ type: 'GET', url: manifestUrl, callSite: 'vachaUpdateCheck' }, CancellationToken.None);
+			const json = await asJson<IVachaRelease | IVachaRelease[]>(context);
 			release = Array.isArray(json) ? json[0] : json;
 		} catch {
 			// offline or endpoint not live yet — try again next interval
@@ -146,14 +146,14 @@ class TondUpdateService extends Disposable implements ITondUpdateService {
 	}
 }
 
-registerSingleton(ITondUpdateService, TondUpdateService, InstantiationType.Delayed);
+registerSingleton(IVachaUpdateService, VachaUpdateService, InstantiationType.Delayed);
 
 /** Fires the throttled automatic check shortly after startup. */
 class UpdateCheckContribution implements IWorkbenchContribution {
 
-	static readonly ID = 'workbench.contrib.tondUpdateCheck';
+	static readonly ID = 'workbench.contrib.vachaUpdateCheck';
 
-	constructor(@ITondUpdateService updateService: ITondUpdateService) {
+	constructor(@IVachaUpdateService updateService: IVachaUpdateService) {
 		updateService.checkForUpdates();
 	}
 }
@@ -176,6 +176,6 @@ registerAction2(class CheckForUpdatesAction extends Action2 {
 	}
 
 	async run(accessor: ServicesAccessor): Promise<void> {
-		await accessor.get(ITondUpdateService).checkForUpdates({ force: true, interactive: true });
+		await accessor.get(IVachaUpdateService).checkForUpdates({ force: true, interactive: true });
 	}
 });

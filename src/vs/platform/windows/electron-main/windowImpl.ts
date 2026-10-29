@@ -140,7 +140,7 @@ export abstract class BaseWindow extends Disposable implements IBaseWindow {
 	protected _lastFocusTime = Date.now(); // window is shown on creation so take current time
 	get lastFocusTime(): number { return this._lastFocusTime; }
 
-	// Tond: a `--start-hidden` launch (the login item) keeps the window invisible
+	// Vacha: a `--start-hidden` launch (the login item) keeps the window invisible
 	// until something asks for it — a forwarded file, the tray, a second launch.
 	// `maximize()` on Windows would show the window, so a saved maximized state
 	// is deferred until the reveal.
@@ -312,7 +312,7 @@ export abstract class BaseWindow extends Disposable implements IBaseWindow {
 
 		if (state.mode === WindowMode.Maximized || state.mode === WindowMode.Fullscreen) {
 
-			// Tond: on a hidden (resident) launch, maximize() would show the
+			// Vacha: on a hidden (resident) launch, maximize() would show the
 			// window. Remember the wish and apply it on reveal instead.
 			if (this.startHidden) {
 				this.pendingMaximize = true;
@@ -418,7 +418,7 @@ export abstract class BaseWindow extends Disposable implements IBaseWindow {
 			return;
 		}
 
-		// Tond: the window may be resident-hidden (started with `--start-hidden`
+		// Vacha: the window may be resident-hidden (started with `--start-hidden`
 		// or hidden by closing); focusing it is the signal to bring it back.
 		this.revealIfHidden();
 
@@ -890,7 +890,7 @@ export class CodeWindow extends BaseWindow implements ICodeWindow {
 		// Handle Workspace events
 		this._register(this.workspacesManagementMainService.onDidDeleteUntitledWorkspace(e => this.onDidDeleteUntitledWorkspace(e)));
 
-		// Tond: no extension gallery in `product.json`, so there is nothing to
+		// Vacha: no extension gallery in `product.json`, so there is nothing to
 		// inject marketplace headers for — the `onBeforeSendHeaders` hook and the
 		// header resolution it fed are gone.
 	}

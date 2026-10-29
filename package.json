@@ -1,6 +1,6 @@
 {
   "name": "code-oss-dev",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "distro": "a78eb8284ce7699e371b36071b579f557406f153",
   "author": {
     "name": "Microsoft Corporation"
@@ -237,9 +237,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/vscode.git"
+    "url": "https://github.com/nova-globen/vacha.git"
   },
   "bugs": {
-    "url": "https://github.com/microsoft/vscode/issues"
+    "url": "https://nova-globen.se/products/vacha/issues"
   }
 }

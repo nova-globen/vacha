@@ -221,7 +221,7 @@ const tokenColorCustomizationConfiguration: IConfigurationNode = {
 	order: 7.2,
 	type: 'object',
 	properties: {
-		// Tond: editor.semanticTokenColorCustomizations removed - no semantic tokens provider exists.
+		// Vacha: editor.semanticTokenColorCustomizations removed - no semantic tokens provider exists.
 		[ThemeSettings.TOKEN_COLOR_CUSTOMIZATIONS]: tokenColorCustomizationSchema
 	}
 };

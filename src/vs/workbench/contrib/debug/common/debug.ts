@@ -836,7 +836,7 @@ export interface IConfigPresentation {
 	order?: number;
 }
 
-// Tond: local stand-in for the removed tasks subsystem's ITaskIdentifier
+// Vacha: local stand-in for the removed tasks subsystem's ITaskIdentifier
 interface ITaskIdentifier {
 	type: string;
 	[name: string]: unknown;

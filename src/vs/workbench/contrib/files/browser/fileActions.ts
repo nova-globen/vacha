@@ -648,7 +648,7 @@ export class FocusFilesExplorer extends Action2 {
 	}
 }
 
-// Tond: ShowActiveFileInExplorer removed — its label promises a file tree that
+// Vacha: ShowActiveFileInExplorer removed — its label promises a file tree that
 // does not exist (revealInExplorer itself stays and reveals in Open Editors).
 
 export class OpenActiveFileInEmptyWorkspace extends Action2 {
@@ -863,7 +863,7 @@ class ClipboardContentProvider implements ITextModelContentProvider {
 	}
 }
 
-// Tond: the explorer.newFile / explorer.newFolder commands are not registered —
+// Vacha: the explorer.newFile / explorer.newFolder commands are not registered —
 // they create items in the file tree, which does not exist.
 
 export const renameHandler = async (accessor: ServicesAccessor) => {

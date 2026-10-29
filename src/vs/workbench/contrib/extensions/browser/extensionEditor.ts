@@ -742,7 +742,7 @@ export class ExtensionEditor extends EditorPane {
 				} else if (matchesScheme(link, Schemas.command) && extension.type === ExtensionType.System) {
 					this.openerService.open(link, {
 						allowCommands: [
-							'update.showCurrentReleaseNotes' // Tond: upstream update contrib removed; command no longer exists
+							'update.showCurrentReleaseNotes' // Vacha: upstream update contrib removed; command no longer exists
 						]
 					});
 				}

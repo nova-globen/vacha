@@ -64,7 +64,7 @@ export class WorkbenchExtensionGalleryManifestService extends ExtensionGalleryMa
 			storageService,
 			telemetryService);
 
-		// Tond: without a gallery in `product.json` the manifest is always `null`,
+		// Vacha: without a gallery in `product.json` the manifest is always `null`,
 		// so this eager RPC only served to spawn the shared process on every boot.
 		if (productService.extensionsGallery) {
 			const channels = [sharedProcessService.getChannel('extensionGalleryManifest')];

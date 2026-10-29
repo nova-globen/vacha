@@ -89,7 +89,7 @@ class MarkdownPreviewEditorPane extends EditorPane {
 	protected createEditor(parent: HTMLElement): void {
 		// full width so the scrollbar sits at the right edge; the workbench
 		// disables selection by default, the preview is text to copy from
-		this.contentElement = dom.append(parent, dom.$('.tond-md-preview-content'));
+		this.contentElement = dom.append(parent, dom.$('.vacha-md-preview-content'));
 		this.contentElement.tabIndex = 0;
 		this.contentElement.style.width = '100%';
 		this.contentElement.style.height = '100%';

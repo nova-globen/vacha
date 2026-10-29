@@ -1082,7 +1082,7 @@ export class NativeWindow extends BaseWindow {
 			};
 			editors.push(diffEditor);
 		} else {
-			// Tond: forwarded files must end up focused even when this window was
+			// Vacha: forwarded files must end up focused even when this window was
 			// resident-hidden a moment ago. The reveal and this open race — the
 			// focus restore after `webContents.focus()` can otherwise win over the
 			// default activation. Only the first editor matters: `openEditors`

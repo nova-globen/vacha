@@ -144,7 +144,7 @@ export function defaultBrowserWindowOptions(accessor: ServicesAccessor, windowSt
 		minWidth: WindowMinimumSize.WIDTH,
 		minHeight: WindowMinimumSize.HEIGHT,
 		title: productService.nameLong,
-		// Tond: a `--start-hidden` launch (the login item) creates the window but
+		// Vacha: a `--start-hidden` launch (the login item) creates the window but
 		// never shows it; the first open/tray click reveals it.
 		show: !environmentMainService.args['start-hidden'] && windowState.mode !== WindowMode.Maximized && windowState.mode !== WindowMode.Fullscreen, // reduce flicker by showing later
 		x: windowState.x,

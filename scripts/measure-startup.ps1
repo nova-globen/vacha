@@ -68,7 +68,7 @@ $shim = Join-Path $appDir 'vacha_open.exe'
 if ($Mode -ne 'Cold' -and -not (Test-Path $shim)) { throw "vacha_open.exe not found next to $Exe" }
 
 $sessionId = [guid]::NewGuid().ToString('n').Substring(0, 12)
-$scratch = Join-Path ([IO.Path]::GetTempPath()) "tond-bench-$sessionId"
+$scratch = Join-Path ([IO.Path]::GetTempPath()) "vacha-bench-$sessionId"
 $userDataDir = Join-Path $scratch 'user-data'
 $filesDir = Join-Path $scratch 'files'
 New-Item -ItemType Directory -Force $userDataDir, $filesDir | Out-Null
@@ -292,7 +292,7 @@ new Promise(resolve => {
 }
 
 function New-BenchFile([string]$name) {
-	$token = "tondbench$([guid]::NewGuid().ToString('n'))"
+	$token = "vachabench$([guid]::NewGuid().ToString('n'))"
 	$path = Join-Path $filesDir $name
 	Set-Content -Path $path -Value "$token`r`nVacha startup benchmark file.`r`n" -NoNewline -Encoding utf8NoBOM
 	@{ path = $path; name = $name; token = $token }
@@ -408,12 +408,12 @@ try {
 
 		for ($i = 1; $i -le $Runs; $i++) {
 			$file = New-BenchFile "warm-$i.txt"
-			$cdp.Evaluate("window.__tondBench = $(Get-ReadyScript $file.name $file.token); true", 5000) | Out-Null
+			$cdp.Evaluate("window.__vachaBench = $(Get-ReadyScript $file.name $file.token); true", 5000) | Out-Null
 
 			$t0 = Get-EpochMs
 			$forwarder = Start-Exe $shim @("--user-data-dir=$userDataDir", $file.path)
 			$launched.Add($forwarder.Id)
-			$value = $cdp.Evaluate('window.__tondBench', $TimeoutSec * 1000)
+			$value = $cdp.Evaluate('window.__vachaBench', $TimeoutSec * 1000)
 			$forwarder.WaitForExit(5000) | Out-Null
 			$shimMs = if ($forwarder.HasExited) { [math]::Round(($forwarder.ExitTime.ToUniversalTime() - [DateTimeOffset]::FromUnixTimeMilliseconds($t0).UtcDateTime).TotalMilliseconds) } else { $null }
 

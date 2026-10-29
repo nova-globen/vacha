@@ -31,7 +31,7 @@ registerEditorAction(PageUpHoverAction);
 registerEditorAction(PageDownHoverAction);
 registerEditorAction(GoToTopHoverAction);
 registerEditorAction(GoToBottomHoverAction);
-// Tond: showDefinitionPreviewHover and increase/decreaseHoverVerbosityLevel not
+// Vacha: showDefinitionPreviewHover and increase/decreaseHoverVerbosityLevel not
 // registered — both need language providers that can never exist.
 HoverParticipantRegistry.register(MarkdownHoverParticipant);
 HoverParticipantRegistry.register(MarkerHoverParticipant);

@@ -240,7 +240,7 @@ export class QuickDiffModel extends Disposable {
 	}
 
 	private diff(): Promise<{ allChanges: QuickDiffChange[]; changes: QuickDiffChange[]; mapChanges: Map<string, number[]>; versionId: number } | null> {
-		// Tond: there is no SCM view container to host progress - use the window.
+		// Vacha: there is no SCM view container to host progress - use the window.
 		const location = ProgressLocation.Window;
 		return this.progressService.withProgress({ location, delay: 250 }, async () => {
 			const versionId = this._model.textEditorModel.getVersionId();

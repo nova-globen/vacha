@@ -529,7 +529,7 @@ export class NativeExtensionService extends AbstractExtensionService implements 
 class NativeExtensionHostFactory implements IExtensionHostFactory {
 
 	public createExtensionHost(runningLocations: ExtensionRunningLocationTracker, runningLocation: ExtensionRunningLocation, isInitialStart: boolean): IExtensionHost | null {
-		// Tond: extension hosts are never spawned — not local process, not web
+		// Vacha: extension hosts are never spawned — not local process, not web
 		// worker, not remote. Declarative contributions (grammars, themes,
 		// language configs) register via the in-renderer scan +
 		// _doHandleExtensionPoints path, which does not need a host.

@@ -77,13 +77,13 @@ function isExtensionHostBundle(filePath: string): boolean {
 }
 
 // Workers - shared between targets
-// Tond: no localFileSearchMain worker; it serves the web build only
+// Vacha: no localFileSearchMain worker; it serves the web build only
 const workerEntryPoints = [
 	'vs/editor/common/services/editorWebWorkerMain',
 	'vs/workbench/services/textMate/browser/backgroundTokenization/worker/textMateTokenizationWorker.workerMain',
 ];
 
-// Desktop workbench and code entry points. Tond: the workbench reads the
+// Desktop workbench and code entry points. Vacha: the workbench reads the
 // keyboard layout through the browser service (no native-keymap), which
 // loads the Windows layout tables at runtime.
 const desktopEntryPoints = [
@@ -130,9 +130,9 @@ function getEntryPointsForTarget(target: BuildTarget): string[] {
 			];
 		case 'server':
 		case 'server-web':
-			throw new Error('Tond: server targets are removed');
+			throw new Error('Vacha: server targets are removed');
 		case 'web':
-			throw new Error('Tond: web target is removed');
+			throw new Error('Vacha: web target is removed');
 		default:
 			throw new Error(`Unknown target: ${target}`);
 	}
@@ -147,9 +147,9 @@ function getBootstrapEntryPointsForTarget(target: BuildTarget): string[] {
 			return bootstrapEntryPointsDesktop;
 		case 'server':
 		case 'server-web':
-			throw new Error('Tond: server targets are removed');
+			throw new Error('Vacha: server targets are removed');
 		case 'web':
-			throw new Error('Tond: web target is removed');
+			throw new Error('Vacha: web target is removed');
 		default:
 			throw new Error(`Unknown target: ${target}`);
 	}
@@ -167,9 +167,9 @@ function getCssBundleEntryPointsForTarget(target: BuildTarget): Set<string> {
 			]);
 		case 'server':
 		case 'server-web':
-			throw new Error('Tond: server targets are removed');
+			throw new Error('Vacha: server targets are removed');
 		case 'web':
-			throw new Error('Tond: web target is removed');
+			throw new Error('Vacha: web target is removed');
 		default:
 			throw new Error(`Unknown target: ${target}`);
 	}
@@ -314,9 +314,9 @@ function getResourcePatternsForTarget(target: BuildTarget): string[] {
 			return desktopResourcePatterns;
 		case 'server':
 		case 'server-web':
-			throw new Error('Tond: server targets are removed');
+			throw new Error('Vacha: server targets are removed');
 		case 'web':
-			throw new Error('Tond: web target is removed');
+			throw new Error('Vacha: web target is removed');
 		default:
 			throw new Error(`Unknown target: ${target}`);
 	}

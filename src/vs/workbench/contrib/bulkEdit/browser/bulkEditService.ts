@@ -241,7 +241,7 @@ export class BulkEditService implements IBulkEditService {
 			listener = this._lifecycleService.onBeforeShutdown(e => e.veto(this._shouldVeto(label, e.reason), 'veto.blukEditService'));
 			await bulkEdit.perform(options?.reason);
 
-			// Tond: files.refactoring.autoSave is unregistered - refactorings cannot happen, so the
+			// Vacha: files.refactoring.autoSave is unregistered - refactorings cannot happen, so the
 			// former "save all touched copies" path (option AND setting) is unreachable and removed.
 
 			return { ariaSummary: bulkEdit.ariaMessage(), isApplied: edits.length > 0 };

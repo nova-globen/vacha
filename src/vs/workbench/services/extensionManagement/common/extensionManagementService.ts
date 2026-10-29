@@ -782,7 +782,7 @@ export class ExtensionManagementService extends CommontExtensionManagementServic
 		if (this.extensionManagementServerService.webExtensionManagementServer) {
 			return this.extensionManagementServerService.webExtensionManagementServer.extensionManagementService.getExtensionsControlManifest();
 		}
-		// Tond: no servers and no gallery — asking the gallery service would just
+		// Vacha: no servers and no gallery — asking the gallery service would just
 		// reject with "No extension gallery service configured" on every boot.
 		return Promise.resolve({ malicious: [], deprecated: {}, search: [] });
 	}

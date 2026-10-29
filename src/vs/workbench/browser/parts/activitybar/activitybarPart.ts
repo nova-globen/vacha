@@ -453,7 +453,7 @@ export class ActivityBarCompositeBar extends PaneCompositeBar {
 		const actions: IAction[] = [
 			new SubmenuAction('workbench.action.activityBar.position', localize('activity bar position', "Activity Bar Position"), positionActions),
 		];
-		// Tond: Activity Bar Size submenu removed with the workbench.activityBar.compact setting.
+		// Vacha: Activity Bar Size submenu removed with the workbench.activityBar.compact setting.
 
 		actions.push(toAction({ id: ToggleSidebarPositionAction.ID, label: ToggleSidebarPositionAction.getLabel(this.layoutService), run: () => this.instantiationService.invokeFunction(accessor => new ToggleSidebarPositionAction().run(accessor)) }));
 

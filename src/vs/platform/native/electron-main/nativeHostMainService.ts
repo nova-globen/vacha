@@ -764,7 +764,7 @@ export class NativeHostMainService extends Disposable implements INativeHostMain
 	async isAdmin(): Promise<boolean> {
 		let isAdmin: boolean;
 		if (isWindows) {
-			// Tond: opening the raw disk for reading requires an elevated
+			// Vacha: opening the raw disk for reading requires an elevated
 			// token; this replaces the native-is-elevated module
 			try {
 				fs.closeSync(fs.openSync('\\\\.\\PHYSICALDRIVE0', 'r'));
@@ -1417,7 +1417,7 @@ export class NativeHostMainService extends Disposable implements INativeHostMain
 			return undefined;
 		}
 
-		// Tond: reg.exe instead of the native @vscode/windows-registry module
+		// Vacha: reg.exe instead of the native @vscode/windows-registry module
 		const hiveShort = { HKEY_CURRENT_USER: 'HKCU', HKEY_LOCAL_MACHINE: 'HKLM', HKEY_CLASSES_ROOT: 'HKCR', HKEY_USERS: 'HKU', HKEY_CURRENT_CONFIG: 'HKCC' }[hive];
 		return new Promise<string | undefined>(resolve => {
 			execFile('reg.exe', ['query', `${hiveShort}\\${path}`, '/v', name], { windowsHide: true, timeout: 5000 }, (err, stdout) => {

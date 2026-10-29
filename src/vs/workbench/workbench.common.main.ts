@@ -187,7 +187,7 @@ import './contrib/search/browser/searchView.js';
 // Sash
 import './contrib/sash/browser/sash.contribution.js';
 
-// SCM services only (Tond: git and the SCM UI are removed; these delayed
+// SCM services only (Vacha: git and the SCM UI are removed; these delayed
 // singletons stay registered because live code injects them — searchView.
 // With no providers they are permanently empty, i.e. de-facto null services.)
 import './contrib/scm/browser/quickDiff.contribution.js';
@@ -200,19 +200,19 @@ import './contrib/commands/common/commands.contribution.js';
 import './contrib/url/browser/url.contribution.js';
 
 // Default sidebar view (Explorer on first launch of a workspace)
-import './contrib/tond/browser/defaultSidebar.contribution.js';
+import './contrib/vacha/browser/defaultSidebar.contribution.js';
 
 // Extension point handlers (language configs, colors, icons — see file)
-import './contrib/tond/browser/extensionPointHandlers.contribution.js';
+import './contrib/vacha/browser/extensionPointHandlers.contribution.js';
 
 // Single Explorer pane (Search + Source Control views folded into Explorer)
-import './contrib/tond/browser/unifiedSidebar.contribution.js';
+import './contrib/vacha/browser/unifiedSidebar.contribution.js';
 
 // Close (hide sidebar) button on the sidebar pane headers
-import './contrib/tond/browser/sidebarClose.contribution.js';
+import './contrib/vacha/browser/sidebarClose.contribution.js';
 
-// Update check against the Tond release manifest
-import './contrib/tond/browser/updateCheck.contribution.js';
+// Update check against the Vacha release manifest
+import './contrib/vacha/browser/updateCheck.contribution.js';
 
 // Preferences (Settings UI — the editor pane, menus, and the services its
 // search and header inject; both AI/chat services are inert in this fork)
@@ -224,7 +224,7 @@ import './contrib/preferences/browser/preferencesSearch.js';
 // CodeEditor Contributions
 import './contrib/codeEditor/browser/codeEditor.contribution.js';
 
-// Tond: keybindings contribution removed — its only action (Toggle Keyboard
+// Vacha: keybindings contribution removed — its only action (Toggle Keyboard
 // Shortcuts Troubleshooting) depended on the deleted log viewer.
 
 // Themes
@@ -233,7 +233,7 @@ import './contrib/themes/browser/themes.contribution.js';
 // Workspace
 import './contrib/workspace/browser/workspace.contribution.js';
 
-// Tond: workspaces.contribution removed — the .code-workspace finder and the
+// Vacha: workspaces.contribution removed — the .code-workspace finder and the
 // "Open Workspace" editor button have no workspace concept to serve.
 
 // List

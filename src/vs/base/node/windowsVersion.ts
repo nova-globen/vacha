@@ -28,7 +28,7 @@ export async function initWindowsVersionInfo() {
 		return;
 	}
 
-	// Tond: Node reports the real version (RtlGetVersion) in os.release(), so
+	// Vacha: Node reports the real version (RtlGetVersion) in os.release(), so
 	// the native registry module is not needed
 	versionInfo = {
 		release: os.release(),

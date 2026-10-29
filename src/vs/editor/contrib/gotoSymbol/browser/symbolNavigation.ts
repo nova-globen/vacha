@@ -148,7 +148,7 @@ class SymbolNavigationService implements ISymbolNavigationService {
 
 registerSingleton(ISymbolNavigationService, SymbolNavigationService, InstantiationType.Delayed);
 
-// Tond: editor.gotoNextSymbolFromResult (+ .cancel) not registered — the
+// Vacha: editor.gotoNextSymbolFromResult (+ .cancel) not registered — the
 // hasSymbols context can never be set (no symbol providers). Frees F12 there.
 
 //

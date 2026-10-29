@@ -350,7 +350,7 @@ export class ExplorerService implements IExplorerService {
 		// When nesting, changes to one file in a folder may impact the rendered structure
 		// of all the folder's immediate children, thus a recursive refresh is needed.
 		// Ideally the tree would be able to recusively refresh just one level but that does not yet exist.
-		// Tond: file nesting is a file-tree feature and its settings are gone,
+		// Vacha: file nesting is a file-tree feature and its settings are gone,
 		// so the node is absent — read defensively.
 		const shouldDeepRefresh = this.config.fileNesting?.enabled ?? false;
 

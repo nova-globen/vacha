@@ -350,7 +350,7 @@ export class InlineCompletionsController extends Disposable {
 			}
 		}));
 
-		// Tond: accessibility.verbosity.inlineCompletions is unregistered (no inline-completion provider can exist); the option keeps its default.
+		// Vacha: accessibility.verbosity.inlineCompletions is unregistered (no inline-completion provider can exist); the option keeps its default.
 
 		const contextKeySvcObs = new ObservableContextKeyService(this._contextKeyService);
 

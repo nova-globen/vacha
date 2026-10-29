@@ -5,7 +5,7 @@ Thanks for your interest in Vacha!
 ## Reporting issues
 
 Report bugs and feature requests through the Nova Globen contact form at
-<https://nova-globen.se/vacha/issues>, or by email to info@nova-globen.se.
+<https://nova-globen.se/products/vacha/issues>, or by email to info@nova-globen.se.
 Please include the Vacha version (Help > About), your Windows version, and
 steps to reproduce. Report security problems as described in
 [SECURITY.md](SECURITY.md).

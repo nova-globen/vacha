@@ -71,14 +71,14 @@ if ($LASTEXITCODE -ne 0) { throw "gulp $buildTask failed (a running Vacha.exe fr
 Write-Host '-- cargo build vacha_open (forwarder shim)' -ForegroundColor Cyan
 $cargo = Join-Path $env:USERPROFILE '.cargo\bin\cargo.exe'
 if (-not (Test-Path $cargo)) { $cargo = 'cargo' }
-$env:TOND_VERSION = $version
-Push-Location (Join-Path $repoRoot 'native\tond-open')
+$env:VACHA_VERSION = $version
+Push-Location (Join-Path $repoRoot 'native\vacha-open')
 & $cargo build --release --quiet
 $cargoExit = $LASTEXITCODE
 Pop-Location
-Remove-Item Env:TOND_VERSION -ErrorAction SilentlyContinue
+Remove-Item Env:VACHA_VERSION -ErrorAction SilentlyContinue
 if ($cargoExit -ne 0) { throw 'cargo build for vacha_open failed' }
-Copy-Item (Join-Path $repoRoot 'native\tond-open\target\release\vacha_open.exe') (Join-Path $destination 'vacha_open.exe') -Force
+Copy-Item (Join-Path $repoRoot 'native\vacha-open\target\release\vacha_open.exe') (Join-Path $destination 'vacha_open.exe') -Force
 
 # strip sourcemaps from the shipped output
 Get-ChildItem -Path (Join-Path $destination 'resources\app\out') -Filter '*.map' -Recurse -ErrorAction SilentlyContinue | Remove-Item -Force
@@ -107,7 +107,7 @@ $reported = & (Join-Path $destination 'bin\vacha.cmd') --version 2>$null | Selec
 if (-not $reported) { throw 'smoke check failed: executable did not report a version' }
 Write-Host "   reported version: $reported"
 
-# SBOM (EU Cyber Resilience Act; infra BL-199): CycloneDX over the shipped npm
+# SBOM (EU Cyber Resilience Act): CycloneDX over the shipped npm
 # dependencies, plus the forwarder shim, which has no crate dependencies
 Write-Host '-- SBOM (CycloneDX)' -ForegroundColor Cyan
 $sbomPath = Join-Path $repoRoot "dist\Vacha-$version-sbom.cdx.json"
@@ -119,8 +119,8 @@ $sbom.metadata.component.version = $version
 $sbom.metadata.component | Add-Member -Force -NotePropertyName supplier -NotePropertyValue @{ name = 'Nova Globen AB'; url = @('https://nova-globen.se') }
 $sbom.components += [pscustomobject]@{
 	type = 'application'
-	'bom-ref' = 'tond-open'
-	name = 'tond-open'
+	'bom-ref' = 'vacha-open'
+	name = 'vacha-open'
 	version = $version
 	description = 'Native forwarder shim (Rust, no crate dependencies)'
 	licenses = @(@{ license = @{ id = 'GPL-3.0-or-later' } })

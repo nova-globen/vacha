@@ -32,7 +32,7 @@ Registry.as<IWorkbenchContributionsRegistry>(WorkbenchExtensions.Workbench)
 registerEditorContribution(QuickDiffEditorController.ID,
 	QuickDiffEditorController, EditorContributionInstantiation.AfterFirstRender);
 
-// Tond: scm.diffDecorations* settings removed - no quick diff provider can ever register (the services stay for the empty-state contract).
+// Vacha: scm.diffDecorations* settings removed - no quick diff provider can ever register (the services stay for the empty-state contract).
 
 registerSingleton(IQuickDiffService, QuickDiffService, InstantiationType.Delayed);
 registerSingleton(IQuickDiffModelService, QuickDiffModelService, InstantiationType.Delayed);

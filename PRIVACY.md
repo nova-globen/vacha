@@ -1,9 +1,9 @@
 # Vacha Privacy Policy
 
-Last updated: 2026-10-26
+Last updated: 2026-10-29
 
 **Nova Globen AB** (Sweden) is the data controller for the Vacha application
-and the nova-globen.se/vacha services. Contact: info@nova-globen.se.
+and the nova-globen.se/products/vacha services. Contact: info@nova-globen.se.
 
 ## The application
 
@@ -17,10 +17,15 @@ Vacha is designed to not phone home:
   data folder.
 - **Update check.** The only network request the application makes on its
   own is a check for new versions, at most once a day: a plain HTTPS GET for
-  <https://nova-globen.se/vacha/releases.json>. No identifier or other data
+  <https://nova-globen.se/products/vacha/releases.json>. No identifier or other data
   is attached to it. Like any web request, it reveals your IP address and the
   requested URL to the servers that answer it (see "Hosting" below). We do
   not use it to identify or track you.
+  The Microsoft Store version makes no such check: the Store updates it.
+- **Downloads.** The installer and the zip are downloaded from GitHub
+  (GitHub, Inc.), and the Store version from Microsoft. Like any web host,
+  they see your IP address and what you download; their own privacy
+  statements apply.
 - **Everything else is your action**: files you open are read from your
   computer, and links you click open in your browser.
 
@@ -42,7 +47,7 @@ Vacha is designed to not phone home:
   bookkeeping obligations (legal bases: contract and legal obligation, GDPR
   Art. 6(1)(b) and (c)). We keep them while the agreement runs and then as
   long as Swedish accounting law requires (currently seven years).
-- **Donations.** The donation service named on didabit.com/vacha, once there
+- **Donations.** The donation service named on nova-globen.se/products/vacha, once there
   is one, handles the payment; we receive the donor details that service
   passes on and keep them only as long as accounting law requires.
 - We do not sell personal data, and we use no advertising or third-party
@@ -72,5 +77,5 @@ Protection (IMY, imy.se).
 
 ## Changes
 
-We announce changes to this policy at nova-globen.se/vacha and update the
+We announce changes to this policy at nova-globen.se/products/vacha and update the
 date above.

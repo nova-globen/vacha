@@ -113,8 +113,8 @@ export interface IProductConfiguration {
 
 	readonly downloadUrl?: string;
 	readonly updateUrl?: string;
-	/** Tond: manifest with the latest release, checked periodically to offer manual updates */
-	readonly tondUpdateManifestUrl?: string;
+	/** Vacha: manifest with the latest release, checked periodically to offer manual updates */
+	readonly updateManifestUrl?: string;
 	/**
 	 * Vacha: set in the Microsoft Store (MSIX) build. The Store delivers
 	 * updates and the package manifest registers file types and the startup

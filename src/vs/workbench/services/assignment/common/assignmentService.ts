@@ -350,4 +350,4 @@ export class WorkbenchAssignmentService extends Disposable implements IAssignmen
 
 registerSingleton(IWorkbenchAssignmentService, WorkbenchAssignmentService, InstantiationType.Delayed);
 
-// Tond: workbench.enableExperiments removed - no experimentation service endpoint is configured.
+// Vacha: workbench.enableExperiments removed - no experimentation service endpoint is configured.

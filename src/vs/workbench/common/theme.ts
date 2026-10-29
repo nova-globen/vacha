@@ -123,7 +123,7 @@ export const TAB_UNFOCUSED_ACTIVE_BORDER = registerColor('tab.unfocusedActiveBor
 }, localize('tabActiveUnfocusedBorder', "Border on the bottom of an active tab in an unfocused group. Tabs are the containers for editors in the editor area. Multiple tabs can be opened in one editor group. There can be multiple editor groups."));
 
 export const TAB_ACTIVE_BORDER_TOP = registerColor('tab.activeBorderTop', {
-	dark: '#CC4411',   // Tond brand accent
+	dark: '#CC4411',   // Vacha brand accent
 	light: '#CC4411',
 	hcDark: '#CC4411',
 	hcLight: '#CC4411'

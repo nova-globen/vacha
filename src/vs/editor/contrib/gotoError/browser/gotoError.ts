@@ -269,10 +269,10 @@ export class PrevMarkerInFilesAction extends MarkerNavigationAction {
 }
 
 registerEditorContribution(MarkerController.ID, MarkerController, EditorContributionInstantiation.Lazy);
-// Tond: marker navigation actions not registered — no language providers, markers never appear.
+// Vacha: marker navigation actions not registered — no language providers, markers never appear.
 // (This module still loads transitively via hover/inlineCompletions imports.)
 
 const CONTEXT_MARKERS_NAVIGATION_VISIBLE = new RawContextKey<boolean>('markersNavigationVisible', false);
 
-// Tond: closeMarkersNavigation not registered — markersNavigationVisible can
+// Vacha: closeMarkersNavigation not registered — markersNavigationVisible can
 // never become true (no marker sources exist).

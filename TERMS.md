@@ -1,11 +1,12 @@
 # Vacha Terms of Use
 
-Last updated: 2026-10-26
+Last updated: 2026-10-29
 
 These Terms of Use ("Terms") cover the Vacha application ("Software") as
 distributed by **Nova Globen AB**, a company registered in Sweden ("we",
-"us"), and the services we provide for it at nova-globen.se and didabit.com,
-such as downloads, the update file and the contact form ("Services").
+"us"), and the services we provide for it: the product page, the update file
+and the contact form at nova-globen.se, and the downloads we publish on
+GitHub and in the Microsoft Store ("Services").
 
 ## 1. License
 
@@ -48,7 +49,7 @@ us.
 
 ## 5. Updates
 
-The Software may check nova-globen.se/vacha for new versions and tell you when
+The Software may check nova-globen.se/products/vacha for new versions and tell you when
 one is available. It never downloads or installs an update without your
 action. See [PRIVACY.md](PRIVACY.md) for what the check sends.
 
@@ -60,7 +61,7 @@ and the update check tells you when one is available. Older versions are not
 patched separately, so install the latest version to stay protected. Each
 security update stays available for download for at least ten years after
 its release. If the support period is extended, the new end date is
-announced at didabit.com/vacha and in these Terms. Report vulnerabilities as
+announced at nova-globen.se/products/vacha and in these Terms. Report vulnerabilities as
 described in [SECURITY.md](SECURITY.md).
 
 ## 7. Disclaimers
@@ -94,7 +95,7 @@ rights.
 ## 10. Changes
 
 We may update these Terms. Material changes are announced at
-didabit.com/vacha at least 30 days before they take effect. Changes never
+nova-globen.se/products/vacha at least 30 days before they take effect. Changes never
 narrow the rights the license gives you for a version you already have.
 
 Contact: info@nova-globen.se · Nova Globen AB, Sweden

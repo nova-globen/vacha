@@ -45,7 +45,7 @@ export interface NativeParsedArgs {
 	version?: boolean;
 	telemetry?: boolean;
 	status?: boolean;
-	quit?: boolean; // Tond: ask the running instance to quit (used by the installer)
+	quit?: boolean; // Vacha: ask the running instance to quit (used by the installer)
 	wait?: boolean;
 	waitMarkerFilePath?: string;
 	diff?: boolean;
@@ -108,7 +108,7 @@ export interface NativeParsedArgs {
 	'locate-extension'?: string[]; // undefined or array of 1 or more
 	'enable-proposed-api'?: string[]; // undefined or array of 1 or more
 	'open-url'?: boolean;
-	'start-hidden'?: boolean; // Tond: resident launch (login item) — window is created but not shown
+	'start-hidden'?: boolean; // Vacha: resident launch (login item) — window is created but not shown
 	'skip-release-notes'?: boolean;
 	'skip-welcome'?: boolean;
 	'disable-telemetry'?: boolean;

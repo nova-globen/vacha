@@ -808,7 +808,7 @@ export abstract class Layout extends Disposable implements IWorkbenchLayoutServi
 		if (this.isVisible(Parts.PANEL_PART)) {
 			const viewContainerToRestore = this.storageService.get(PanelPart.activePanelSettingsKey, StorageScope.WORKSPACE, this.viewDescriptorService.getDefaultViewContainer(ViewContainerLocation.Panel)?.id);
 
-			// Tond: a stored panel id can outlive its (trimmed) view container
+			// Vacha: a stored panel id can outlive its (trimmed) view container
 			if (viewContainerToRestore && this.hasViews(viewContainerToRestore)) {
 				this.state.initialization.views.containerToRestore.panel = viewContainerToRestore;
 			} else {
@@ -864,7 +864,7 @@ export abstract class Layout extends Disposable implements IWorkbenchLayoutServi
 			return false;
 		}
 
-		// Tond: the session is the set of open tabs. Launching with file
+		// Vacha: the session is the set of open tabs. Launching with file
 		// arguments must not discard it — restored tabs and the newly opened
 		// files coexist.
 		return true;
@@ -919,7 +919,7 @@ export abstract class Layout extends Disposable implements IWorkbenchLayoutServi
 			return filesToOpenOrCreate;
 		}
 
-		// Tond: an empty window opens an untitled tab by default (notepad
+		// Vacha: an empty window opens an untitled tab by default (notepad
 		// behavior) — the welcome/terminal startup editors are removed and the
 		// 'workbench.startupEditor' schema is unregistered, so only an explicit
 		// 'none' opts out.
@@ -2058,7 +2058,7 @@ export abstract class Layout extends Disposable implements IWorkbenchLayoutServi
 			return; // Return if not initialized fully (https://github.com/microsoft/vscode/issues/105480)
 		}
 
-		// Tond: nothing ships in the panel, so it never shows as an empty box
+		// Vacha: nothing ships in the panel, so it never shows as an empty box
 		if (!hidden && !this.viewDescriptorService.getViewContainersByLocation(ViewContainerLocation.Panel).some(viewContainer => this.hasViews(viewContainer.id))) {
 			hidden = true;
 		}

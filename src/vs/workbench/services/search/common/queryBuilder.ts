@@ -93,7 +93,7 @@ interface ICommonQueryBuilderOptions<U extends UriComponents = URI> {
 	ignoreSymlinks?: boolean;
 	ignoreGlobCase?: boolean;
 	onlyOpenEditors?: boolean;
-	// Tond: restrict the query to exactly these files (the active editor)
+	// Vacha: restrict the query to exactly these files (the active editor)
 	onlyFileResources?: URI[];
 	changedFileUris?: URI[];
 	onlyFileScheme?: boolean;
@@ -279,7 +279,7 @@ export class QueryBuilder {
 			onlyFileScheme: options.onlyFileScheme
 		};
 
-		// Tond: search only the given files (used for active-file search)
+		// Vacha: search only the given files (used for active-file search)
 		if (options.onlyFileResources !== undefined) {
 			const filesInQuery = options.onlyFileResources.filter(file => pathIncludedInQuery(queryProps, file.fsPath));
 			const filesQueryProps = this.commonQueryFromFileList(filesInQuery);

@@ -38,7 +38,7 @@ registerAction2(ResetActiveEditorReadonlyInSession);
 CommandsRegistry.registerCommand('_files.windowOpen', openWindowCommand);
 CommandsRegistry.registerCommand('_files.newWindow', newWindowCommand);
 
-// Tond: the explorer-tree keybinding rules (renameFile, moveFileToTrash, deleteFile,
+// Vacha: the explorer-tree keybinding rules (renameFile, moveFileToTrash, deleteFile,
 // filesExplorer.cut/copy/paste/cancelCut/openFilePreserveFocus) are not registered —
 // the file tree does not exist, so their FilesExplorerFocusCondition can never be true.
 
@@ -155,7 +155,7 @@ appendToCommandPalette({
 	category: Categories.File
 }, IsSessionsWindowContext.negate());
 
-// Tond: explorer.newFile / explorer.newFolder palette entries removed — they need the
+// Vacha: explorer.newFile / explorer.newFolder palette entries removed — they need the
 // file tree, and the Keyboard Shortcuts page lists palette items regardless of `when`.
 
 appendToCommandPalette({
@@ -331,7 +331,7 @@ MenuRegistry.appendMenuItem(MenuId.OpenEditorsContext, {
 });
 
 // Menu registration - explorer
-// Tond: the ExplorerContext items for the removed file-tree commands (new file/folder,
+// Vacha: the ExplorerContext items for the removed file-tree commands (new file/folder,
 // cut/copy/paste, add/remove root folder, rename, delete) are gone with their commands.
 
 MenuRegistry.appendMenuItem(MenuId.ExplorerContext, {

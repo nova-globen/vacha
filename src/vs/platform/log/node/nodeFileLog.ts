@@ -28,7 +28,7 @@ function timestamp(date: Date): string {
 }
 
 /**
- * Tond: appends log lines to a file with plain node fs, in the format the
+ * Vacha: appends log lines to a file with plain node fs, in the format the
  * native spdlog logger used (`YYYY-MM-DD HH:MM:SS.mmm [level] message`).
  * Lines are batched for {@link FLUSH_DELAY} ms; a rotating log moves to
  * `<file>.1` once it passes {@link MAX_FILE_SIZE}.

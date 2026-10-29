@@ -10,13 +10,13 @@ import { IUserDataManifest, IUserDataSyncResource, IUserDataSyncResourceConflict
 import { IUserDataSyncAccount, IUserDataSyncAccountService } from '../../../../platform/userDataSync/common/userDataSyncAccount.js';
 import { IUserDataSyncMachine, IUserDataSyncMachinesService } from '../../../../platform/userDataSync/common/userDataSyncMachines.js';
 
-// Tond: Settings Sync does not exist (no store, no accounts). Upstream these
+// Vacha: Settings Sync does not exist (no store, no accounts). Upstream these
 // services were channel clients whose constructors immediately called into the
 // shared process — which is what SPAWNED it. Permanently-idle local stands-in
 // keep the injectors (settings editor sync pane, relauncher, the sync
 // workbench service) dormant without any process or channel.
 
-class TondUserDataSyncService implements IUserDataSyncService {
+class VachaUserDataSyncService implements IUserDataSyncService {
 	declare readonly _serviceBrand: undefined;
 	readonly status = SyncStatus.Uninitialized;
 	readonly onDidChangeStatus = Event.None;
@@ -43,7 +43,7 @@ class TondUserDataSyncService implements IUserDataSyncService {
 	extractActivityData(): Promise<void> { return Promise.resolve(); }
 }
 
-class TondUserDataSyncAccountService implements IUserDataSyncAccountService {
+class VachaUserDataSyncAccountService implements IUserDataSyncAccountService {
 	declare readonly _serviceBrand: undefined;
 	readonly onTokenFailed = Event.None;
 	readonly account: IUserDataSyncAccount | undefined = undefined;
@@ -51,7 +51,7 @@ class TondUserDataSyncAccountService implements IUserDataSyncAccountService {
 	updateAccount(): Promise<void> { return Promise.resolve(); }
 }
 
-class TondUserDataSyncMachinesService implements IUserDataSyncMachinesService {
+class VachaUserDataSyncMachinesService implements IUserDataSyncMachinesService {
 	declare readonly _serviceBrand: undefined;
 	readonly onDidChange = Event.None;
 	getMachines(_manifest?: IUserDataManifest): Promise<IUserDataSyncMachine[]> { return Promise.resolve([]); }
@@ -61,7 +61,7 @@ class TondUserDataSyncMachinesService implements IUserDataSyncMachinesService {
 	setEnablements(): Promise<void> { return Promise.resolve(); }
 }
 
-class TondUserDataSyncStoreManagementService implements IUserDataSyncStoreManagementService {
+class VachaUserDataSyncStoreManagementService implements IUserDataSyncStoreManagementService {
 	declare readonly _serviceBrand: undefined;
 	readonly onDidChangeUserDataSyncStore = Event.None;
 	readonly userDataSyncStore: IUserDataSyncStore | undefined = undefined;
@@ -69,9 +69,9 @@ class TondUserDataSyncStoreManagementService implements IUserDataSyncStoreManage
 	getPreviousUserDataSyncStore(): Promise<IUserDataSyncStore | undefined> { return Promise.resolve(undefined); }
 }
 
-registerSingleton(IUserDataSyncService, TondUserDataSyncService, InstantiationType.Delayed);
-registerSingleton(IUserDataSyncAccountService, TondUserDataSyncAccountService, InstantiationType.Delayed);
-registerSingleton(IUserDataSyncMachinesService, TondUserDataSyncMachinesService, InstantiationType.Delayed);
-registerSingleton(IUserDataSyncStoreManagementService, TondUserDataSyncStoreManagementService, InstantiationType.Delayed);
+registerSingleton(IUserDataSyncService, VachaUserDataSyncService, InstantiationType.Delayed);
+registerSingleton(IUserDataSyncAccountService, VachaUserDataSyncAccountService, InstantiationType.Delayed);
+registerSingleton(IUserDataSyncMachinesService, VachaUserDataSyncMachinesService, InstantiationType.Delayed);
+registerSingleton(IUserDataSyncStoreManagementService, VachaUserDataSyncStoreManagementService, InstantiationType.Delayed);
 // IUserDataSyncResourceProviderService has no injector left and is deliberately
 // no longer registered.

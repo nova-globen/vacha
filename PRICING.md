@@ -19,7 +19,7 @@ Notes:
   permission to use Vacha, which the license already gives everyone.
 - **Donations** are voluntary and buy no rights or services. The donation
   link is not set up yet; it will be published at
-  <https://didabit.com/vacha> when it is.
+  <https://nova-globen.se/products/vacha> when it is.
 - Prices for support agreements exclude VAT. Business customers in the EU
   outside Sweden with a valid VAT number are invoiced under the
   reverse-charge rule; Swedish VAT is added for customers in Sweden.

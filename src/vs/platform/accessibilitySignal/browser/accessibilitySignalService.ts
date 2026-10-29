@@ -257,7 +257,7 @@ export class AccessibilitySignalService extends Disposable implements IAccessibi
 		if (!this.configurationService.getValue('accessibility.signalOptions.debouncePositionChanges')) {
 			return 0;
 		}
-		// Tond: the errorAtPosition/warningAtPosition delays are unregistered (no diagnostics
+		// Vacha: the errorAtPosition/warningAtPosition delays are unregistered (no diagnostics
 		// providers can raise those signals), so only the general delay is left to read.
 		const value = this.configurationService.getValue<{ sound: number; announcement: number } | undefined>('accessibility.signalOptions.experimental.delays.general');
 		if (!value) {

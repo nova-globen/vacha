@@ -237,7 +237,7 @@ MenuRegistry.appendMenuItem(MenuId.MenubarAppearanceMenu, {
 	order: 2
 });
 
-// Tond: `workbench.action.toggleEditorVisibility` removed — it hid the editor
+// Vacha: `workbench.action.toggleEditorVisibility` removed — it hid the editor
 // and force-showed the (contentless) panel, leaving a blank workbench.
 
 MenuRegistry.appendMenuItem(MenuId.MenubarViewMenu, {
@@ -820,7 +820,7 @@ registerAction2(class extends Action2 {
 			});
 		});
 
-		// Tond: only the side bar can host views — Panel and Secondary Side Bar
+		// Vacha: only the side bar can host views — Panel and Secondary Side Bar
 		// are contentless surfaces here.
 		return results;
 	}
@@ -899,7 +899,7 @@ class MoveFocusedViewAction extends Action2 {
 		const currentLocation = viewDescriptorService.getViewLocationById(focusedViewId)!;
 		const isViewSolo = viewDescriptorService.getViewContainerModel(currentContainer).allViewDescriptors.length === 1;
 
-		// Tond: the side bar is the only destination — Panel and Secondary Side
+		// Vacha: the side bar is the only destination — Panel and Secondary Side
 		// Bar are contentless surfaces here.
 		if (!(isViewSolo && currentLocation === ViewContainerLocation.Sidebar)) {
 			items.push({
@@ -1218,7 +1218,7 @@ if (!isMacintosh || !isNative) {
 	ToggleVisibilityActions.push(CreateToggleLayoutItem('workbench.action.toggleMenuBar', MenuBarToggledContext, localize('menuBar', "Menu Bar"), menubarIcon));
 }
 
-// Tond: Activity Bar, Secondary Side Bar and Panel entries removed — those
+// Vacha: Activity Bar, Secondary Side Bar and Panel entries removed — those
 // surfaces can never hold content in this build.
 ToggleVisibilityActions.push(...[
 	CreateToggleLayoutItem(ToggleSidebarVisibilityAction.ID, SideBarVisibleContext, localize('sideBar', "Primary Side Bar"), { whenA: ContextKeyExpr.equals('config.workbench.sideBar.location', 'left'), iconA: panelLeftIcon, iconB: panelRightIcon }),

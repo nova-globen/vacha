@@ -438,7 +438,7 @@ export class LinkedEditingAction extends EditorAction {
 	}
 }
 
-// Tond: cancelLinkedEditingInput not registered — LinkedEditingInputVisible can
+// Vacha: cancelLinkedEditingInput not registered — LinkedEditingInputVisible can
 // never become true (no linked-editing range provider).
 
 
@@ -466,4 +466,4 @@ registerModelAndPositionCommand('_executeLinkedEditingProvider', (_accessor, mod
 });
 
 registerEditorContribution(LinkedEditingContribution.ID, LinkedEditingContribution, EditorContributionInstantiation.AfterFirstRender);
-// Tond: LinkedEditingAction not registered - no linked editing range provider exists (frees Ctrl+Shift+F2).
+// Vacha: LinkedEditingAction not registered - no linked editing range provider exists (frees Ctrl+Shift+F2).

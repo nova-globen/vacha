@@ -53,7 +53,7 @@ import { ZenHideEditorTabsAction, ZenShowMultipleEditorTabsAction, ZenShowSingle
 				'default': true,
 				'description': localize('zenMode.hideStatusBar', "Controls whether turning on Zen Mode also hides the status bar at the bottom of the workbench.")
 			},
-			// Tond: zenMode.hideActivityBar removed - the activity bar is hidden always.
+			// Vacha: zenMode.hideActivityBar removed - the activity bar is hidden always.
 			'zenMode.hideLineNumbers': {
 				'type': 'boolean',
 				'default': true,

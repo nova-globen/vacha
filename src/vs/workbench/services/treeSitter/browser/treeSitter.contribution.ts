@@ -11,7 +11,7 @@ import { InstantiationType, registerSingleton } from '../../../../platform/insta
 import { TreeSitterThemeService } from './treeSitterThemeService.js';
 
 /**
- * Tond: highlighting is TextMate only. Tree-sitter parsing was an opt-in
+ * Vacha: highlighting is TextMate only. Tree-sitter parsing was an opt-in
  * experiment; without it the 4 MB @vscode/tree-sitter-wasm package does not
  * ship, so no language reports tree-sitter support.
  */

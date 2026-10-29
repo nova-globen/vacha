@@ -77,7 +77,7 @@ export const newWindowCommand = (accessor: ServicesAccessor, options?: IOpenEmpt
 
 KeybindingsRegistry.registerCommandAndKeybindingRule({
 	weight: KeybindingWeight.WorkbenchContrib,
-	// Tond: re-gated from ExplorerFocusCondition (which required the unregistered file
+	// Vacha: re-gated from ExplorerFocusCondition (which required the unregistered file
 	// tree via foldersViewVisible) onto Open-Editors focus so Ctrl+Enter works there.
 	when: ContextKeyExpr.and(OpenEditorsFocusedContext, ContextKeyExpr.not(InputFocusedContextKey)),
 	primary: KeyMod.CtrlCmd | KeyCode.Enter,
@@ -115,7 +115,7 @@ KeybindingsRegistry.registerCommandAndKeybindingRule({
 	}
 });
 
-// Tond: explorer.openAndPassFocus not registered — needs the file tree
+// Vacha: explorer.openAndPassFocus not registered — needs the file tree
 // (FilesExplorerFocusCondition can never be true).
 
 const COMPARE_WITH_SAVED_SCHEMA = 'showModifications';
@@ -259,7 +259,7 @@ const copyRelativePathCommandHandler: ICommandHandler = async (accessor, resourc
 	await resourcesToClipboard(resources, true, accessor.get(IClipboardService), accessor.get(ILabelService), accessor.get(IConfigurationService));
 };
 
-// Tond: no workspace, so no relative paths; the command stays (dead explorer
+// Vacha: no workspace, so no relative paths; the command stays (dead explorer
 // menus name it) but has no keybinding and no menu entry
 CommandsRegistry.registerCommand(COPY_RELATIVE_PATH_COMMAND_ID, copyRelativePathCommandHandler);
 
@@ -524,7 +524,7 @@ CommandsRegistry.registerCommand({
 	}
 });
 
-// Tond: removeRootFolder and the compressed-folder navigation commands
+// Vacha: removeRootFolder and the compressed-folder navigation commands
 // (previous/next/first/lastCompressedFolder) are not registered — no folder
 // concept, and the compressed-folder handlers would crash on the unregistered
 // explorer tree view.

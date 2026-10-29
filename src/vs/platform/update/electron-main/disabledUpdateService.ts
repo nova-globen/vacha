@@ -7,7 +7,7 @@ import { Event } from '../../../base/common/event.js';
 import { DisablementReason, IUpdateService, State } from '../common/update.js';
 
 /**
- * Tond checks for updates itself (contrib/tond/browser/updateCheck) and never
+ * Vacha checks for updates itself (contrib/vacha/browser/updateCheck) and never
  * installs them, so the platform update machinery is replaced by this
  * permanently disabled service.
  */

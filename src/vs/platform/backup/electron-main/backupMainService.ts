@@ -155,7 +155,7 @@ export class BackupMainService implements IBackupMainService {
 		return join(this.backupHome, emptyWindowInfo.backupFolder);
 	}
 
-	// Tond: multi-root workspaces and folders cannot be opened any more, so no
+	// Vacha: multi-root workspaces and folders cannot be opened any more, so no
 	// workspace/folder backup can be created and none can survive. Both
 	// validators short-circuit instead of walking the backup home before the
 	// first window opens. `validateEmptyWorkspaces` below stays as-is: it is

@@ -278,7 +278,7 @@ configurationRegistry.registerConfiguration({
 			'markdownDescription': nls.localize({ comment: ['This is the description for a setting. Values surrounded by single quotes are not to be translated.'], key: 'autoSaveDelay' }, "Controls the delay in milliseconds after which an editor with unsaved changes is saved automatically. Only applies when `#files.autoSave#` is set to `{0}`.", AutoSaveConfiguration.AFTER_DELAY),
 			scope: ConfigurationScope.LANGUAGE_OVERRIDABLE
 		},
-		// Tond: files.autoSaveWorkspaceFilesOnly unregistered - with no workspace it disabled autosave for every file; files.autoSaveWhenNoErrors unregistered - no diagnostics source exists. Both readers in filesConfigurationService are optional-chained.
+		// Vacha: files.autoSaveWorkspaceFilesOnly unregistered - with no workspace it disabled autosave for every file; files.autoSaveWhenNoErrors unregistered - no diagnostics source exists. Both readers in filesConfigurationService are optional-chained.
 		'files.watcherExclude': {
 			'type': 'object',
 			'patternProperties': {
@@ -368,7 +368,7 @@ configurationRegistry.registerConfiguration({
 	}
 });
 
-// Tond: editor.formatOnSave / editor.formatOnSaveMode removed - no formatting provider exists.
+// Vacha: editor.formatOnSave / editor.formatOnSaveMode removed - no formatting provider exists.
 
 configurationRegistry.registerConfiguration({
 	'id': 'explorer',
@@ -376,7 +376,7 @@ configurationRegistry.registerConfiguration({
 	'title': nls.localize('explorerConfigurationTitle', "File Explorer"),
 	'type': 'object',
 	'properties': {
-		// Tond: explorer file-tree settings and files.participants.timeout removed - there is no file tree (only the Open Editors pane).
+		// Vacha: explorer file-tree settings and files.participants.timeout removed - there is no file tree (only the Open Editors pane).
 		// Kept: openEditors.*, decorations.* (read by Open Editors) and copyPathSeparator (Copy Path lives on the tab context menu).
 		'explorer.openEditors.visible': {
 			'type': 'number',

@@ -982,7 +982,7 @@ export class WorkspaceService extends Disposable implements IWorkbenchConfigurat
 		return this.folderConfigFolderNames.get(folderUri) ?? FOLDER_CONFIG_FOLDER_NAME;
 	}
 
-	// Tond: `.vscode` is the only config folder, so nothing is probed on disk here.
+	// Vacha: `.vscode` is the only config folder, so nothing is probed on disk here.
 	private async resolveFolderConfigFolderName(folder: IWorkspaceFolder): Promise<string> {
 		return FOLDER_CONFIG_FOLDER_NAME;
 	}

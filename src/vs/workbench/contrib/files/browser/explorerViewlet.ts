@@ -60,7 +60,7 @@ export class ExplorerViewletViewsContribution extends Disposable implements IWor
 	private registerViews(): void {
 		mark('code/willRegisterExplorerViews');
 
-		// Tond: files-only — no file tree, no "no folder opened" placeholder.
+		// Vacha: files-only — no file tree, no "no folder opened" placeholder.
 		// Open Editors is the only view this contribution registers; Search
 		// is relocated in by the unified sidebar contribution.
 		const viewDescriptors = viewsRegistry.getViews(VIEW_CONTAINER);
@@ -78,7 +78,7 @@ export class ExplorerViewletViewsContribution extends Disposable implements IWor
 			name: OpenEditorsView.NAME,
 			ctorDescriptor: new SyncDescriptor(OpenEditorsView),
 			containerIcon: openEditorsViewIcon,
-			// Tond: Open Editors is the first accordion of the single Explorer
+			// Vacha: Open Editors is the first accordion of the single Explorer
 			// pane; visible but collapsed by default (see unifiedSidebar).
 			order: 10,
 			canToggleVisibility: true,
@@ -112,7 +112,7 @@ export class ExplorerViewPaneContainer extends ViewPaneContainer {
 		@ILogService logService: ILogService,
 	) {
 
-		// Tond: merging is off because the container has no title any more. If the
+		// Vacha: merging is off because the container has no title any more. If the
 		// last pane hid its own header there would be nothing left to right-click,
 		// and no way back to a hidden Open Editors.
 		super(VIEWLET_ID, { mergeViewWithContainerWhenSingleView: false }, instantiationService, configurationService, layoutService, contextMenuService, telemetryService, extensionService, themeService, storageService, contextService, viewDescriptorService, logService);
@@ -216,4 +216,4 @@ export const VIEW_CONTAINER: ViewContainer = viewContainerRegistry.registerViewC
 	},
 }, ViewContainerLocation.Sidebar, { isDefault: true });
 
-// Tond: the folder/workspace welcome content is removed with the file tree.
+// Vacha: the folder/workspace welcome content is removed with the file tree.

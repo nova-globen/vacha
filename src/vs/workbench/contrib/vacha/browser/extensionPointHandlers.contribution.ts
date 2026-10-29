@@ -12,7 +12,7 @@ import { TokenClassificationExtensionPoints } from '../../../services/themes/com
 import { CSSExtensionPoint } from '../../../services/themes/browser/cssExtensionPoint.js';
 
 /**
- * Tond: the upstream ExtensionPoints contribution lived in the deleted
+ * Vacha: the upstream ExtensionPoints contribution lived in the deleted
  * extension-host API layer (extensionHost.contribution.ts). These handlers
  * are what turn the *declarative* built-in extension manifests into editor
  * behavior — most critically LanguageConfigurationFileHandler, which loads
@@ -21,9 +21,9 @@ import { CSSExtensionPoint } from '../../../services/themes/browser/cssExtension
  * Without it, comment toggling and auto-closing silently die for all
  * languages while syntax highlighting keeps working.
  */
-class TondExtensionPointHandlers implements IWorkbenchContribution {
+class VachaExtensionPointHandlers implements IWorkbenchContribution {
 
-	static readonly ID = 'workbench.contrib.tondExtensionPointHandlers';
+	static readonly ID = 'workbench.contrib.vachaExtensionPointHandlers';
 
 	constructor(@IInstantiationService instantiationService: IInstantiationService) {
 		instantiationService.createInstance(LanguageConfigurationFileHandler);
@@ -34,4 +34,4 @@ class TondExtensionPointHandlers implements IWorkbenchContribution {
 	}
 }
 
-registerWorkbenchContribution2(TondExtensionPointHandlers.ID, TondExtensionPointHandlers, WorkbenchPhase.BlockRestore);
+registerWorkbenchContribution2(VachaExtensionPointHandlers.ID, VachaExtensionPointHandlers, WorkbenchPhase.BlockRestore);

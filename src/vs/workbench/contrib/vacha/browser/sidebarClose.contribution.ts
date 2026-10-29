@@ -13,21 +13,21 @@ import { registerIcon } from '../../../../platform/theme/common/iconRegistry.js'
 import { VIEW_ID as SEARCH_VIEW_ID } from '../../../services/search/common/search.js';
 import { OpenEditorsView } from '../../files/browser/views/openEditorsView.js';
 
-const sidebarCloseIcon = registerIcon('tond-sidebar-close', Codicon.close, localize('tondSidebarCloseIcon', 'Icon for the pane-header button that hides the sidebar.'));
+const sidebarCloseIcon = registerIcon('vacha-sidebar-close', Codicon.close, localize('vachaSidebarCloseIcon', 'Icon for the pane-header button that hides the sidebar.'));
 
 /**
- * Tond: the sidebar has no container title bar (`hasTitle: false`) and no
+ * Vacha: the sidebar has no container title bar (`hasTitle: false`) and no
  * activity bar, so without this there is no mouse affordance to close it.
  * The button rides each pane's own header (whichever pane is expanded shows
  * its header actions), on both sidebar panes: Open Editors and Search.
  */
-registerAction2(class TondCloseSidebarAction extends Action2 {
+registerAction2(class VachaCloseSidebarAction extends Action2 {
 
 	static readonly ID = 'tond.closeSidebar';
 
 	constructor() {
 		super({
-			id: TondCloseSidebarAction.ID,
+			id: VachaCloseSidebarAction.ID,
 			title: localize2('tond.closeSidebar', "Hide Sidebar"),
 			f1: false,
 			icon: sidebarCloseIcon,

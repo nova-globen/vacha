@@ -39,7 +39,7 @@ export class OpenFileAction extends Action2 {
 }
 
 // --- Actions Registration
-// Tond: files only — the folder/workspace actions above stay unregistered
+// Vacha: files only — the folder/workspace actions above stay unregistered
 // and their menu entries are gone. Open File is the whole story.
 
 registerAction2(OpenFileAction);

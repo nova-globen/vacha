@@ -188,7 +188,7 @@ export class PromptExtensionInstallFailureAction extends Action {
 				buttons: [{
 					label: localize('learn more', "Learn More"),
 					run: () => this.openerService.open('https://code.visualstudio.com/docs/editor/extension-marketplace#_the-extension-signature-cannot-be-verified-by-vs-code')
-				}, { // Tond: issue reporter removed; Report Issue button dropped
+				}, { // Vacha: issue reporter removed; Report Issue button dropped
 
 					label: localize('install donot verify', "Install Anyway (Don't Verify Signature)"),
 					run: () => {
@@ -208,7 +208,7 @@ export class PromptExtensionInstallFailureAction extends Action {
 
 		const downloadUrl = await this.getDownloadUrl();
 		if (downloadUrl) {
-			// Tond: no log viewer in this build, so no "check the log" link.
+			// Vacha: no log viewer in this build, so no "check the log" link.
 			promptChoices.push({
 				label: localize('download', "Try Downloading Manually..."),
 				run: () => this.openerService.open(downloadUrl).then(() => {

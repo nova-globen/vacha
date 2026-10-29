@@ -340,6 +340,6 @@ export class SnippetController2 implements IEditorContribution {
 
 registerEditorContribution(SnippetController2.ID, SnippetController2, EditorContributionInstantiation.Lazy);
 
-// Tond: jumpToNext/PrevSnippetPlaceholder, leaveSnippet and acceptSnippet are not
+// Vacha: jumpToNext/PrevSnippetPlaceholder, leaveSnippet and acceptSnippet are not
 // registered — inSnippetMode can never become true (nothing can insert a
 // placeholder snippet; word-based completions are plain text).

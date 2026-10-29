@@ -323,7 +323,7 @@ class PreferencesActionsContribution extends Disposable implements IWorkbenchCon
 				await accessor.get(IPreferencesService).openSettings({ jsonEditor: false, query: '@tag:accessibility' });
 			}
 		}));
-		// Tond: settings.filterUntrusted / settings.filterByTelemetry not registered —
+		// Vacha: settings.filterUntrusted / settings.filterByTelemetry not registered —
 		// the trust and telemetry settings they filter for were unregistered.
 
 		this.registerSettingsEditorActions();

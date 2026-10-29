@@ -108,7 +108,7 @@ const registry = Registry.as<IConfigurationRegistry>(Extensions.Configuration);
 registry.registerConfiguration({
 	...workbenchConfigurationNodeBase,
 	'properties': {
-		// Tond: workbench.settings.enableNaturalLanguageSearch removed (no online NL search service).
+		// Vacha: workbench.settings.enableNaturalLanguageSearch removed (no online NL search service).
 		'workbench.settings.settingsSearchTocBehavior': {
 			'type': 'string',
 			'enum': ['hide', 'filter'],

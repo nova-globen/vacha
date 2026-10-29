@@ -84,8 +84,8 @@ import './services/workingCopy/electron-browser/workingCopyHistoryService.js';
 import './services/userDataSync/browser/userDataSyncEnablementService.js';
 import './services/extensions/electron-browser/nativeExtensionService.js';
 import './contrib/debug/electron-browser/extensionHostDebugService.js';
-// Tond: the first-run shell-integration prompt is gone — the installer owns
-// "Open with Tond" and the PATH entry, both pointing at the forwarder shim.
+// Vacha: the first-run shell-integration prompt is gone — the installer owns
+// "Open with Vacha" and the PATH entry, both pointing at the forwarder shim.
 
 import '../platform/userDataProfile/electron-browser/userDataProfileStorageService.js';
 import './services/auxiliaryWindow/electron-browser/auxiliaryWindowService.js';

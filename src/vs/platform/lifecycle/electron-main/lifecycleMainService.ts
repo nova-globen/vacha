@@ -431,9 +431,9 @@ export class LifecycleMainService extends Disposable implements ILifecycleMainSe
 		const win = assertReturnsDefined(window.win);
 		windowListeners.add(Event.fromNodeEventEmitter<electron.Event>(win, 'close')(e => {
 
-			// Tond: closing the window hides it — the app stays resident so the
+			// Vacha: closing the window hides it — the app stays resident so the
 			// next open is a pipe write instead of a boot. Quitting (tray "Quit
-			// Tond", File > Exit, update/restart) is the only way through.
+			// Vacha", File > Exit, update/restart) is the only way through.
 			if (!this._quitRequested && !this.windowToCloseRequest.has(window.id)) {
 				this.trace(`Lifecycle#window.on('close') - hiding window ID ${window.id} (resident)`);
 				e.preventDefault();

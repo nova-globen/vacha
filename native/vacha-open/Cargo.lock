@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "tond-open"
-version = "1.1.1"
+name = "vacha-open"
+version = "1.1.2"

@@ -164,7 +164,7 @@ suite('EditorInput', () => {
 		fileEditorInput.dispose();
 	});
 
-	// Tond: MergeEditorInput test removed with the merge editor.
+	// Vacha: MergeEditorInput test removed with the merge editor.
 
 	test('Untyped inputs properly match UntitledTextEditorInput', () => {
 		const untitledModel = accessor.untitledTextEditorService.create({ associatedResource: { authority: '', path: '/path', fragment: '', query: '' } });

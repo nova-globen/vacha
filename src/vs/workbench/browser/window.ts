@@ -189,7 +189,7 @@ export abstract class BaseWindow extends Disposable {
 			(isMacintosh ? localize({ key: 'quitButtonLabel', comment: ['&& denotes a mnemonic'] }, "&&Quit") : localize({ key: 'exitButtonLabel', comment: ['&& denotes a mnemonic'] }, "&&Exit")) :
 			localize({ key: 'closeWindowButtonLabel', comment: ['&& denotes a mnemonic'] }, "&&Close Window");
 
-		// Tond: the "do not ask me again" checkbox is gone with the window.confirmBeforeClose setting.
+		// Vacha: the "do not ask me again" checkbox is gone with the window.confirmBeforeClose setting.
 		const res = await dialogService.confirm({
 			message,
 			primaryButton

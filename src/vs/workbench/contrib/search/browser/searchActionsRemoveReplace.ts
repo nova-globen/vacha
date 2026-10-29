@@ -218,7 +218,7 @@ registerAction2(class ReplaceAllAction extends Action2 {
 	}
 });
 
-// Tond: search.action.replaceAllInFolder not registered — active-file search
+// Vacha: search.action.replaceAllInFolder not registered — active-file search
 // never produces folder matches.
 
 //#endregion

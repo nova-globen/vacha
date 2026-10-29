@@ -159,7 +159,7 @@ import product from '../../platform/product/common/product.js';
 		'title': localize('windowConfigurationTitle', "Window"),
 		'type': 'object',
 		'properties': {
-			// Tond: window.restoreWindows / .newWindowDimensions / .openWithoutArgumentsInNewWindow / .nativeTabs removed - Tond is single-instance and never opens a second window.
+			// Vacha: window.restoreWindows / .newWindowDimensions / .openWithoutArgumentsInNewWindow / .nativeTabs removed - Vacha is single-instance and never opens a second window.
 			'window.startAtLogin': {
 				'type': 'boolean',
 				'default': true,
@@ -341,7 +341,7 @@ import product from '../../platform/product/common/product.js';
 				'markdownDescription': localize('security.promptForLocalFileProtocolHandling', 'If enabled, a dialog will ask for confirmation whenever a local file or workspace is about to open through a protocol handler.'),
 				'scope': ConfigurationScope.APPLICATION
 			}
-			// Tond: security.promptForRemoteFileProtocolHandling unregistered - no remote schemes can open, so its prompt path (electron-main app.ts) and the 'do not ask again' write (window.ts) are both unreachable.
+			// Vacha: security.promptForRemoteFileProtocolHandling unregistered - no remote schemes can open, so its prompt path (electron-main app.ts) and the 'do not ask again' write (window.ts) are both unreachable.
 		}
 	});
 })();

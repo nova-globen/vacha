@@ -132,7 +132,7 @@ class QuickDiffDecorator extends Disposable {
 			return;
 		}
 
-		// Tond: scm.diffDecorationsGutterPattern is unregistered, so the read yields `undefined`.
+		// Vacha: scm.diffDecorationsGutterPattern is unregistered, so the read yields `undefined`.
 		const pattern = this.configurationService.getValue<{ added: boolean; modified: boolean } | undefined>('scm.diffDecorationsGutterPattern');
 
 		const primaryQuickDiff = this.quickDiffModelRef.object.quickDiffs.find(quickDiff => quickDiff.kind === 'primary');

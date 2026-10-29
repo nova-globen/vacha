@@ -17,7 +17,7 @@ import { VIEWLET_ID as EXPLORER_VIEWLET_ID } from '../../files/common/files.js';
  */
 class DefaultSidebarViewContribution implements IWorkbenchContribution {
 
-	static readonly ID = 'workbench.contrib.tondDefaultSidebarView';
+	static readonly ID = 'workbench.contrib.vachaDefaultSidebarView';
 
 	private static readonly APPLIED_KEY = 'tond.defaultSidebarApplied';
 

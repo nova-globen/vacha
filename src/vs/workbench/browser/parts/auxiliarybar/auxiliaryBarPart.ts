@@ -243,7 +243,7 @@ export class AuxiliaryBarPart extends AbstractPaneCompositePart {
 		actions.push(...[
 			new Separator(),
 			new SubmenuAction('workbench.action.panel.position', localize('activity bar position', "Activity Bar Position"), positionActions),
-			// Tond: no "Hide Secondary Side Bar" and no labels toggle — those commands and settings are gone.
+			// Vacha: no "Hide Secondary Side Bar" and no labels toggle — those commands and settings are gone.
 			toAction({ id: ToggleSidebarPositionAction.ID, label: currentPositionRight ? localize('move second side bar left', "Move Secondary Side Bar Left") : localize('move second side bar right', "Move Secondary Side Bar Right"), run: () => this.commandService.executeCommand(ToggleSidebarPositionAction.ID) })
 		]);
 	}

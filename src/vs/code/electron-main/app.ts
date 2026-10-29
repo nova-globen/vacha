@@ -199,7 +199,7 @@ export class CodeApplication extends Disposable {
 			return false;
 		});
 
-		// Tond: no screen sharing — the `setDisplayMediaRequestHandler` and the
+		// Vacha: no screen sharing — the `setDisplayMediaRequestHandler` and the
 		// `screen` topology listeners that fed its source cache are gone.
 
 		//#endregion
@@ -209,7 +209,7 @@ export class CodeApplication extends Disposable {
 		// Block all SVG requests from unsupported origins
 		const supportedSvgSchemes = new Set([Schemas.file, Schemas.vscodeFileResource, Schemas.vscodeRemoteResource, Schemas.vscodeManagedRemoteResource, 'devtools']);
 
-		// Tond: there are no webviews, so the only safe SVG context left is XHR.
+		// Vacha: there are no webviews, so the only safe SVG context left is XHR.
 		const isSvgRequestFromSafeContext = (details: Electron.OnBeforeRequestListenerDetails | Electron.OnHeadersReceivedListenerDetails): boolean => {
 			return details.resourceType === 'xhr';
 		};
@@ -502,7 +502,7 @@ export class CodeApplication extends Disposable {
 			}
 		});
 
-		// Tond: these ids only ever feed telemetry, which this product does not
+		// Vacha: these ids only ever feed telemetry, which this product does not
 		// have (`supportsTelemetry()` is false). Resolving them cost three state
 		// reads (and a device-id probe) before the first window could open.
 		const machineId = '';
@@ -900,7 +900,7 @@ export class CodeApplication extends Disposable {
 	private async initServices(machineId: string, sqmId: string, devDeviceId: string, sharedProcessReady: Promise<MessagePortClient>): Promise<IInstantiationService> {
 		const services = new ServiceCollection();
 
-		// Update (Tond checks for updates in the workbench; nothing installs them)
+		// Update (Vacha checks for updates in the workbench; nothing installs them)
 		services.set(IUpdateService, new DisabledUpdateService());
 
 		// Windows
@@ -979,7 +979,7 @@ export class CodeApplication extends Disposable {
 		services.set(ICSSDevelopmentService, new SyncDescriptor(CSSDevelopmentService, undefined, true));
 
 		// Init services that require it
-		// Tond: `workspacesManagementMainService.initialize()` is not awaited here
+		// Vacha: `workspacesManagementMainService.initialize()` is not awaited here
 		// anymore — untitled workspaces cannot be created, so it has nothing to do.
 		await backupMainService.initialize();
 
@@ -1215,10 +1215,10 @@ export class CodeApplication extends Disposable {
 			initWindowsVersionInfo();
 		}
 
-		// Tond: tray icon (the only full exit)
+		// Vacha: tray icon (the only full exit)
 		this.installTray();
 
-		// Tond: icons for file types the user sent to Tond with "Choose another app",
+		// Vacha: icons for file types the user sent to Vacha with "Choose another app",
 		// and the start-at-login registration. Vacha's Store package declares its
 		// file types and startup task in its manifest instead.
 		if (!this.productService.win32StorePackage) {
@@ -1243,7 +1243,7 @@ export class CodeApplication extends Disposable {
 		}
 	}
 
-	// Tond: closing the window only hides it, so the tray is the one place the
+	// Vacha: closing the window only hides it, so the tray is the one place the
 	// app can be fully quit from (besides File > Exit).
 	private tray: Tray | undefined;
 
@@ -1253,7 +1253,7 @@ export class CodeApplication extends Disposable {
 		}
 
 		try {
-			const iconPath = join(this.environmentMainService.appRoot, 'resources', 'win32', 'tond-tray.ico');
+			const iconPath = join(this.environmentMainService.appRoot, 'resources', 'win32', 'vacha-tray.ico');
 			const tray = this.tray = new Tray(iconPath);
 			Event.once(this.lifecycleMainService.onWillShutdown)(() => tray.destroy());
 
@@ -1277,7 +1277,7 @@ export class CodeApplication extends Disposable {
 		}
 	}
 
-	// Tond: resident mode wants the app there before the first file of the day.
+	// Vacha: resident mode wants the app there before the first file of the day.
 	// Default ON; the setting is honoured on every boot and on change.
 	private updateStartAtLogin(): void {
 		if (!isWindows || !this.environmentMainService.isBuilt) {

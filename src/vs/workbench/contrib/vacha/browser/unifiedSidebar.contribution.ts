@@ -15,7 +15,7 @@ import { VIEWLET_ID as EXPLORER_VIEWLET_ID, VIEW_ID as EXPLORER_VIEW_ID } from '
 import { OpenEditorsView } from '../../files/browser/views/openEditorsView.js';
 import { VIEW_ID as SEARCH_VIEW_ID } from '../../../services/search/common/search.js';
 
-/** Views that Tond gathers into the single Explorer sidebar pane, in order.
+/** Views that Vacha gathers into the single Explorer sidebar pane, in order.
  * (Git/SCM removed — Search is the only relocated view.) */
 const RELOCATED_VIEW_IDS = [SEARCH_VIEW_ID];
 
@@ -36,7 +36,7 @@ const DEFAULT_SIZE_WEIGHTS: Record<string, number> = {
 };
 
 /**
- * Tond presents a single Explorer sidebar pane: the Search view and the three
+ * Vacha presents a single Explorer sidebar pane: the Search view and the three
  * Source Control views (Repositories, Changes, Graph) are moved out of their
  * own containers and into the Explorer container, so there is only one sidebar
  * tab (which the hidden activity bar then drops entirely). View order,
@@ -46,7 +46,7 @@ const DEFAULT_SIZE_WEIGHTS: Record<string, number> = {
  */
 class UnifiedSidebarContribution extends Disposable implements IWorkbenchContribution {
 
-	static readonly ID = 'workbench.contrib.tondUnifiedSidebar';
+	static readonly ID = 'workbench.contrib.vachaUnifiedSidebar';
 
 	private static readonly SIZING_APPLIED_KEY = 'tond.unifiedSidebarSizingApplied';
 

@@ -144,7 +144,7 @@ Registry.as<IConfigurationRegistry>(Extensions.Configuration).registerConfigurat
 			type: 'boolean',
 			default: true
 		},
-		// Tond: breadcrumbs symbol settings (symbolPath/symbolSortOrder/symbolPathSeparator + 28 show* kinds) removed - no document symbol provider exists.
+		// Vacha: breadcrumbs symbol settings (symbolPath/symbolSortOrder/symbolPathSeparator + 28 show* kinds) removed - no document symbol provider exists.
 	}
 });
 

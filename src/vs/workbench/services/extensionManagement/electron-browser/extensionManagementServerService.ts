@@ -12,7 +12,7 @@ export class ExtensionManagementServerService extends Disposable implements IExt
 
 	declare readonly _serviceBrand: undefined;
 
-	// Tond: no extension management exists — nothing can be installed, and the
+	// Vacha: no extension management exists — nothing can be installed, and the
 	// grammars/themes are scanned in the renderer. Registering the shared
 	// process backed local server was the last thing that SPAWNED the shared
 	// process on boot (its channel client subscribes to install events in its

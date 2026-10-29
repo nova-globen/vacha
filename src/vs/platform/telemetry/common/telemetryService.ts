@@ -338,7 +338,7 @@ configurationRegistry.registerConfiguration({
 				}
 			}
 		},
-		// Tond: telemetry.feedback.enabled removed - no issue reporter and no survey endpoints.
+		// Vacha: telemetry.feedback.enabled removed - no issue reporter and no survey endpoints.
 		// Deprecated telemetry setting
 		[TELEMETRY_OLD_SETTING_ID]: {
 			'type': 'boolean',

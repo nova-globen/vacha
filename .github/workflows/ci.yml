@@ -1,0 +1,93 @@
+name: ci
+
+# Checks every change on push, pull request and dispatch. The name checks run in this public repository; the
+# Windows build also runs elsewhere, but only when started by hand.
+#
+#   names  - no private host name and no old product name in the published tree
+#   build  - a clean install, a minified Windows package with the forwarder shim, the type check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  names:
+    if: github.repository == 'nova-globen/vacha'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      # The terms are assembled at run time from fragments, so this file never matches itself.
+      # Word boundaries on the stems, so a word merely containing one does not hit.
+      - name: no private host name
+        shell: bash
+        run: |
+          h="di""da""bit"
+          if git grep -nIiE "${h}" -- . ':!**/*.lock' ':!**/package-lock.json'; then
+            echo "::error::the private host name is in the published tree"
+            exit 1
+          fi
+      - name: no other product's old names
+        shell: bash
+        run: |
+          s="di""da"
+          if git grep -nIiE "\\b${s}(core|deck|bin|game|code)?\\b" -- . ':!**/*.lock' ':!**/package-lock.json'; then
+            echo "::error::an old product name is in the published tree"
+            exit 1
+          fi
+      - name: no old name of this product (named exceptions)
+        shell: bash
+        run: |
+          t="to""nd"
+          # Each excluded file names the product's 1.0.0 name on purpose:
+          #   README.md                         the upgrade note for users of the 1.0.0 release
+          #   build/win32/vacha-setup.iss       the installer upgrades a 1.0.0 install in place and cleans up after it
+          #   src/main.ts                       first start carries the 1.0.0 settings folders over
+          #   native/vacha-open/src/icons.rs    file types sent to the 1.0.0 forwarder are pointed at the new one
+          #   .../updateCheck.contribution.ts   persisted storage keys and a command id (users' state, keybindings)
+          #   .../defaultSidebar.contribution.ts, unifiedSidebar.contribution.ts   persisted storage keys
+          #   .../sidebarClose.contribution.ts  a command id (users' keybindings)
+          #   .../markdownPreview.contribution.ts  command ids and the editor ids that restore open preview tabs
+          #   .../imagePreview.contribution.ts  command ids (users' keybindings)
+          if git grep -nIiE "\\b${t}\\b" -- . ':!**/*.lock' ':!**/package-lock.json' \
+            ':!README.md' \
+            ':!build/win32/vacha-setup.iss' \
+            ':!src/main.ts' \
+            ':!native/vacha-open/src/icons.rs' \
+            ':!src/vs/workbench/contrib/vacha/browser/updateCheck.contribution.ts' \
+            ':!src/vs/workbench/contrib/vacha/browser/defaultSidebar.contribution.ts' \
+            ':!src/vs/workbench/contrib/vacha/browser/unifiedSidebar.contribution.ts' \
+            ':!src/vs/workbench/contrib/vacha/browser/sidebarClose.contribution.ts' \
+            ':!src/vs/workbench/contrib/markdownPreview/browser/markdownPreview.contribution.ts' \
+            ':!src/vs/workbench/contrib/imagePreview/browser/imagePreview.contribution.ts'; then
+            echo "::error::the product's old name is in the published tree outside the named exceptions"
+            exit 1
+          fi
+
+  build:
+    if: github.repository == 'nova-globen/vacha' || github.event_name == 'workflow_dispatch'
+    runs-on: windows-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - name: Package (clean install, minified, with the forwarder shim and the SBOM)
+        # -CleanInstall runs npm ci and rebuilds the one native module for Electron (npm ignores .npmrc's runtime)
+        shell: pwsh
+        run: ./scripts/release.ps1 -Arch x64 -CleanInstall -NoZip
+      - name: Type check
+        shell: pwsh
+        run: |
+          npm run typecheck-client
+          if ($LASTEXITCODE -ne 0) { throw 'type check failed' }

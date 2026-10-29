@@ -100,7 +100,7 @@ async function getMacMachineId(errorLogger: (error: Error) => void): Promise<str
 	}
 }
 
-// Tond sends no telemetry: no SQM id is read and the device id is a random
+// Vacha sends no telemetry: no SQM id is read and the device id is a random
 // one (the native @vscode/deviceid and windows-registry modules are gone)
 export async function getSqmMachineId(errorLogger: (error: Error) => void): Promise<string> {
 	return '';

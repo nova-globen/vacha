@@ -95,7 +95,7 @@ if (portable.isPortable) {
 }
 
 // Register custom schemes with privileges
-// Tond: `vscode-file` is the only scheme left — there are no webviews and no
+// Vacha: `vscode-file` is the only scheme left — there are no webviews and no
 // remote, so their schemes are not registered any more.
 protocol.registerSchemesAsPrivileged([
 	{
@@ -434,7 +434,7 @@ function createDefaultArgvConfigSync(argvConfigPath: string): void {
 }
 
 /**
- * Vacha was called Tond until 1.1.0. On the first start after the rename, the
+ * Vacha was called Tond up to 1.0.0. On the first start after the rename, the
  * user's data moves to the new folder names: settings, keybindings and session
  * state (%APPDATA%\Tond), argv.json (~\.tond) and the shared storage
  * (~\.tond-shared). A folder moves only when the new one does not exist yet,

@@ -416,7 +416,7 @@ export class SearchViewModelWorkbenchService implements ISearchViewModelWorkbenc
 		this._searchModel = searchModel;
 	}
 
-	// Tond: swap the active model WITHOUT disposing the previous one — the
+	// Vacha: swap the active model WITHOUT disposing the previous one — the
 	// search view retains per-file models and re-attaches them on tab switch.
 	swapSearchModel(searchModel: SearchModelImpl): SearchModelImpl | null {
 		const previous = this._searchModel;

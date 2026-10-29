@@ -2207,7 +2207,7 @@ class EditorGoToLocation extends BaseEditorOption<EditorOption.gotoLocation, IGo
 			alternativeTestsCommand: '',
 		};
 		super(
-			// Tond: gotoLocation settings unregistered - no definition/declaration/type-definition/implementation/reference providers exist.
+			// Vacha: gotoLocation settings unregistered - no definition/declaration/type-definition/implementation/reference providers exist.
 			EditorOption.gotoLocation, 'gotoLocation', defaults
 		);
 	}
@@ -3023,7 +3023,7 @@ class EditorLightbulb extends BaseEditorOption<EditorOption.lightbulb, IEditorLi
 	constructor() {
 		const defaults: EditorLightbulbOptions = { enabled: ShowLightbulbIconMode.OnCode };
 		super(
-			// Tond: editor.lightbulb.enabled schema unregistered - no code-action provider can exist, so the lightbulb can never appear.
+			// Vacha: editor.lightbulb.enabled schema unregistered - no code-action provider can exist, so the lightbulb can never appear.
 			EditorOption.lightbulb, 'lightbulb', defaults
 		);
 	}
@@ -3164,7 +3164,7 @@ class EditorInlayHints extends BaseEditorOption<EditorOption.inlayHints, IEditor
 	constructor() {
 		const defaults: EditorInlayHintsOptions = { enabled: 'on', fontSize: 0, fontFamily: '', padding: false, maximumLength: 43 };
 		super(
-			// Tond: inlayHints settings unregistered - no inlay hints provider exists.
+			// Vacha: inlayHints settings unregistered - no inlay hints provider exists.
 			EditorOption.inlayHints, 'inlayHints', defaults
 		);
 	}
@@ -3565,7 +3565,7 @@ class EditorParameterHints extends BaseEditorOption<EditorOption.parameterHints,
 			cycle: true
 		};
 		super(
-			// Tond: parameterHints settings unregistered - no signature help provider exists.
+			// Vacha: parameterHints settings unregistered - no signature help provider exists.
 			EditorOption.parameterHints, 'parameterHints', defaults
 		);
 	}
@@ -4440,7 +4440,7 @@ class InlineEditorSuggest extends BaseEditorOption<EditorOption.inlineSuggest, I
 		};
 
 		super(
-			// Tond: editor.inlineSuggest.* schemas unregistered - no inline-completion provider can exist; the defaults still drive the ghost-text preview fed by editor.suggest.preview.
+			// Vacha: editor.inlineSuggest.* schemas unregistered - no inline-completion provider can exist; the defaults still drive the ghost-text preview fed by editor.suggest.preview.
 			EditorOption.inlineSuggest, 'inlineSuggest', defaults
 		);
 	}
@@ -4982,7 +4982,7 @@ class EditorSuggest extends BaseEditorOption<EditorOption.suggest, ISuggestOptio
 					default: true,
 					markdownDescription: nls.localize('editor.suggest.showTexts', "When enabled IntelliSense shows `text`-suggestions.")
 				},
-				// Tond: editor.suggest.showSnippets schema unregistered - the snippets contrib is out, so no snippet completions exist.
+				// Vacha: editor.suggest.showSnippets schema unregistered - the snippets contrib is out, so no snippet completions exist.
 			}
 		);
 	}
@@ -5280,7 +5280,7 @@ class EditorDropIntoEditor extends BaseEditorOption<EditorOption.dropIntoEditor,
 	constructor() {
 		const defaults: EditorDropIntoEditorOptions = { enabled: true, showDropSelector: 'afterDrop' };
 		super(
-			// Tond: editor.dropIntoEditor.* schemas unregistered - provider-based smart drop cannot trigger (dropOrPasteInto contrib is out); plain drag-and-drop is unaffected.
+			// Vacha: editor.dropIntoEditor.* schemas unregistered - provider-based smart drop cannot trigger (dropOrPasteInto contrib is out); plain drag-and-drop is unaffected.
 			EditorOption.dropIntoEditor, 'dropIntoEditor', defaults
 		);
 	}
@@ -5328,7 +5328,7 @@ class EditorPasteAs extends BaseEditorOption<EditorOption.pasteAs, IPasteAsOptio
 	constructor() {
 		const defaults: EditorPasteAsOptions = { enabled: true, showPasteSelector: 'afterPaste' };
 		super(
-			// Tond: editor.pasteAs.* schemas unregistered - provider-based smart paste cannot trigger (dropOrPasteInto contrib is out); plain paste is unaffected.
+			// Vacha: editor.pasteAs.* schemas unregistered - provider-based smart paste cannot trigger (dropOrPasteInto contrib is out); plain paste is unaffected.
 			EditorOption.pasteAs, 'pasteAs', defaults
 		);
 	}
@@ -5710,7 +5710,7 @@ export const EditorOptions = {
 		EditorOption.stickyTabStops, 'stickyTabStops', false,
 		{ description: nls.localize('stickyTabStops', "Emulate selection behavior of tab characters when using spaces for indentation. Selection will stick to tab stops.") }
 	)),
-	// Tond: codeLens schemas removed - no CodeLens provider exists.
+	// Vacha: codeLens schemas removed - no CodeLens provider exists.
 	codeLens: register(new EditorBooleanOption(
 		EditorOption.codeLens, 'codeLens', true
 	)),
@@ -5718,7 +5718,7 @@ export const EditorOptions = {
 		EditorOption.codeLensFontFamily, 'codeLensFontFamily', ''
 	)),
 	codeLensFontSize: register(new EditorIntOption(EditorOption.codeLensFontSize, 'codeLensFontSize', 0, 0, 100)),
-	// Tond: editor.colorDecorators* schemas unregistered - no DocumentColorProvider can exist; the options keep their defaults.
+	// Vacha: editor.colorDecorators* schemas unregistered - no DocumentColorProvider can exist; the options keep their defaults.
 	colorDecorators: register(new EditorBooleanOption(
 		EditorOption.colorDecorators, 'colorDecorators', true,
 	)),
@@ -5912,7 +5912,7 @@ export const EditorOptions = {
 	fontSize: register(new EditorFontSize()),
 	fontWeight: register(new EditorFontWeight()),
 	fontVariations: register(new EditorFontVariations()),
-	// Tond: formatOnPaste/formatOnType schemas removed - no formatting provider exists.
+	// Vacha: formatOnPaste/formatOnType schemas removed - no formatting provider exists.
 	formatOnPaste: register(new EditorBooleanOption(
 		EditorOption.formatOnPaste, 'formatOnPaste', false
 	)),
@@ -6223,7 +6223,7 @@ export const EditorOptions = {
 	snippetSuggestions: register(new EditorStringEnumOption(
 		EditorOption.snippetSuggestions, 'snippetSuggestions',
 		'inline' as 'top' | 'bottom' | 'inline' | 'none',
-		// Tond: editor.snippetSuggestions schema unregistered - the snippets contrib is out, so no snippet completions exist.
+		// Vacha: editor.snippetSuggestions schema unregistered - the snippets contrib is out, so no snippet completions exist.
 		['top', 'bottom', 'inline', 'none'] as const,
 	)),
 	smartSelect: register(new SmartSelect()),

@@ -76,8 +76,8 @@ const editorConfiguration: IConfigurationNode = {
 			description: nls.localize('wordBasedSuggestions', "Controls whether completions should be computed based on words in the document and from which documents they are computed."),
 			experiment: { mode: 'auto' },
 		},
-		// Tond: editor.semanticHighlighting.enabled removed - no semantic tokens provider exists.
-		// Tond: editor.stablePeek removed - nothing can open a peek widget (no reference/definition providers, marker peek gone).
+		// Vacha: editor.semanticHighlighting.enabled removed - no semantic tokens provider exists.
+		// Vacha: editor.stablePeek removed - nothing can open a peek widget (no reference/definition providers, marker peek gone).
 		'editor.maxTokenizationLineLength': {
 			type: 'integer',
 			default: 20_000,
@@ -186,7 +186,7 @@ const editorConfiguration: IConfigurationNode = {
 			description: nls.localize('renderIndicators', "Controls whether the diff editor shows +/- indicators for added/removed changes."),
 			agentsWindow: { default: false },
 		},
-		// Tond: diffEditor.codeLens removed - no CodeLens provider exists.
+		// Vacha: diffEditor.codeLens removed - no CodeLens provider exists.
 		'diffEditor.wordWrap': {
 			type: 'string',
 			enum: ['off', 'on', 'inherit'],

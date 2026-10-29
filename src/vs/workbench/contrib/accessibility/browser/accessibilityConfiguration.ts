@@ -41,7 +41,7 @@ export const enum ViewDimUnfocusedOpacityProperties {
 	Maximum = 1
 }
 
-// Tond: verbosity ids for removed features are unregistered; enum members kept only where live
+// Vacha: verbosity ids for removed features are unregistered; enum members kept only where live
 // code (in or out of closure) still compiles against them.
 export const enum AccessibilityVerbositySettingId {
 	DiffEditor = 'accessibility.verbosity.diffEditor',
@@ -142,7 +142,7 @@ const configuration: IConfigurationNode = {
 			description: localize('verbosity.find', 'Provide information about how to access the find accessibility help menu when the find input is focused.'),
 			...baseVerbosityProperty
 		},
-		// Tond: accessibility.signals.* for removed features (markers/errors/warnings, breakpoints/debug, inlay hints, format, terminal, tasks, notebooks, chat/edits, voice) and the error/warning position delays are no longer registered - nothing can raise those events.
+		// Vacha: accessibility.signals.* for removed features (markers/errors/warnings, breakpoints/debug, inlay hints, format, terminal, tasks, notebooks, chat/edits, voice) and the error/warning position delays are no longer registered - nothing can raise those events.
 		'accessibility.signalOptions.volume': {
 			'description': localize('accessibility.signalOptions.volume', "The volume of the sounds in percent (0-100)."),
 			'type': 'number',
@@ -338,7 +338,7 @@ export { AccessibilityVoiceSettingId };
 
 export const SpeechTimeoutDefault = 0;
 
-// Tond: DynamicSpeechAccessibilityConfiguration removed - the accessibility.voice.* settings only ever registered behind a speech provider, which requires extensions.
+// Vacha: DynamicSpeechAccessibilityConfiguration removed - the accessibility.voice.* settings only ever registered behind a speech provider, which requires extensions.
 
 Registry.as<IConfigurationMigrationRegistry>(WorkbenchExtensions.ConfigurationMigration)
 	.registerConfigurationMigrations([{

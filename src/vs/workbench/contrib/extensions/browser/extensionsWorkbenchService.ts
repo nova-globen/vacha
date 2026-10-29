@@ -514,7 +514,7 @@ ${this.description}
 		}
 
 		if (this.type === ExtensionType.System) {
-			return Promise.resolve(`Please check the [VS Code Release Notes](command:update.showCurrentReleaseNotes) for changes to the built-in extensions.`); // Tond: upstream update contrib removed
+			return Promise.resolve(`Please check the [VS Code Release Notes](command:update.showCurrentReleaseNotes) for changes to the built-in extensions.`); // Vacha: upstream update contrib removed
 		}
 
 		return Promise.reject(new Error('not available'));

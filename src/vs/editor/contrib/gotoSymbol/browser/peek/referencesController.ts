@@ -315,11 +315,11 @@ function withController(accessor: ServicesAccessor, fn: (controller: ReferencesC
 	}
 }
 
-// Tond: togglePeekWidgetFocus, goToNextReference and goToPreviousReference are
+// Vacha: togglePeekWidgetFocus, goToNextReference and goToPreviousReference are
 // not registered — the references peek can never open for a user (no providers,
 // peek only reachable via arg-taking API commands). Frees Ctrl+K F2, F4, Shift+F4.
 
-// Tond: the goToNext/PreviousReferenceFromEmbeddedEditor aliases went with their targets.
+// Vacha: the goToNext/PreviousReferenceFromEmbeddedEditor aliases went with their targets.
 
 // close
 CommandsRegistry.registerCommandAlias('closeReferenceSearchEditor', 'closeReferenceSearch');
@@ -350,7 +350,7 @@ KeybindingsRegistry.registerKeybindingRule({
 });
 
 
-// Tond: revealReference and openReferenceToSide are not registered — same
+// Vacha: revealReference and openReferenceToSide are not registered — same
 // never-openable references peek (frees Enter/Ctrl+Enter in that scope).
 
 CommandsRegistry.registerCommand('openReference', (accessor) => {

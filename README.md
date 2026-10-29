@@ -11,23 +11,27 @@ does. Measured on a desktop PC (Ryzen 9 9950X3D, Windows 11 x64), it starts
 in about 0.7 s, and once Vacha is running a file opens in about 0.14 s
 (medians of 5 runs on 2026-10-23; method under [Measuring startup](#measuring-startup)).
 
-Version 1.1.0 · Windows arm64 and x64 · called Tond up to 1.0.0
+Version 1.1.2 · Windows x64 · called Tond up to 1.0.0
 
-**Website:** <https://nova-globen.se/vacha> · **Issues:**
-<https://nova-globen.se/vacha/issues>
+**Website:** <https://nova-globen.se/products/vacha> · **Issues:**
+<https://nova-globen.se/products/vacha/issues>
 
 ## Install
 
-Download the latest release (Windows 10/11, x64):
+From the **Microsoft Store**: <https://apps.microsoft.com/detail/9NSCM5WH4WF1>
+(signed by Microsoft; the Store keeps it up to date).
 
-- Installer: <https://dl.didabit.com/vacha/latest/vacha-setup-x64.exe>
-- Zip: <https://dl.didabit.com/vacha/latest/vacha-win32-x64.zip>
-- Checksums: <https://dl.didabit.com/vacha/latest/SHA256SUMS> and the SBOM
-  <https://dl.didabit.com/vacha/latest/vacha-sbom.cdx.json>
+Or download the latest release (Windows 10/11, x64) from GitHub:
 
-Each version also stays at `https://dl.didabit.com/vacha/<version>/`. The
-files are not code-signed yet, so Windows SmartScreen asks before the first
-run.
+- Installer: <https://github.com/nova-globen/vacha/releases/latest/download/vacha-setup-x64.exe>
+- Zip: <https://github.com/nova-globen/vacha/releases/latest/download/vacha-win32-x64.zip>
+- Checksums: <https://github.com/nova-globen/vacha/releases/latest/download/SHA256SUMS>
+  and the SBOM <https://github.com/nova-globen/vacha/releases/latest/download/vacha-sbom.cdx.json>
+
+Every version stays on the releases page,
+<https://github.com/nova-globen/vacha/releases>. The downloaded files are not
+code-signed yet, so Windows SmartScreen asks before the first run. The Store
+version and a downloaded one keep separate settings.
 
 - **Installer** — registers `Vacha.exe`, the `vacha` CLI shim on `PATH`, the
   `vacha://` URL protocol, the "Open with Vacha" entry for any file, and the
@@ -132,7 +136,7 @@ npm run gulp -- vscode-win32-arm64      # package into dist\win32-arm64
 Build the forwarder shim separately:
 
 ```powershell
-cargo build --release --manifest-path native\tond-open\Cargo.toml
+cargo build --release --manifest-path native\vacha-open\Cargo.toml
 ```
 
 Use `npm run typecheck-client` to check your work. This fork does not use

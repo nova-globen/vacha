@@ -25,7 +25,7 @@ export default new class ApiProviderNaming implements eslint.Rule.RuleModule {
 		try {
 			const packageJson = JSON.parse(readFileSync(join(import.meta.dirname, '../package.json'), 'utf-8'));
 			const { dependencies, optionalDependencies } = packageJson;
-			// Tond: package.json has no optionalDependencies since the trim
+			// Vacha: package.json has no optionalDependencies since the trim
 			const all = Object.keys(dependencies ?? {}).concat(Object.keys(optionalDependencies ?? {}));
 			for (const key of all) {
 				modules.add(key);

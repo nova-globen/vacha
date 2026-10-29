@@ -153,7 +153,7 @@ export class PanelPart extends AbstractPaneCompositePart {
 	}
 
 	private fillExtraContextMenuActions(actions: IAction[]): void {
-		// Tond: only the views submenu — the panel position/alignment commands and the labels setting are gone.
+		// Vacha: only the views submenu — the panel position/alignment commands and the labels setting are gone.
 		if (this.getCompositeBarPosition() === CompositeBarPosition.TITLE) {
 			const viewsSubmenuAction = this.getViewsSubmenuAction();
 			if (viewsSubmenuAction) {

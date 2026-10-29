@@ -84,7 +84,7 @@ export enum SearchViewPosition {
 	Panel
 }
 
-// Tond: query state (pattern, replace text, toggles) is per-file and in-memory
+// Vacha: query state (pattern, replace text, toggles) is per-file and in-memory
 // only — deliberately NOT persisted across restarts. Only genuinely view-level
 // bits survive in the memento.
 interface ISearchViewState {
@@ -95,7 +95,7 @@ interface ISearchViewState {
 }
 
 /**
- * Tond: everything the Search pane shows for one file — widget state plus the
+ * Vacha: everything the Search pane shows for one file — widget state plus the
  * retained result model (undefined while the file has no results to keep).
  */
 interface IPerFileSearchState {
@@ -151,14 +151,14 @@ export class SearchView extends ViewPane {
 	private searchWidget!: SearchWidget;
 	private size!: dom.Dimension;
 
-	// Tond: in the single Explorer pane the Search accordion collapses to just
+	// Vacha: in the single Explorer pane the Search accordion collapses to just
 	// its input widgets when there are no results and grows once a search runs.
 	private didAutoExpandForResults = false;
 	private autoExpanding = false;
 	private readonly relaxAutoHeightFloor = this._register(new MutableDisposable<IDisposable>());
 	private resultsElement!: HTMLElement;
 
-	// Tond: per-file Search pane state — each open file keeps its own query,
+	// Vacha: per-file Search pane state — each open file keeps its own query,
 	// options, and result model; switching tabs swaps the whole pane content.
 	// In-memory only (discarded on restart), capped LRU-style.
 	private static readonly MAX_PER_FILE_SEARCH_STATES = 20;
@@ -382,14 +382,14 @@ export class SearchView extends ViewPane {
 		this.searchWidgetsContainerElement = dom.append(this.container, $('.search-widgets-container'));
 		this.createSearchWidget(this.searchWidgetsContainerElement);
 
-		// Tond: no include/exclude ('query details') UI — the search scope is
+		// Vacha: no include/exclude ('query details') UI — the search scope is
 		// always the active file, so those inputs cannot do anything here.
 
 		this.messagesElement = dom.append(this.container, $('.messages.text-search-provider-messages'));
 
 		this.createSearchResultsView(this.container);
 
-		// Tond: per-file search state starts keyed to whichever file is active
+		// Vacha: per-file search state starts keyed to whichever file is active
 		this.currentStateKey = this.editorService.activeEditor?.resource?.toString();
 
 		this._onSearchResultChangedDisposable = this._register(this.viewModel.onSearchResultChanged(async (event) => await this.onSearchResultsChanged(event)));
@@ -437,7 +437,7 @@ export class SearchView extends ViewPane {
 	}
 
 	private createSearchWidget(container: HTMLElement): void {
-		// Tond: the query itself (pattern, replace text, toggles) is per-file
+		// Vacha: the query itself (pattern, replace text, toggles) is per-file
 		// and in-memory only — the widgets always start empty after a restart.
 		const history = this.searchHistoryService.load();
 		const searchHistory = history.search || [];
@@ -467,7 +467,7 @@ export class SearchView extends ViewPane {
 		}
 
 		this._register(this.searchWidget.onSearchSubmit(options => {
-			// Tond: semantic/AI search is removed - always a plain text query.
+			// Vacha: semantic/AI search is removed - always a plain text query.
 			this.triggerQueryChange({
 				...options,
 				shouldKeepAIResults: false,
@@ -833,7 +833,7 @@ export class SearchView extends ViewPane {
 
 		// Setup cursor position monitoring to clear selected match when cursor moves
 		this._register(this.editorService.onDidActiveEditorChange(() => {
-			// Tond: swap the pane to the newly active file's own search state
+			// Vacha: swap the pane to the newly active file's own search state
 			this.onActiveEditorChangedForSearchState();
 
 			const editor = getCodeEditor(this.editorService.activeTextEditorControl);
@@ -1197,7 +1197,7 @@ export class SearchView extends ViewPane {
 		}
 		this.viewModel.cancelSearch();
 		this.viewModel.cancelAISearch();
-		// Tond: clearing is a discard — drop the active file's cached state too
+		// Vacha: clearing is a discard — drop the active file's cached state too
 		if (this.currentStateKey !== undefined) {
 			this.deleteSearchStateForFile(this.currentStateKey);
 		}
@@ -1338,10 +1338,10 @@ export class SearchView extends ViewPane {
 			extraFileResources: this.instantiationService.invokeFunction(getOutOfWorkspaceEditorResources),
 			maxResults: this.searchConfig.maxResults ?? undefined,
 			ignoreGlobCase: !isLinux || undefined,
-			// Tond: no include/exclude UI — excludes and ignore files always apply
+			// Vacha: no include/exclude UI — excludes and ignore files always apply
 			excludePattern: [],
 			includePattern: '',
-			// Tond: the search pane searches ONLY the active file
+			// Vacha: the search pane searches ONLY the active file
 			onlyFileResources: this.getActiveFileResources(),
 			previewOptions: {
 				matchLines: 1,
@@ -1481,7 +1481,7 @@ export class SearchView extends ViewPane {
 
 
 		if (!allResults) {
-			// Tond: no include/exclude UI — only the plain message variants remain
+			// Vacha: no include/exclude UI — only the plain message variants remain
 			const message = !completed
 				? SEARCH_CANCELLED_MESSAGE
 				: nls.localize('noResultsFound', "No results found. Review your configured exclusions and check your gitignore files - ");
@@ -1636,13 +1636,13 @@ export class SearchView extends ViewPane {
 
 	private onOpenSettings(e: dom.EventLike): void {
 		dom.EventHelper.stop(e, false);
-		// Tond: only files.exclude survives - the search.* ignore-file settings are gone.
+		// Vacha: only files.exclude survives - the search.* ignore-file settings are gone.
 		this.openSettings('@id:files.exclude');
 	}
 
 	private openSettings(query: string): Promise<IEditorPane | undefined> {
 		const options: ISettingsEditorOptions = { query };
-		// Tond: editor-only — there is never a workspace, so always user settings
+		// Vacha: editor-only — there is never a workspace, so always user settings
 		return this.preferencesService.openUserSettings(options);
 	}
 
@@ -1798,7 +1798,7 @@ export class SearchView extends ViewPane {
 			}
 		}
 
-		// Tond: the untitled file is gone for good — its cached search state too
+		// Vacha: the untitled file is gone for good — its cached search state too
 		this.deleteSearchStateForFile(resource.toString());
 	}
 
@@ -1813,7 +1813,7 @@ export class SearchView extends ViewPane {
 
 			this.viewModel.searchResult.remove(deletedMatches);
 
-			// Tond: drop cached per-file search state of deleted files
+			// Vacha: drop cached per-file search state of deleted files
 			for (const key of [...this.perFileSearchState.keys()]) {
 				if (e.contains(URI.parse(key), FileChangeType.DELETED)) {
 					this.deleteSearchStateForFile(key);
@@ -1829,7 +1829,7 @@ export class SearchView extends ViewPane {
 		}
 	}
 
-	// Tond: the search scope — the active editor's file (empty list when the
+	// Vacha: the search scope — the active editor's file (empty list when the
 	// active editor has no file resource, which yields zero results rather
 	// than silently searching everything).
 	private getActiveFileResources(): URI[] {
@@ -1837,7 +1837,7 @@ export class SearchView extends ViewPane {
 		return active ? [active] : [];
 	}
 
-	//#region Tond: per-file search pane state
+	//#region Vacha: per-file search pane state
 
 	/**
 	 * Swaps the whole pane content when the active editor changes file: the
@@ -2014,7 +2014,7 @@ export class SearchView extends ViewPane {
 			return;
 		}
 
-		// Tond: the query itself (pattern, replace text, toggles) is per-file
+		// Vacha: the query itself (pattern, replace text, toggles) is per-file
 		// and in-memory only — deliberately NOT persisted across restarts.
 		// Only genuinely view-level bits are saved.
 		if (!this.viewletState.view) {
@@ -2068,7 +2068,7 @@ export class SearchView extends ViewPane {
 	override dispose(): void {
 		this.isDisposed = true;
 		this.saveState();
-		// Tond: release every cached per-file search model (the attached one
+		// Vacha: release every cached per-file search model (the attached one
 		// stays with the view-model service)
 		for (const entry of this.perFileSearchState.values()) {
 			if (entry.model && entry.model !== this.viewModel) {
@@ -2312,7 +2312,7 @@ class RefreshTreeController extends Disposable {
 	}
 
 	/**
-	 * Tond: drops queued change events and cancels in-flight refreshes. Called
+	 * Vacha: drops queued change events and cancels in-flight refreshes. Called
 	 * when the search model is swapped for another file's — events queued
 	 * against the outgoing model reference nodes the new tree input does not
 	 * have.
@@ -2346,7 +2346,7 @@ class RefreshTreeController extends Disposable {
 	}
 
 	private async refreshTree(event?: IChangeEvent): Promise<void> {
-		// Tond: the per-file model swap can replace the tree input while a
+		// Vacha: the per-file model swap can replace the tree input while a
 		// refresh is in flight; the async data tree then throws "node not
 		// found" for elements of the superseded input. Detect the swap and
 		// swallow only that case.

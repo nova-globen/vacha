@@ -278,7 +278,7 @@ export class ErrorPlaceholderEditor extends EditorPlaceholder {
 				};
 			});
 		} else {
-			// Tond: no log viewer in this build, so no "Show Logs" action.
+			// Vacha: no log viewer in this build, so no "Show Logs" action.
 			actions = [
 				{
 					label: localize('retry', "Try Again"),

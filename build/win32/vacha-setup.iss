@@ -31,8 +31,8 @@ AppId={{FC828270-755C-4664-B40E-CB0BA6AC8FC9}
 AppName=Vacha
 AppVersion={#AppVersion}
 AppPublisher=Nova Globen AB
-AppPublisherURL=https://nova-globen.se/vacha
-AppSupportURL=https://nova-globen.se/vacha/issues
+AppPublisherURL=https://nova-globen.se/products/vacha
+AppSupportURL=https://nova-globen.se/products/vacha/issues
 DefaultDirName={localappdata}\Programs\vacha
 DefaultGroupName=Vacha
 ; a Tond install would otherwise keep its Programs\tond folder and Start menu group
@@ -161,6 +161,9 @@ Root: HKCU; Subkey: "Software\Classes\.conf\OpenWithProgids"; ValueName: "Tond.c
 Root: HKCU; Subkey: "Software\Classes\.env\OpenWithProgids"; ValueName: "Tond.env"; Flags: deletevalue
 ; Tond's start-at-login item; Vacha registers its own on first start
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueName: "{#LegacyName}"; Flags: deletevalue
+; Tond's URL protocol, registered by the app at run time; it points at the
+; removed Tond.exe, and Vacha answers only its own protocol
+Root: HKCU; Subkey: "Software\Classes\{#LegacyName}"; Flags: deletekey
 
 [Run]
 ; types sent to Vacha (or Tond) with "Choose another app" get their icons back

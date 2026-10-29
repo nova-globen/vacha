@@ -205,7 +205,7 @@ class CodeMain {
 		fileService.registerProvider(Schemas.vscodeUserData, new FileUserDataProvider(Schemas.file, diskFileSystemProvider, Schemas.vscodeUserData, userDataProfilesMainService, uriIdentityService, logService));
 
 		// Policy
-		// Tond: no registry / plist policies (the native @vscode/policy-watcher
+		// Vacha: no registry / plist policies (the native @vscode/policy-watcher
 		// module is gone); a policy file still works where one is given
 		let policyService: IPolicyService | undefined;
 		const policyServices: IPolicyService[] = [];
@@ -291,7 +291,7 @@ class CodeMain {
 		await Promises.settled<unknown>([
 
 			// Environment service (paths)
-			// Tond: no extensions and no workspaces, so `extensionsPath` and
+			// Vacha: no extensions and no workspaces, so `extensionsPath` and
 			// `workspaceStorageHome` are not created here anymore. All remaining
 			// paths are user-data-derived and already enlisted from `main.js`.
 			Promise.all<string | undefined>([
@@ -429,7 +429,7 @@ class CodeMain {
 			throw new ExpectedError('Sent env to running instance. Terminating...');
 		}
 
-		// Tond: --quit with no running instance has nothing to do
+		// Vacha: --quit with no running instance has nothing to do
 		if (environmentMainService.args.quit) {
 			throw new ExpectedError('No running instance to quit. Terminating...');
 		}
@@ -480,7 +480,7 @@ class CodeMain {
 
 			logService.trace('Sending some foreground love to the running instance:', processId);
 
-			// Tond: the forwarder shim next to the exe makes the Win32 call
+			// Vacha: the forwarder shim next to the exe makes the Win32 call
 			// (replaces the native windows-foreground-love module); a child of
 			// the foreground process may pass the right on
 			const shim = join(dirname(process.execPath), 'vacha_open.exe');

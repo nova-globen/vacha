@@ -101,13 +101,13 @@ class ImagePreviewEditorPane extends EditorPane {
 	}
 
 	protected createEditor(parent: HTMLElement): void {
-		this.container = dom.append(parent, dom.$('.tond-image-preview'));
+		this.container = dom.append(parent, dom.$('.vacha-image-preview'));
 		this.container.style.display = 'flex';
 		this.container.style.flexDirection = 'column';
 		this.container.style.width = '100%';
 		this.container.style.height = '100%';
 
-		const imageHost = dom.append(this.container, dom.$('.tond-image-preview-host'));
+		const imageHost = dom.append(this.container, dom.$('.vacha-image-preview-host'));
 		imageHost.style.flex = '1';
 		imageHost.style.display = 'flex';
 		imageHost.style.alignItems = 'center';
@@ -124,7 +124,7 @@ class ImagePreviewEditorPane extends EditorPane {
 		this.imageElement.style.objectFit = 'contain';
 		this.imageElement.draggable = false;
 
-		this.captionElement = dom.append(this.container, dom.$('.tond-image-preview-caption'));
+		this.captionElement = dom.append(this.container, dom.$('.vacha-image-preview-caption'));
 		this.captionElement.style.flex = '0 0 auto';
 		this.captionElement.style.padding = '4px 12px';
 		this.captionElement.style.textAlign = 'center';
@@ -214,7 +214,7 @@ class ImagePreviewInputSerializer implements IEditorSerializer {
 
 class ImagePreviewContribution implements IWorkbenchContribution {
 
-	static readonly ID = 'workbench.contrib.tondImagePreview';
+	static readonly ID = 'workbench.contrib.vachaImagePreview';
 
 	constructor(
 		@IEditorResolverService editorResolverService: IEditorResolverService,

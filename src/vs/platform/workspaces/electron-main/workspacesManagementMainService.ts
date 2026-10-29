@@ -82,7 +82,7 @@ export class WorkspacesManagementMainService extends Disposable implements IWork
 
 	async initialize(): Promise<void> {
 
-		// Tond: untitled workspaces can no longer be created, so scanning
+		// Vacha: untitled workspaces can no longer be created, so scanning
 		// `untitledWorkspacesHome` before the first window only ever cost a
 		// `readdir` (plus a workspace resolve per hit) for an empty result.
 		this.untitledWorkspaces = [];

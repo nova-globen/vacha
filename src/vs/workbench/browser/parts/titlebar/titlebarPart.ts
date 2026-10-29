@@ -882,7 +882,7 @@ export class BrowserTitlebarPart extends Part implements ITitlebarPart {
 	}
 
 	private get globalActionsEnabled(): boolean {
-		// Tond: no Manage gear next to the window controls — settings live in
+		// Vacha: no Manage gear next to the window controls — settings live in
 		// the File menu and Ctrl+,.
 		return false;
 	}

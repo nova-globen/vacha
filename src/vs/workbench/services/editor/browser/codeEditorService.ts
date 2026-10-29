@@ -77,7 +77,7 @@ export class CodeEditorService extends AbstractCodeEditorService {
 		// should be pinned or not. This ensures that the source of a navigation
 		// is not being replaced by the target. An example is "Goto definition"
 		// that otherwise would replace the editor everytime the user navigates.
-		// Tond: workbench.editor.enablePreviewFromCodeNavigation is unregistered (default false behavior applies unconditionally).
+		// Vacha: workbench.editor.enablePreviewFromCodeNavigation is unregistered (default false behavior applies unconditionally).
 		if (
 			source &&											// we need to know the origin of the navigation
 			!input.options?.pinned &&							// we only need to look at preview editors that open

@@ -36,4 +36,4 @@ registerWorkbenchContribution2(ExtensionAccessibilityHelpDialogContribution.ID, 
 registerWorkbenchContribution2(SaveAccessibilitySignalContribution.ID, SaveAccessibilitySignalContribution, WorkbenchPhase.AfterRestored);
 registerWorkbenchContribution2(SpeechAccessibilitySignalContribution.ID, SpeechAccessibilitySignalContribution, WorkbenchPhase.AfterRestored);
 registerWorkbenchContribution2(DiffEditorActiveAnnouncementContribution.ID, DiffEditorActiveAnnouncementContribution, WorkbenchPhase.AfterRestored);
-// Tond: DynamicSpeechAccessibilityConfiguration removed with the accessibility.voice.* settings.
+// Vacha: DynamicSpeechAccessibilityConfiguration removed with the accessibility.voice.* settings.

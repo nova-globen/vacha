@@ -14,7 +14,7 @@ export interface ISearchViewModelWorkbenchService {
 	searchModel: ISearchModel;
 
 	/**
-	 * Tond: makes `searchModel` the active model without disposing the previous
+	 * Vacha: makes `searchModel` the active model without disposing the previous
 	 * one (unlike the setter). Returns the previous model, which the caller now
 	 * owns. Used by the per-file search state cache in the search view.
 	 */

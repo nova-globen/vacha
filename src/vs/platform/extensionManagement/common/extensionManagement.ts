@@ -716,7 +716,7 @@ export const AllowedExtensionsConfigKey = 'extensions.allowed';
 export const VerifyExtensionSignatureConfigKey = 'extensions.verifySignature';
 export const ExtensionRequestsTimeoutConfigKey = 'extensions.requestTimeout';
 
-// Tond: extensions.allowed / .verifySignature / .requestTimeout are not registered - there is no extension host, gallery or installer.
+// Vacha: extensions.allowed / .verifySignature / .requestTimeout are not registered - there is no extension host, gallery or installer.
 
 export function shouldRequireRepositorySignatureFor(isPrivate: boolean, galleryManifest: IExtensionGalleryManifest | null): boolean {
 	if (isPrivate) {

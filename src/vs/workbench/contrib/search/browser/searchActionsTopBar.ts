@@ -140,7 +140,7 @@ registerAction2(class ClearSearchResultsAction extends Action2 {
 			category,
 			icon: searchClearIcon,
 			f1: true,
-			// Tond: the toolbar shows the fuller Reset Search button instead;
+			// Vacha: the toolbar shows the fuller Reset Search button instead;
 			// Clear Search Results stays available from the Command Palette.
 			precondition: ContextKeyExpr.or(Constants.SearchContext.HasSearchResults, Constants.SearchContext.ViewHasSearchPatternKey, Constants.SearchContext.ViewHasReplacePatternKey),
 		});
@@ -173,7 +173,7 @@ registerAction2(class ResetSearchAction extends Action2 {
 });
 
 
-// Tond: search.action.searchWithAI not registered — no AI result provider can
+// Vacha: search.action.searchWithAI not registered — no AI result provider can
 // ever exist, so the action was a dead row on the Keyboard Shortcuts page.
 
 //#endregion

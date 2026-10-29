@@ -149,7 +149,7 @@ const minifyVSCodeTask = task.define('minify-vscode', task.series(
 ));
 task.task(minifyVSCodeTask);
 
-// Tond: core-ci-old removed — it referenced the deleted reh (server) minify
+// Vacha: core-ci-old removed — it referenced the deleted reh (server) minify
 // tasks and would crash at execution.
 
 task.task(task.define('core-ci', task.series(
@@ -162,7 +162,7 @@ task.task(task.define('core-ci', task.series(
 	// Transpile individual files to out-build first (for unit tests)
 	task.define('esbuild-out-build', () => runEsbuildTranspile('out-build', false)),
 	// Then bundle for shipping (bundles also write NLS files to out-build)
-	// Tond: desktop is the only build target (server targets removed)
+	// Vacha: desktop is the only build target (server targets removed)
 	task.define('esbuild-vscode-min', () => runEsbuildBundle('out-vscode-min', true, true, 'desktop', `${sourceMappingURLBase}/core`))
 )));
 
@@ -175,7 +175,7 @@ function packageTask(platform: string, arch: string, sourceFolderName: string, d
 		const out = sourceFolderName;
 		const versionedResourcesFolder = util.getVersionedResourcesFolder(platform, commit!);
 
-		// Tond: no stamped checksums. The integrity check they feed ran five
+		// Vacha: no stamped checksums. The integrity check they feed ran five
 		// file reads + hashes through the shared process on every boot, and the
 		// shared process deliberately no longer spawns. With no `checksums` in
 		// product.json the IntegrityService reports pure without any IO.
@@ -292,12 +292,12 @@ function packageTask(platform: string, arch: string, sourceFolderName: string, d
 		let all = es.merge(...mergeStreams);
 
 		if (platform === 'win32') {
-			// Tond: the per-language association icons are gone — Tond claims a
+			// Vacha: the per-language association icons are gone — Vacha claims a
 			// handful of plain-text extensions and offers "Open with" for the
 			// rest, all of which use the app icon.
 			all = es.merge(all, gulp.src([
 				'resources/win32/code.ico',
-				'resources/win32/tond-tray.ico',
+				'resources/win32/vacha-tray.ico',
 				'resources/win32/code_70x70.png',
 				'resources/win32/code_150x150.png'
 			], { base: '.' }));
@@ -577,5 +577,5 @@ BUILD_TARGETS.forEach(buildTarget => {
 	}
 });
 
-// Tond: the Microsoft translation export/import tasks are gone with the
+// Vacha: the Microsoft translation export/import tasks are gone with the
 // Inno Setup language files; the product ships English-only.

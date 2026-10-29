@@ -1,0 +1,135 @@
+name: release
+
+# Builds a release from a version tag in this public repository and publishes it:
+#   - a GitHub Release with the installer, the zip, the SBOM and SHA256SUMS, under fixed names, so the stable link
+#     https://github.com/nova-globen/vacha/releases/latest/download/<asset> always serves the newest one;
+#   - the MSIX uploaded to the Microsoft Store as a DRAFT submission, checked and submitted by hand in Partner
+#     Center. Without the four Partner Center secrets this step is skipped, not failed.
+#
+# Secrets (repository secrets of nova-globen/vacha; names as in Microsoft's msstore CLI documentation):
+#   PARTNER_CENTER_TENANT_ID, PARTNER_CENTER_SELLER_ID, PARTNER_CENTER_CLIENT_ID, PARTNER_CENTER_CLIENT_SECRET
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  STORE_PRODUCT_ID: 9NSCM5WH4WF1
+  STORE_IDENTITY_NAME: NovaGloben.vacha
+  STORE_PUBLISHER: CN=C2BCD1EA-623A-4B0A-9775-525C428D668E
+  STORE_PUBLISHER_DISPLAY_NAME: Nova Globen
+
+jobs:
+  release:
+    if: github.repository == 'nova-globen/vacha'
+    runs-on: windows-latest
+    timeout-minutes: 150
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: The tag matches package.json
+        shell: pwsh
+        run: |
+          $version = (Get-Content package.json -Raw | ConvertFrom-Json).version
+          if ("v$version" -ne $env:GITHUB_REF_NAME) { throw "tag $env:GITHUB_REF_NAME does not match package.json version $version" }
+          "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: Inno Setup
+        shell: pwsh
+        run: |
+          choco install innosetup --no-progress -y
+          if ($LASTEXITCODE -ne 0) { throw 'Inno Setup install failed' }
+          "${env:ProgramFiles(x86)}\Inno Setup 6" | Out-File -FilePath $env:GITHUB_PATH -Append -Encoding utf8
+
+      - name: Build (clean install, installer, zip, SBOM)
+        shell: pwsh
+        run: ./scripts/release.ps1 -Arch x64 -CleanInstall -Installer
+
+      - name: Package the Store MSIX
+        shell: pwsh
+        run: ./scripts/package-msix.ps1 -Arch x64 -IdentityName $env:STORE_IDENTITY_NAME -Publisher $env:STORE_PUBLISHER -PublisherDisplayName $env:STORE_PUBLISHER_DISPLAY_NAME
+
+      - name: Stage the release assets under their fixed names
+        shell: pwsh
+        run: |
+          $out = New-Item -ItemType Directory -Force (Join-Path $env:RUNNER_TEMP 'assets')
+          Copy-Item "dist/VachaSetup-x64-$env:VERSION.exe" (Join-Path $out 'vacha-setup-x64.exe')
+          Copy-Item "dist/Vacha-win32-x64-$env:VERSION.zip" (Join-Path $out 'vacha-win32-x64.zip')
+          Copy-Item "dist/Vacha-$env:VERSION-sbom.cdx.json" (Join-Path $out 'vacha-sbom.cdx.json')
+          $sums = 'vacha-setup-x64.exe', 'vacha-win32-x64.zip', 'vacha-sbom.cdx.json' | ForEach-Object {
+            "$((Get-FileHash (Join-Path $out $_) -Algorithm SHA256).Hash.ToLower())  $_"
+          }
+          [IO.File]::WriteAllText((Join-Path $out 'SHA256SUMS'), ($sums -join "`n") + "`n")
+          Get-Content (Join-Path $out 'SHA256SUMS')
+
+      - name: GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $out = Join-Path $env:RUNNER_TEMP 'assets'
+          $notes = @"
+          Vacha $env:VERSION for Windows x64, free and open source under GPL-3.0-or-later.
+
+          - vacha-setup-x64.exe: per-user installer (no admin rights)
+          - vacha-win32-x64.zip: portable build
+          - vacha-sbom.cdx.json: CycloneDX SBOM
+          - SHA256SUMS: SHA-256 of the three files above
+
+          The files are not code-signed; Windows SmartScreen asks before the first run. The Microsoft Store version is
+          signed by Microsoft: https://apps.microsoft.com/detail/$env:STORE_PRODUCT_ID
+          "@
+          gh release create $env:GITHUB_REF_NAME --title "Vacha $env:VERSION" --notes $notes --verify-tag `
+            (Join-Path $out 'vacha-setup-x64.exe') (Join-Path $out 'vacha-win32-x64.zip') `
+            (Join-Path $out 'vacha-sbom.cdx.json') (Join-Path $out 'SHA256SUMS')
+          if ($LASTEXITCODE -ne 0) { throw 'gh release create failed' }
+
+      - name: Keep the MSIX with the run
+        uses: actions/upload-artifact@v4
+        with:
+          name: vacha-msix
+          path: dist/Vacha-x64-*.msix
+          retention-days: 3
+
+      - name: Are the Partner Center secrets set?
+        id: store
+        shell: pwsh
+        env:
+          TENANT: ${{ secrets.PARTNER_CENTER_TENANT_ID }}
+          SELLER: ${{ secrets.PARTNER_CENTER_SELLER_ID }}
+          CLIENT: ${{ secrets.PARTNER_CENTER_CLIENT_ID }}
+          SECRET: ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
+        run: |
+          if ($env:TENANT -and $env:SELLER -and $env:CLIENT -and $env:SECRET) { 'ready=true' | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8 }
+          else { Write-Host '::notice::msstore secrets not set - Store upload skipped' }
+
+      - name: Microsoft Store Developer CLI
+        if: steps.store.outputs.ready == 'true'
+        uses: microsoft/microsoft-store-apppublisher@v1.1
+
+      - name: Upload to the Store as a draft submission (the owner submits)
+        if: steps.store.outputs.ready == 'true'
+        shell: pwsh
+        env:
+          TENANT: ${{ secrets.PARTNER_CENTER_TENANT_ID }}
+          SELLER: ${{ secrets.PARTNER_CENTER_SELLER_ID }}
+          CLIENT: ${{ secrets.PARTNER_CENTER_CLIENT_ID }}
+          SECRET: ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
+        run: |
+          msstore reconfigure --tenantId $env:TENANT --sellerId $env:SELLER --clientId $env:CLIENT --clientSecret $env:SECRET
+          if ($LASTEXITCODE -ne 0) { throw 'msstore reconfigure failed' }
+          $msix = (Get-Item "dist/Vacha-x64-$env:VERSION.msix").FullName
+          msstore publish dist -i $msix -id $env:STORE_PRODUCT_ID --noCommit
+          if ($LASTEXITCODE -ne 0) { throw 'msstore publish failed' }

@@ -54,7 +54,7 @@ export class LaunchMainService implements ILaunchMainService {
 	async start(args: NativeParsedArgs, userEnv: IProcessEnvironment): Promise<void> {
 		this.logService.trace('Received data from other instance: ', args, userEnv);
 
-		// Tond: `--quit` from the installer. Closing the window only hides it to
+		// Vacha: `--quit` from the installer. Closing the window only hides it to
 		// the tray, so this is how setup gets the resident instance to exit before
 		// it replaces files. Quit on the next tick so this call's reply is sent.
 		if (args.quit) {
@@ -63,7 +63,7 @@ export class LaunchMainService implements ILaunchMainService {
 			return;
 		}
 
-		// Tond: a type the user just sent here with "Choose another app" gets its icon
+		// Vacha: a type the user just sent here with "Choose another app" gets its icon
 		if (args._.length > 0 && !this.productService.win32StorePackage) {
 			repairFileTypeIcons(this.logService, args._);
 		}
@@ -156,7 +156,7 @@ export class LaunchMainService implements ILaunchMainService {
 			forceTempProfile: args['profile-temp']
 		};
 
-		// Tond: single window, always. A launch without file arguments
+		// Vacha: single window, always. A launch without file arguments
 		// focuses the existing window; a launch with file arguments forwards
 		// them into it as tabs. --new-window and the window.* reuse settings
 		// are deliberately ignored.

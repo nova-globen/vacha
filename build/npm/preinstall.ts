@@ -78,7 +78,7 @@ if (process.arch !== os.arch()) {
 function hasSupportedVisualStudioVersion() {
 	// Translated over from
 	// https://source.chromium.org/chromium/chromium/src/+/master:build/vs_toolchain.py;l=140-175
-	// Tond: '18' is Visual Studio 2026's install folder (node-gyp 12 builds with it)
+	// Vacha: '18' is Visual Studio 2026's install folder (node-gyp 12 builds with it)
 	const supportedVersions = ['18', '2022', '2019'];
 
 	const availableVersions = [];
@@ -117,7 +117,7 @@ function hasSupportedVisualStudioVersion() {
 
 function installHeaders() {
 	const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-	// Tond: npm 11 passes a user-level `allow-scripts` on to child installs
+	// Vacha: npm 11 passes a user-level `allow-scripts` on to child installs
 	// as npm_config_allow_scripts, then rejects it there (EALLOWSCRIPTS)
 	const env = { ...process.env };
 	delete env['npm_config_allow_scripts'];

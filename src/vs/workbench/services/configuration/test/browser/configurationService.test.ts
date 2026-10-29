@@ -69,7 +69,7 @@ class ConfigurationCache implements IConfigurationCache {
 
 const ROOT = URI.file('tests').with({ scheme: 'vscode-tests' });
 
-// Tond: local stand-in for the removed tasks subsystem's schema keys
+// Vacha: local stand-in for the removed tasks subsystem's schema keys
 const enum TasksSchemaProperties {
 	Tasks = 'tasks',
 	ServiceTestSetting = 'tasks.service.testSetting',

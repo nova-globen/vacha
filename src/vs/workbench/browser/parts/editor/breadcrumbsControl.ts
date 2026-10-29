@@ -305,7 +305,7 @@ export class BreadcrumbsControl {
 		this._widget.onDidFocusItem(this._onFocusEvent, this, this._disposables);
 		this._widget.onDidChangeFocus(this._updateCkBreadcrumbsActive, this, this._disposables);
 
-		// Tond: actions for the active editor at the right end of the row
+		// Vacha: actions for the active editor at the right end of the row
 		// (the markdown Edit/Preview toggle); the arg is the group id
 		const trailingContainer = dom.append(this.domNode, dom.$('.breadcrumbs-trailing-actions'));
 		this._trailingActions = this._disposables.add(this._instantiationService.createInstance(MenuWorkbenchToolBar, trailingContainer, MenuId.BreadcrumbsTrailing, {

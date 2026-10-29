@@ -794,7 +794,7 @@ export class ShowPreviousChangeAction extends EditorAction {
 		controller.previous();
 	}
 }
-// Tond: editor.action.dirtydiff.previous not registered - frees Shift+Alt+F3 (the class stays; the quick diff widget toolbar uses it).
+// Vacha: editor.action.dirtydiff.previous not registered - frees Shift+Alt+F3 (the class stays; the quick diff widget toolbar uses it).
 
 export class ShowNextChangeAction extends EditorAction {
 
@@ -827,11 +827,11 @@ export class ShowNextChangeAction extends EditorAction {
 		controller.next();
 	}
 }
-// Tond: editor.action.dirtydiff.next not registered - frees Alt+F3 (the class stays; the quick diff widget toolbar uses it).
+// Vacha: editor.action.dirtydiff.next not registered - frees Alt+F3 (the class stays; the quick diff widget toolbar uses it).
 
-// Tond: workbench.action.editor.nextChange/.previousChange removed - frees Alt+F5 and Shift+Alt+F5.
+// Vacha: workbench.action.editor.nextChange/.previousChange removed - frees Alt+F5 and Shift+Alt+F5.
 
-// Tond: closeQuickDiff / toggleQuickDiffWidgetFocus keybindings removed - frees Escape and Ctrl+K F2.
+// Vacha: closeQuickDiff / toggleQuickDiffWidgetFocus keybindings removed - frees Escape and Ctrl+K F2.
 
 
 function getOuterEditorFromDiffEditor(accessor: ServicesAccessor): ICodeEditor | null {

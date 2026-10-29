@@ -56,7 +56,7 @@ const viewDescriptor: IViewDescriptor = {
 	ctorDescriptor: new SyncDescriptor(SearchView),
 	canToggleVisibility: false,
 	canMoveView: true,
-	// Tond: Search is relocated into the single Explorer pane (see
+	// Vacha: Search is relocated into the single Explorer pane (see
 	// unifiedSidebar.contribution); this places it second, after Open Editors.
 	order: 20,
 	openCommandActionDescriptor: {
@@ -79,10 +79,10 @@ const configurationRegistry = Registry.as<IConfigurationRegistry>(ConfigurationE
 configurationRegistry.registerConfiguration({
 	...searchConfigurationNode,
 	properties: {
-		// Tond: search.exclude / useIgnoreFiles / useGlobalIgnoreFiles / useParentIgnoreFiles /
+		// Vacha: search.exclude / useIgnoreFiles / useGlobalIgnoreFiles / useParentIgnoreFiles /
 		// followSymlinks / quickOpen.includeSymbols / location / searchView.* removed - search only
 		// ever queries the active file, there is no folder to walk and no symbol provider.
-		// Tond: `search.mode` removed — the Search Editor does not exist in this
+		// Vacha: `search.mode` removed — the Search Editor does not exist in this
 		// build, so searches always run in the Search view.
 		'search.useRipgrep': {
 			type: 'boolean',

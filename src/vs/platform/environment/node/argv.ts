@@ -197,7 +197,7 @@ export const OPTIONS: OptionDescriptions<Required<NativeParsedArgs>> = {
 	'crash-reporter-id': { type: 'string' },
 	'skip-add-to-recently-opened': { type: 'boolean' },
 	'open-url': { type: 'boolean' },
-	'start-hidden': { type: 'boolean' }, // Tond: resident launch (login item) — window is created but not shown
+	'start-hidden': { type: 'boolean' }, // Vacha: resident launch (login item) — window is created but not shown
 
 	'file-write': { type: 'boolean' },
 	'file-chmod': { type: 'boolean' },

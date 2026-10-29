@@ -184,7 +184,7 @@
 }
 
 .monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab.sizing-fit {
-	/* Tond: `fit-content` collapses to the strip width once the label is wider */
+	/* Vacha: `fit-content` collapses to the strip width once the label is wider */
 	/* than the strip, which is what produced the ellipsis. `max-content` sizes */
 	/* to the full title and lets the strip scroll instead. */
 	width: auto;
@@ -318,7 +318,7 @@
 .monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab.selected.tab-border-top > .tab-border-top-container {
 	z-index: 6;
 	top: 0;
-	height: 2px; /* Tond: the brand accent, and it stays put when the tab has focus */
+	height: 2px; /* Vacha: the brand accent, and it stays put when the tab has focus */
 	background-color: var(--tab-border-top-color);
 }
 
@@ -384,7 +384,7 @@
 .monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab.sizing-fit .monaco-icon-label,
 .monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab.sizing-fit .monaco-icon-label > .monaco-icon-label-container,
 .monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab.sizing-fit .tab-label {
-	/* Tond: tab titles are never truncated. `min-width: max-content` cancels */
+	/* Vacha: tab titles are never truncated. `min-width: max-content` cancels */
 	/* the `min-width: 0` the shared icon-label sets, which is what allowed */
 	/* the label to be compressed into an ellipsis. */
 	overflow: visible;

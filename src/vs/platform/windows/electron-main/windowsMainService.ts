@@ -729,7 +729,7 @@ export class WindowsMainService extends Disposable implements IWindowsMainServic
 	private doOpenFilesInExistingWindow(configuration: IOpenConfiguration, window: ICodeWindow, filesToOpen?: IFilesToOpen): ICodeWindow {
 		this.logService.trace('windowsManager#doOpenFilesInExistingWindow', { filesToOpen });
 
-		const wasHidden = !!window.win && !window.win.isVisible(); // Tond: resident-hidden window about to be revealed
+		const wasHidden = !!window.win && !window.win.isVisible(); // Vacha: resident-hidden window about to be revealed
 
 		this.focusMainOrChildWindow(window); // make sure window or any of the children has focus
 
@@ -741,7 +741,7 @@ export class WindowsMainService extends Disposable implements IWindowsMainServic
 			termProgram: configuration?.userEnv?.['TERM_PROGRAM']
 		};
 
-		// Tond: when the window was resident-hidden, its renderer is still
+		// Vacha: when the window was resident-hidden, its renderer is still
 		// throttled and mid-reveal; an open sent right away can lose the
 		// activation race against the focus restore. Wait for the focus to
 		// land (bounded — the window might never take focus, e.g. locked
@@ -865,7 +865,7 @@ export class WindowsMainService extends Disposable implements IWindowsMainServic
 		else if (openConfig.cli._.length || openConfig.cli['folder-uri'] || openConfig.cli['file-uri']) {
 			pathsToOpen = await this.doExtractPathsFromCLI(openConfig.cli);
 			if (pathsToOpen.length === 0 && this.getLastActiveWindow()) {
-				// Tond: every CLI path was rejected (e.g. a directory — there
+				// Vacha: every CLI path was rejected (e.g. a directory — there
 				// is no folder concept). With a window already open, treat
 				// this as focus-only rather than resetting it to empty.
 				return [];
@@ -874,7 +874,7 @@ export class WindowsMainService extends Disposable implements IWindowsMainServic
 				pathsToOpen.push(EMPTY_WINDOW); // add an empty window if we did not have windows to open from command line
 			}
 
-			// Tond: at initial startup, also restore the previous session's
+			// Vacha: at initial startup, also restore the previous session's
 			// empty window (which carries the open tabs) so files passed on
 			// the command line ADD to the session instead of replacing it.
 			if (openConfig.initialStartup) {
@@ -1219,7 +1219,7 @@ export class WindowsMainService extends Disposable implements IWindowsMainServic
 		try {
 			const pathStat = await fs.promises.stat(path);
 
-			// File (Tond: every file opens as a plain file tab — a
+			// File (Vacha: every file opens as a plain file tab — a
 			// .code-workspace file is NOT resolved into a workspace)
 			if (pathStat.isFile()) {
 				return {
@@ -1232,7 +1232,7 @@ export class WindowsMainService extends Disposable implements IWindowsMainServic
 				};
 			}
 
-			// Folder (Tond: there is no folder concept — directory arguments
+			// Folder (Vacha: there is no folder concept — directory arguments
 			// are ignored rather than opened as a workspace)
 			else if (pathStat.isDirectory()) {
 				return undefined;
@@ -1376,7 +1376,7 @@ export class WindowsMainService extends Disposable implements IWindowsMainServic
 	}
 
 	private shouldOpenNewWindow(openConfig: IOpenConfiguration): { openFolderInNewWindow: boolean; openFilesInNewWindow: boolean } {
-		// Tond: one window, always. Every launch context — CLI, dialog,
+		// Vacha: one window, always. Every launch context — CLI, dialog,
 		// dock, second instance — reuses the existing window; files open as
 		// tabs there. The window.openFilesInNewWindow /
 		// openFoldersInNewWindow settings and forceNewWindow flags are

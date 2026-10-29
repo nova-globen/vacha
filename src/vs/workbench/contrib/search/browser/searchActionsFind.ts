@@ -11,7 +11,7 @@ import { KeybindingWeight } from '../../../../platform/keybinding/common/keybind
 import { KeyCode, KeyMod } from '../../../../base/common/keyCodes.js';
 import { category, findInFilesCommand, IFindInFilesArgs } from './searchActionsBase.js';
 
-// Tond: the folder- and file-pattern search actions (Restrict Search to Folder,
+// Vacha: the folder- and file-pattern search actions (Restrict Search to Folder,
 // Exclude Folder/File Type from Search, Find in Folder/Workspace) are gone —
 // the search pane always scopes to the active file and has no include/exclude UI.
 // Also gone: search.action.expandRecursively (folder-match tree op) and

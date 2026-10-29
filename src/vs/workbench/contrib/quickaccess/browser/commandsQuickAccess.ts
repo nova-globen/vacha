@@ -77,7 +77,7 @@ export class CommandsQuickAccessProvider extends AbstractEditorCommandsQuickAcce
 		this.extensionRegistrationRace = raceTimeout(extensionService.whenInstalledExtensionsRegistered(), 800);
 	}
 
-	// Tond: workbench.commandPalette.experimental.* and showAskInChat are unregistered, so the
+	// Vacha: workbench.commandPalette.experimental.* and showAskInChat are unregistered, so the
 	// "commonly used commands" section can never turn on - only preserveInput is still read.
 	private get configuration() {
 		const commandPaletteConfig = this.configurationService.getValue<IWorkbenchQuickAccessConfiguration>().workbench.commandPalette;
