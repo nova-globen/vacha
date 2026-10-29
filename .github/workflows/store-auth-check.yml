@@ -1,0 +1,55 @@
+name: store-auth-check
+
+# Proves the four Partner Center secrets without a release: the Microsoft Store Developer CLI signs in with them and
+# reads this product. Started by hand only. GitHub masks the secret values in the log; the step prints only the
+# outcome and the product's public id.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  STORE_PRODUCT_ID: 9NSCM5WH4WF1
+
+jobs:
+  check:
+    if: github.repository == 'nova-globen/vacha'
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - name: Are the Partner Center secrets set?
+        shell: pwsh
+        env:
+          TENANT: ${{ secrets.PARTNER_CENTER_TENANT_ID }}
+          SELLER: ${{ secrets.PARTNER_CENTER_SELLER_ID }}
+          CLIENT: ${{ secrets.PARTNER_CENTER_CLIENT_ID }}
+          SECRET: ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
+        run: |
+          $missing = @{ PARTNER_CENTER_TENANT_ID = $env:TENANT; PARTNER_CENTER_SELLER_ID = $env:SELLER; PARTNER_CENTER_CLIENT_ID = $env:CLIENT; PARTNER_CENTER_CLIENT_SECRET = $env:SECRET }.GetEnumerator() |
+            Where-Object { -not $_.Value } | ForEach-Object Name
+          if ($missing) { throw "not set: $($missing -join ', ')" }
+          Write-Host 'all four secrets are set'
+
+      - name: Microsoft Store Developer CLI
+        uses: microsoft/microsoft-store-apppublisher@v1.1
+
+      - name: Sign in to Partner Center
+        shell: pwsh
+        env:
+          TENANT: ${{ secrets.PARTNER_CENTER_TENANT_ID }}
+          SELLER: ${{ secrets.PARTNER_CENTER_SELLER_ID }}
+          CLIENT: ${{ secrets.PARTNER_CENTER_CLIENT_ID }}
+          SECRET: ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
+        run: |
+          msstore reconfigure --tenantId $env:TENANT --sellerId $env:SELLER --clientId $env:CLIENT --clientSecret $env:SECRET
+          if ($LASTEXITCODE -ne 0) { throw 'sign-in FAILED: check the tenant id, seller id, client id and secret, and that the app registration has the Manager role in Partner Center' }
+          Write-Host 'sign-in OK'
+
+      - name: Read this product
+        shell: pwsh
+        run: |
+          msstore apps get $env:STORE_PRODUCT_ID
+          if ($LASTEXITCODE -ne 0) { throw "signed in, but product $env:STORE_PRODUCT_ID could not be read: check the app registration's role and the seller id" }
+          Write-Host "product $env:STORE_PRODUCT_ID readable"

@@ -91,6 +91,13 @@ jobs:
           The files are not code-signed; Windows SmartScreen asks before the first run. The Microsoft Store version is
           signed by Microsoft: https://apps.microsoft.com/detail/$env:STORE_PRODUCT_ID
           "@
+          # A re-run of the same tag (say, after a failed Store step) keeps the release that exists: its files and
+          # SHA256SUMS stay as first published, since a rebuild would not be byte-identical.
+          gh release view $env:GITHUB_REF_NAME --json tagName 2>$null | Out-Null
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "::notice::the GitHub Release $env:GITHUB_REF_NAME exists already - kept as it is"
+            exit 0
+          }
           gh release create $env:GITHUB_REF_NAME --title "Vacha $env:VERSION" --notes $notes --verify-tag `
             (Join-Path $out 'vacha-setup-x64.exe') (Join-Path $out 'vacha-win32-x64.zip') `
             (Join-Path $out 'vacha-sbom.cdx.json') (Join-Path $out 'SHA256SUMS')
