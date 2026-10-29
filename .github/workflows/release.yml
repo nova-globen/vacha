@@ -3,8 +3,18 @@ name: release
 # Builds a release from a version tag in this public repository and publishes it:
 #   - a GitHub Release with the installer, the zip, the SBOM and SHA256SUMS, under fixed names, so the stable link
 #     https://github.com/nova-globen/vacha/releases/latest/download/<asset> always serves the newest one;
-#   - the MSIX uploaded to the Microsoft Store as a DRAFT submission, checked and submitted by hand in Partner
-#     Center. Without the four Partner Center secrets this step is skipped, not failed.
+#   - the MSIX submitted to the Microsoft Store for certification, with no step by hand. Without the four Partner
+#     Center secrets a tag push skips the Store, not fails; a dispatch fails.
+#
+# Two ways in:
+#   - a pushed v* tag: build, GitHub Release, Store submission;
+#   - workflow_dispatch with `tag` (an existing release, say v1.1.3): this workflow, as it is now, checks out that tag's
+#     source, builds the MSIX and submits it to the Store. The GitHub Release is not created or changed. This is how a
+#     failed Store step is retried.
+#
+# Before submitting, the Store step reads the product's pending submission. One in certification (or any other
+# in-flight state) is waited for, up to 20 minutes, and then the run fails with a message saying so; dispatch again
+# later. A pending draft is replaced, as msstore does.
 #
 # Secrets (repository secrets of nova-globen/vacha; names as in Microsoft's msstore CLI documentation):
 #   PARTNER_CENTER_TENANT_ID, PARTNER_CENTER_SELLER_ID, PARTNER_CENTER_CLIENT_ID, PARTNER_CENTER_CLIENT_SECRET
@@ -12,12 +22,18 @@ name: release
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing release tag to submit to the Store again, e.g. v1.1.3'
+        required: true
+        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: release-${{ github.ref }}
+  group: release-${{ inputs.tag || github.ref_name }}
   cancel-in-progress: false
 
 env:
@@ -25,16 +41,24 @@ env:
   STORE_IDENTITY_NAME: NovaGloben.vacha
   STORE_PUBLISHER: CN=C2BCD1EA-623A-4B0A-9775-525C428D668E
   STORE_PUBLISHER_DISPLAY_NAME: Nova Globen
+  TAG: ${{ inputs.tag || github.ref_name }}
 
 jobs:
   release:
     if: github.repository == 'nova-globen/vacha'
     runs-on: windows-latest
-    timeout-minutes: 150
+    timeout-minutes: 180
     permissions:
       contents: write
     steps:
+      - name: The tag is a version tag
+        shell: pwsh
+        run: |
+          if ($env:TAG -notmatch '^v\d+\.\d+\.\d+$') { throw "'$env:TAG' is not a version tag like v1.2.3" }
+
       - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ env.TAG }}
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
@@ -43,10 +67,85 @@ jobs:
         shell: pwsh
         run: |
           $version = (Get-Content package.json -Raw | ConvertFrom-Json).version
-          if ("v$version" -ne $env:GITHUB_REF_NAME) { throw "tag $env:GITHUB_REF_NAME does not match package.json version $version" }
+          if ("v$version" -ne $env:TAG) { throw "tag $env:TAG does not match package.json version $version" }
           "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
 
+      - name: A dispatch needs the GitHub Release to exist
+        if: github.event_name == 'workflow_dispatch'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view $env:TAG --json tagName -R $env:GITHUB_REPOSITORY 2>$null | Out-Null
+          if ($LASTEXITCODE -ne 0) { throw "no GitHub Release $env:TAG: a new release starts with a pushed tag, not a dispatch" }
+
+      - name: Are the Partner Center secrets set?
+        id: store
+        shell: pwsh
+        env:
+          TENANT: ${{ secrets.PARTNER_CENTER_TENANT_ID }}
+          SELLER: ${{ secrets.PARTNER_CENTER_SELLER_ID }}
+          CLIENT: ${{ secrets.PARTNER_CENTER_CLIENT_ID }}
+          SECRET: ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
+        run: |
+          if ($env:TENANT -and $env:SELLER -and $env:CLIENT -and $env:SECRET) { 'ready=true' | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8 }
+          elseif ($env:GITHUB_EVENT_NAME -eq 'workflow_dispatch') { throw 'the Partner Center secrets are not set' }
+          else { Write-Host '::notice::msstore secrets not set - Store submission skipped' }
+
+      # Reads the product through the Partner Center submission API (read-only) and waits while a submission is in
+      # flight. The functions are saved for the last step, since a dispatched tag's tree may not have them.
+      - name: 'Store: wait for any in-flight submission'
+        if: steps.store.outputs.ready == 'true'
+        shell: pwsh
+        env:
+          TENANT: ${{ secrets.PARTNER_CENTER_TENANT_ID }}
+          CLIENT: ${{ secrets.PARTNER_CENTER_CLIENT_ID }}
+          SECRET: ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
+        run: |
+          $helpers = Join-Path $env:RUNNER_TEMP 'store-state.ps1'
+          Set-Content -Path $helpers -Encoding utf8 -Value @'
+          $script:api = "https://manage.devcenter.microsoft.com/v1.0/my/applications/$env:STORE_PRODUCT_ID"
+          function Get-StoreHeaders {
+            $body = @{ grant_type = 'client_credentials'; client_id = $env:CLIENT; client_secret = $env:SECRET; resource = 'https://manage.devcenter.microsoft.com' }
+            $token = (Invoke-RestMethod -Method Post -Uri "https://login.microsoftonline.com/$env:TENANT/oauth2/token" -Body $body).access_token
+            @{ Authorization = "Bearer $token" }
+          }
+          # Prints the last published and the pending submission (status, package versions); returns the pending one.
+          function Get-StorePending {
+            $h = Get-StoreHeaders
+            $app = Invoke-RestMethod -Uri $script:api -Headers $h
+            $pending = $null
+            foreach ($kind in 'lastPublishedApplicationSubmission', 'pendingApplicationSubmission') {
+              $id = $app.$kind.id
+              if (-not $id) { Write-Host "${kind}: none"; continue }
+              $s = Invoke-RestMethod -Uri "$script:api/submissions/$id" -Headers $h
+              $versions = ($s.applicationPackages | Where-Object fileStatus -ne 'PendingDelete' | ForEach-Object { "$($_.version) ($($_.fileName))" }) -join ', '
+              Write-Host "${kind}: $id, status $($s.status), packages: $versions"
+              foreach ($e in @($s.statusDetails.errors)) { if ($e) { Write-Host "  error $($e.code): $($e.details)" } }
+              if ($kind -eq 'pendingApplicationSubmission') { $pending = $s }
+            }
+            $pending
+          }
+          # A draft (PendingCommit) or a failed one is replaced by msstore publish; anything else is in flight.
+          $script:replaceable = 'PendingCommit', 'CommitFailed', 'PreProcessingFailed', 'CertificationFailed', 'ReleaseFailed', 'PublishFailed', 'Canceled'
+          function Wait-StoreIdle([int]$Minutes) {
+            $until = (Get-Date).AddMinutes($Minutes)
+            while ($true) {
+              $p = Get-StorePending
+              if (-not $p -or $p.status -in $script:replaceable) { return }
+              if ((Get-Date) -ge $until) {
+                throw "waiting for the in-flight submission $($p.id) (status $($p.status)): it was still in flight after $Minutes minutes. Nothing was submitted; dispatch release.yml with tag $env:TAG again once Partner Center shows it finished."
+              }
+              Write-Host "waiting for the in-flight submission $($p.id) (status $($p.status)); next look in 60 s"
+              Start-Sleep -Seconds 60
+            }
+          }
+          '@
+          . $helpers
+          Wait-StoreIdle -Minutes 20
+
       - name: Inno Setup
+        if: github.event_name == 'push'
         shell: pwsh
         run: |
           choco install innosetup --no-progress -y
@@ -54,14 +153,21 @@ jobs:
           "${env:ProgramFiles(x86)}\Inno Setup 6" | Out-File -FilePath $env:GITHUB_PATH -Append -Encoding utf8
 
       - name: Build (clean install, installer, zip, SBOM)
+        if: github.event_name == 'push'
         shell: pwsh
         run: ./scripts/release.ps1 -Arch x64 -CleanInstall -Installer
+
+      - name: Build (clean install, for the MSIX only)
+        if: github.event_name == 'workflow_dispatch'
+        shell: pwsh
+        run: ./scripts/release.ps1 -Arch x64 -CleanInstall -NoZip
 
       - name: Package the Store MSIX
         shell: pwsh
         run: ./scripts/package-msix.ps1 -Arch x64 -IdentityName $env:STORE_IDENTITY_NAME -Publisher $env:STORE_PUBLISHER -PublisherDisplayName $env:STORE_PUBLISHER_DISPLAY_NAME
 
       - name: Stage the release assets under their fixed names
+        if: github.event_name == 'push'
         shell: pwsh
         run: |
           $out = New-Item -ItemType Directory -Force (Join-Path $env:RUNNER_TEMP 'assets')
@@ -75,6 +181,7 @@ jobs:
           Get-Content (Join-Path $out 'SHA256SUMS')
 
       - name: GitHub Release
+        if: github.event_name == 'push'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
@@ -91,14 +198,14 @@ jobs:
           The files are not code-signed; Windows SmartScreen asks before the first run. The Microsoft Store version is
           signed by Microsoft: https://apps.microsoft.com/detail/$env:STORE_PRODUCT_ID
           "@
-          # A re-run of the same tag (say, after a failed Store step) keeps the release that exists: its files and
-          # SHA256SUMS stay as first published, since a rebuild would not be byte-identical.
-          gh release view $env:GITHUB_REF_NAME --json tagName 2>$null | Out-Null
+          # A re-run of the same tag keeps the release that exists: its files and SHA256SUMS stay as first published,
+          # since a rebuild would not be byte-identical.
+          gh release view $env:TAG --json tagName 2>$null | Out-Null
           if ($LASTEXITCODE -eq 0) {
-            Write-Host "::notice::the GitHub Release $env:GITHUB_REF_NAME exists already - kept as it is"
+            Write-Host "::notice::the GitHub Release $env:TAG exists already - kept as it is"
             exit 0
           }
-          gh release create $env:GITHUB_REF_NAME --title "Vacha $env:VERSION" --notes $notes --verify-tag `
+          gh release create $env:TAG --title "Vacha $env:VERSION" --notes $notes --verify-tag `
             (Join-Path $out 'vacha-setup-x64.exe') (Join-Path $out 'vacha-win32-x64.zip') `
             (Join-Path $out 'vacha-sbom.cdx.json') (Join-Path $out 'SHA256SUMS')
           if ($LASTEXITCODE -ne 0) { throw 'gh release create failed' }
@@ -110,23 +217,13 @@ jobs:
           path: dist/Vacha-x64-*.msix
           retention-days: 3
 
-      - name: Are the Partner Center secrets set?
-        id: store
-        shell: pwsh
-        env:
-          TENANT: ${{ secrets.PARTNER_CENTER_TENANT_ID }}
-          SELLER: ${{ secrets.PARTNER_CENTER_SELLER_ID }}
-          CLIENT: ${{ secrets.PARTNER_CENTER_CLIENT_ID }}
-          SECRET: ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
-        run: |
-          if ($env:TENANT -and $env:SELLER -and $env:CLIENT -and $env:SECRET) { 'ready=true' | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8 }
-          else { Write-Host '::notice::msstore secrets not set - Store upload skipped' }
-
       - name: Microsoft Store Developer CLI
         if: steps.store.outputs.ready == 'true'
         uses: microsoft/microsoft-store-apppublisher@v1.1
 
-      - name: Upload to the Store as a draft submission (the owner submits)
+      # msstore publish replaces a pending draft, uploads the MSIX, commits the submission and polls until the commit
+      # is processed; it exits non-zero on CommitFailed. The status is then read again, and a failed one fails the run.
+      - name: Submit to the Store for certification
         if: steps.store.outputs.ready == 'true'
         shell: pwsh
         env:
@@ -135,8 +232,15 @@ jobs:
           CLIENT: ${{ secrets.PARTNER_CENTER_CLIENT_ID }}
           SECRET: ${{ secrets.PARTNER_CENTER_CLIENT_SECRET }}
         run: |
+          . (Join-Path $env:RUNNER_TEMP 'store-state.ps1')
+          Wait-StoreIdle -Minutes 20
           msstore reconfigure --tenantId $env:TENANT --sellerId $env:SELLER --clientId $env:CLIENT --clientSecret $env:SECRET
           if ($LASTEXITCODE -ne 0) { throw 'msstore reconfigure failed' }
           $msix = (Get-Item "dist/Vacha-x64-$env:VERSION.msix").FullName
-          msstore publish dist -i $msix -id $env:STORE_PRODUCT_ID --noCommit
-          if ($LASTEXITCODE -ne 0) { throw 'msstore publish failed' }
+          msstore publish $msix -id $env:STORE_PRODUCT_ID
+          if ($LASTEXITCODE -ne 0) { throw "msstore publish failed (exit $LASTEXITCODE): see its errors above and the submission in Partner Center" }
+          $p = Get-StorePending
+          if (-not $p) { throw 'msstore publish succeeded, but the product has no pending submission' }
+          if ($p.status -like '*Failed' -or $p.status -in 'PendingCommit', 'Canceled') { throw "the submission $($p.id) is $($p.status), not in certification" }
+          if (-not ($p.applicationPackages | Where-Object { $_.version -eq "$env:VERSION.0" -and $_.fileStatus -ne 'PendingDelete' })) { throw "the submission $($p.id) does not hold package $env:VERSION.0" }
+          Write-Host "::notice::Vacha $env:VERSION submitted: submission $($p.id), status $($p.status). Partner Center emails the account about certification."
