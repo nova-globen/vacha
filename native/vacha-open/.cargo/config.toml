@@ -1,0 +1,4 @@
+# No VC++ runtime on the machine must not stop this exe: a clean Windows may lack
+# VCRUNTIME140.dll, and setup waits on this exe (--fix-file-icons).
+[target.'cfg(all(windows, target_env = "msvc"))']
+rustflags = ["-C", "target-feature=+crt-static"]

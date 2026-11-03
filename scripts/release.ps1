@@ -26,11 +26,22 @@ param(
 	# Inno's licence allows commercial use with no fee; the vendor requests a paid licence (jrsoftware.org/isorder.php).
 	[switch]$Installer,
 	# Also package the Microsoft Store MSIX (scripts\package-msix.ps1, placeholder identity)
-	[switch]$Msix
+	[switch]$Msix,
+	# A build that will not be published may hold native components beyond the public ones
+	[switch]$AllowExtraNative
 )
 
 $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Parent $PSScriptRoot
+
+# A release ships only the native components named here, and these programs at
+# the package's top level. Anything else in the tree is refused, not picked up.
+$publicNative = @('vacha-open')
+$packagePrograms = @('Vacha.exe', 'vacha_open.exe')
+$extraNative = @(Get-ChildItem (Join-Path $repoRoot 'native') -Directory | Where-Object { $publicNative -notcontains $_.Name })
+if ($extraNative -and -not $AllowExtraNative) {
+	throw "native\ holds what a release must not ship: $($extraNative.Name -join ', '). Build from a public snapshot, or pass -AllowExtraNative for a build that will not be published."
+}
 Set-Location $repoRoot
 
 $version = (Get-Content (Join-Path $repoRoot 'package.json') | ConvertFrom-Json).version
@@ -78,7 +89,28 @@ $cargoExit = $LASTEXITCODE
 Pop-Location
 Remove-Item Env:VACHA_VERSION -ErrorAction SilentlyContinue
 if ($cargoExit -ne 0) { throw 'cargo build for vacha_open failed' }
-Copy-Item (Join-Path $repoRoot 'native\vacha-open\target\release\vacha_open.exe') (Join-Path $destination 'vacha_open.exe') -Force
+$shim = Join-Path $repoRoot 'native\vacha-open\target\release\vacha_open.exe'
+# Setup waits on this exe, and a clean Windows may have no VC++ runtime (a static CRT: native\vacha-open\.cargo\config.toml)
+if ([System.Text.Encoding]::ASCII.GetString([System.IO.File]::ReadAllBytes($shim)) -match '(?i)vcruntime\d+\.dll|msvcp\d+\.dll') {
+	throw 'vacha_open.exe needs the VC++ runtime, which a clean Windows may not have.'
+}
+Copy-Item $shim (Join-Path $destination 'vacha_open.exe') -Force
+
+# Only when asked to: see the refusal at the top.
+if ($AllowExtraNative) {
+	foreach ($extra in $extraNative) {
+		Write-Host "-- cargo build $($extra.Name)" -ForegroundColor Cyan
+		Push-Location $extra.FullName
+		& $cargo build --release --quiet
+		$cargoExit = $LASTEXITCODE
+		Pop-Location
+		if ($cargoExit -ne 0) { throw "cargo build for $($extra.Name) failed" }
+		Get-ChildItem (Join-Path $extra.FullName 'target\release') -Filter '*.exe' | Copy-Item -Destination $destination -Force
+	}
+} else {
+	$unexpected = @(Get-ChildItem $destination -Filter '*.exe' | Where-Object { $packagePrograms -notcontains $_.Name })
+	if ($unexpected) { throw "the package holds programs a release must not ship: $($unexpected.Name -join ', ')" }
+}
 
 # strip sourcemaps from the shipped output
 Get-ChildItem -Path (Join-Path $destination 'resources\app\out') -Filter '*.map' -Recurse -ErrorAction SilentlyContinue | Remove-Item -Force
