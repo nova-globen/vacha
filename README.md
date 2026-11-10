@@ -11,7 +11,7 @@ does. Measured on a desktop PC (Ryzen 9 9950X3D, Windows 11 x64), it starts
 in about 0.7 s, and once Vacha is running a file opens in about 0.14 s
 (medians of 5 runs on 2026-10-23; method under [Measuring startup](#measuring-startup)).
 
-Version 1.1.4 · Windows x64 · called Tond up to 1.0.0
+Version 1.2.0 · Windows x64 · called Tond up to 1.0.0
 
 **Website:** <https://nova-globen.se/products/vacha> · **Issues:**
 <https://nova-globen.se/products/vacha/issues>
@@ -19,7 +19,8 @@ Version 1.1.4 · Windows x64 · called Tond up to 1.0.0
 ## Install
 
 From the **Microsoft Store**: <https://apps.microsoft.com/detail/9NSCM5WH4WF1>
-(signed by Microsoft; the Store keeps it up to date).
+(signed by Microsoft; the Store keeps it up to date). It adds "Open with Vacha" to
+the right-click menu of every file.
 
 Or download the latest release (Windows 10/11, x64) from GitHub:
 

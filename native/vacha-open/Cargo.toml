@@ -15,6 +15,12 @@ build = "build.rs"
 name = "vacha_open"
 path = "src/main.rs"
 
+# The Store build's right-click entry: see src/menu.rs. Only the MSIX ships it.
+[lib]
+name = "vacha_menu"
+path = "src/menu.rs"
+crate-type = ["cdylib"]
+
 [profile.release]
 opt-level = "z"
 lto = true

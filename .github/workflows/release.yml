@@ -215,7 +215,7 @@ jobs:
           Vacha $env:VERSION for Windows x64, free and open source under GPL-3.0-or-later.
 
           - vacha-setup-x64.exe: per-user installer (no admin rights)
-          - vacha-win32-x64.zip: portable build
+          - vacha-win32-x64.zip: the same program as a zip, run without installing; it keeps its settings in your user profile
           - vacha-sbom.cdx.json: CycloneDX SBOM
           - SHA256SUMS: SHA-256 of the three files above
 

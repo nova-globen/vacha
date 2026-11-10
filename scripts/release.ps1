@@ -91,8 +91,10 @@ Remove-Item Env:VACHA_VERSION -ErrorAction SilentlyContinue
 if ($cargoExit -ne 0) { throw 'cargo build for vacha_open failed' }
 $shim = Join-Path $repoRoot 'native\vacha-open\target\release\vacha_open.exe'
 # Setup waits on this exe, and a clean Windows may have no VC++ runtime (a static CRT: native\vacha-open\.cargo\config.toml)
-if ([System.Text.Encoding]::ASCII.GetString([System.IO.File]::ReadAllBytes($shim)) -match '(?i)vcruntime\d+\.dll|msvcp\d+\.dll') {
-	throw 'vacha_open.exe needs the VC++ runtime, which a clean Windows may not have.'
+foreach ($built in $shim, (Join-Path $repoRoot 'native\vacha-open\target\release\vacha_menu.dll')) {
+	if ([System.Text.Encoding]::ASCII.GetString([System.IO.File]::ReadAllBytes($built)) -match '(?i)vcruntime\d+\.dll|msvcp\d+\.dll') {
+		throw "$(Split-Path -Leaf $built) needs the VC++ runtime, which a clean Windows may not have."
+	}
 }
 Copy-Item $shim (Join-Path $destination 'vacha_open.exe') -Force
 

@@ -319,3 +319,33 @@ begin
 	if not DelTree(LegacyDir, True, True, True) then
 		Log('Could not remove ' + LegacyDir);
 end;
+
+// Removes a file-type key whose open command runs this install's shim.
+procedure RemoveIfOpensWithShim(SubKey, Shim: String);
+var
+	Command: String;
+begin
+	if RegQueryStringValue(HKCU, SubKey + '\shell\open\command', '', Command) and (Pos(Shim, Lowercase(Command)) > 0) then
+		RegDeleteKeyIncludingSubkeys(HKCU, SubKey);
+end;
+
+// "Choose another app" records a type as <ext>_auto_file and the program as
+// Applications\<exe>; these are not setup's own entries, so nothing else removes
+// them. Left behind, they name a deleted program, and Windows shows its bare path
+// as the default app and asks on every double click.
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+var
+	Names: TArrayOfString;
+	Shim: String;
+	Index: Integer;
+begin
+	if CurUninstallStep <> usUninstall then
+		exit;
+	Shim := Lowercase(ExpandConstant('{app}\{#ShimExe}'));
+	RemoveIfOpensWithShim('Software\Classes\Applications\{#ShimExe}', Shim);
+	if not RegGetSubkeyNames(HKCU, 'Software\Classes', Names) then
+		exit;
+	for Index := 0 to GetArrayLength(Names) - 1 do
+		if Lowercase(Copy(Names[Index], Length(Names[Index]) - 9, 10)) = '_auto_file' then
+			RemoveIfOpensWithShim('Software\Classes\' + Names[Index], Shim);
+end;

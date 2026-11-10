@@ -64,6 +64,8 @@ Copy-Item $source $staging -Recurse
 Remove-Item (Join-Path $staging 'bin') -Recurse -Force -ErrorAction SilentlyContinue
 # The startup task's target: the shim under this name starts Vacha hidden
 Copy-Item (Join-Path $staging 'vacha_open.exe') (Join-Path $staging 'vacha_resident.exe')
+# "Open with Vacha" in the right-click menu: a package cannot write the installer's registry key
+Copy-Item (Join-Path $repoRoot 'native\vacha-open\target\release\vacha_menu.dll') $staging
 Remove-Item (Join-Path $staging 'Vacha.VisualElementsManifest.xml') -Force -ErrorAction SilentlyContinue
 
 Write-Host '-- Store variant (product.json)' -ForegroundColor Cyan
